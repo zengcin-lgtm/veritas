@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天主教 Veritas 護教中心 | 捍衛真理，傳遞信仰</title>
+    <!-- 引入 Tailwind CSS (用於快速開發高品質 UI) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 FontAwesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入 Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        // 設定 Veritas 品牌專屬顏色
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        veritas: {
+                            red: '#8B0000',     // 深紅色 (主色)
+                            darkred: '#5C0000', // 更深的紅
+                            gold: '#D4AF37',    // 金色 (輔助/強調色)
+                            light: '#FAFAFA',   // 背景灰白
+                            dark: '#2D3748'     // 文字深灰
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #FAFAFA; }
+        /* 平滑捲動 */
+        html { scroll-behavior: smooth; }
+        /* 漸層背景特效 */
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(139,0,0,0.9) 0%, rgba(92,0,0,0.95) 100%), url('https://images.unsplash.com/photo-1437603568260-1950d3ca6eab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        /* 卡片懸浮動畫 */
+        .hover-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="text-veritas-dark antialiased">
+
+    <!-- 頂部導覽列 Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <!-- Logo 區塊 -->
+                <div class="flex items-center">
+                    <a href="#" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-veritas-red rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                            V
+                        </div>
+                        <div>
+                            <h1 class="font-bold text-xl text-veritas-red tracking-wider">Veritas 護教中心</h1>
+                            <p class="text-xs text-gray-500 font-medium">天主教數位弘道平台</p>
+                        </div>
+                    </a>
+                </div>
+                <!-- 電腦版選單 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-gray-600 hover:text-veritas-red font-medium transition">關於我們</a>
+                    <a href="#" class="text-gray-600 hover:text-veritas-red font-medium transition">護教知識庫</a>
+                    <a href="#" class="text-gray-600 hover:text-veritas-red font-medium transition">影音策展</a>
+                    <a href="#" class="text-gray-600 hover:text-veritas-red font-medium transition">真理問答箱</a>
+                    <a href="#" class="bg-veritas-gold text-white px-5 py-2 rounded-full font-bold hover:bg-yellow-500 transition shadow-md">
+                        <i class="fa-solid fa-heart mr-2"></i>支持我們
+                    </a>
+                </div>
+                <!-- 手機版選單按鈕 -->
+                <div class="flex items-center md:hidden">
+                    <button class="text-gray-600 hover:text-veritas-red focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 行政公告置頂區 (跑馬燈概念) -->
+    <div class="bg-yellow-50 border-b border-yellow-200 py-2">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center gap-3">
+            <span class="bg-veritas-red text-white text-xs font-bold px-2 py-1 rounded">最新公告</span>
+            <p class="text-sm text-yellow-800 font-medium truncate">
+                2026年春季「慕道與護教」線上講座開始報名！詳情請點擊此處了解更多。
+            </p>
+            <a href="#" class="text-sm text-veritas-red font-bold hover:underline whitespace-nowrap">查看詳情 <i class="fa-solid fa-angle-right"></i></a>
+        </div>
+    </div>
+
+    <!-- 英雄區塊 Hero Section -->
+    <header class="hero-gradient relative text-white py-24 md:py-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center md:text-left flex flex-col md:flex-row items-center">
+            <div class="md:w-3/5 space-y-6">
+                <span class="text-veritas-gold font-bold tracking-widest text-sm border border-veritas-gold px-3 py-1 rounded-full uppercase">Catholic Apologetics</span>
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
+                    捍衛真理，<br class="hidden md:block" />
+                    用愛傳遞天主信仰。
+                </h2>
+                <p class="text-lg md:text-xl text-gray-200 max-w-2xl leading-relaxed">
+                    我們致力於透過數位平台、護教文章與多媒體影音，解答信仰疑惑，幫助教友與慕道者更深認識羅馬天主教會的豐富寶藏。
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 pt-4 justify-center md:justify-start">
+                    <a href="#knowledge" class="bg-white text-veritas-red px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition shadow-lg text-center">
+                        開始探索知識庫
+                    </a>
+                    <a href="#qa" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-white/10 transition text-center">
+                        提出信仰問題
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 募資進度卡片 (放在 Hero 區塊右側) -->
+            <div class="md:w-2/5 mt-12 md:mt-0 w-full max-w-md mx-auto md:ml-auto">
+                <div class="bg-white rounded-2xl shadow-2xl p-6 text-veritas-dark relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-veritas-gold"></div>
+                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-seedling text-veritas-gold"></i> 數位弘道建置計畫
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-6">邀請您以祈禱與奉獻，支持護教中心的數位化升級，讓福音傳得更遠。</p>
+                    
+                    <!-- 進度條 -->
+                    <div class="mb-2 flex justify-between text-sm font-bold">
+                        <span class="text-veritas-red">已募得 NT$ 24,000</span>
+                        <span class="text-gray-400">目標 NT$ 50,000</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3 mb-4">
+                        <div class="bg-gradient-to-r from-veritas-gold to-yellow-400 h-3 rounded-full" style="width: 48%"></div>
+                    </div>
+                    <div class="text-right text-xs text-gray-400 font-medium mb-6">達成率 48%</div>
+                    
+                    <button class="w-full bg-veritas-red text-white py-3 rounded-xl font-bold hover:bg-veritas-darkred transition shadow-md flex justify-center items-center gap-2">
+                        <i class="fa-solid fa-hand-holding-heart"></i> 我要支持奉獻
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 最新護教內容區 (文章 + 影音) -->
+    <section id="knowledge" class="py-20 bg-veritas-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <h2 class="text-3xl font-bold text-veritas-dark border-l-4 border-veritas-red pl-4">最新護教資源</h2>
+                    <p class="text-gray-500 mt-2 pl-4">整合 YouTube、Podcast 與專欄文章，一站搜尋。</p>
+                </div>
+                <a href="#" class="hidden sm:block text-veritas-red font-bold hover:underline">查看全部 <i class="fa-solid fa-arrow-right ml-1"></i></a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 文章卡片 1 -->
+                <article class="bg-white rounded-2xl overflow-hidden shadow-md hover-card border border-gray-100">
+                    <div class="relative h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
+                        <!-- 模擬圖片 -->
+                        <div class="text-gray-400 text-5xl opacity-50"><i class="fa-solid fa-book-bible"></i></div>
+                        <div class="absolute top-4 left-4 bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full">神學專欄</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
+                            <i class="fa-regular fa-calendar"></i> 2026年1月20日
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 line-clamp-2 hover:text-veritas-red cursor-pointer">為什麼天主教要恭敬聖母？釐清常見的敬禮迷思</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">很多基督新教弟兄姊妹常誤解天主教「拜」聖母。本文將從聖經基礎與教會歷史，為您解析「敬禮」與「朝拜」的本質差異...</p>
+                        
+                        <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-100">
+                            <span class="text-sm font-medium text-gray-700"><i class="fa-solid fa-pen-nib text-gray-400 mr-1"></i> 伯多祿神父</span>
+                            <!-- 一鍵分享按鈕 (預覽) -->
+                            <div class="flex gap-2">
+                                <button class="w-8 h-8 rounded-full bg-green-100 text-green-600 hover:bg-green-500 hover:text-white transition flex items-center justify-center" title="分享至 LINE"><i class="fa-brands fa-line"></i></button>
+                                <button class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-600 hover:text-white transition flex items-center justify-center" title="分享至 Facebook"><i class="fa-brands fa-facebook-f"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 影音卡片 (YouTube) -->
+                <article class="bg-white rounded-2xl overflow-hidden shadow-md hover-card border border-gray-100">
+                    <div class="relative h-48 bg-gray-800 flex items-center justify-center overflow-hidden group cursor-pointer">
+                        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition z-10"></div>
+                        <i class="fa-brands fa-youtube text-5xl text-red-600 z-20 group-hover:scale-110 transition"></i>
+                        <div class="absolute top-4 left-4 bg-red-100 text-red-800 text-xs font-bold px-3 py-1 rounded-full z-20">YouTube 直播</div>
+                        <div class="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded z-20">45:20</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
+                            <i class="fa-regular fa-calendar"></i> 2026年1月18日
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 line-clamp-2 hover:text-veritas-red cursor-pointer">【主日講道精華】在苦難中看見天主的旨意</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">面對生活中的不順遂，我們該如何以信仰的眼光看待？神父以本週福音為例，帶領大家反思...</p>
+                    </div>
+                </article>
+
+                <!-- Podcast 卡片 -->
+                <article class="bg-white rounded-2xl overflow-hidden shadow-md hover-card border border-gray-100">
+                    <div class="relative h-48 bg-veritas-dark flex items-center justify-center overflow-hidden cursor-pointer group">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-purple-900 to-veritas-dark opacity-80 group-hover:opacity-100 transition"></div>
+                        <i class="fa-solid fa-podcast text-5xl text-purple-300 z-20 group-hover:scale-110 transition"></i>
+                        <div class="absolute top-4 left-4 bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full z-20">Podcast 單集</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-headphones"></i> EP. 24 | 真理之聲
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 line-clamp-2 hover:text-veritas-red cursor-pointer">教理輕鬆聊：什麼是大赦？跟贖罪券一樣嗎？</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">禧年即將到來，常常聽到教會頒布「全大赦」。這到底是什麼意思？讓我們用十分鐘為您解答。</p>
+                        <button class="text-sm font-bold text-veritas-red hover:text-veritas-darkred flex items-center gap-1">
+                            <i class="fa-solid fa-circle-play"></i> 立即收聽
+                        </button>
+                    </div>
+                </article>
+            </div>
+            
+            <div class="mt-8 text-center sm:hidden">
+                <button class="bg-white border-2 border-veritas-red text-veritas-red font-bold px-6 py-2 rounded-full w-full">載入更多內容</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 口碑推薦區 (後台手動維護) -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-veritas-dark mb-4">教友見證與回饋</h2>
+            <p class="text-gray-500 mb-12 max-w-2xl mx-auto">這些來自各地主內弟兄姊妹的真實分享，是推動我們持續建置數位弘道平台的最大動力。</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- 推薦卡片 1 -->
+                <div class="bg-veritas-light p-8 rounded-2xl relative text-left">
+                    <i class="fa-solid fa-quote-left text-4xl text-gray-200 absolute top-4 left-4"></i>
+                    <p class="text-gray-700 mb-6 relative z-10 pt-4">「以前遇到非基督徒朋友問我關於聖經的問題，我常常不知道怎麼有條理地回答。現在我都直接來這邊搜尋文章，分享給他們看，真的非常實用！」</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-bold">瑪</div>
+                        <div>
+                            <div class="font-bold text-sm">瑪利亞 (台北)</div>
+                            <div class="text-xs text-gray-400">青年教友</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 推薦卡片 2 -->
+                <div class="bg-veritas-light p-8 rounded-2xl relative text-left">
+                    <i class="fa-solid fa-quote-left text-4xl text-gray-200 absolute top-4 left-4"></i>
+                    <p class="text-gray-700 mb-6 relative z-10 pt-4">「因為工作關係常出差，沒辦法穩定參與堂區的講座。有這個平台後，我可以在通勤時聽 Podcast 補課，感謝神父與護教中心的用心。」</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-bold">保</div>
+                        <div>
+                            <div class="font-bold text-sm">保祿 (台中)</div>
+                            <div class="text-xs text-gray-400">職場信徒</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 推薦卡片 3 (引導投稿) -->
+                <div class="bg-gradient-to-br from-veritas-red to-veritas-darkred p-8 rounded-2xl text-white flex flex-col items-center justify-center text-center shadow-xl">
+                    <i class="fa-solid fa-pen-to-square text-4xl text-veritas-gold mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">分享您的感動</h3>
+                    <p class="text-sm text-red-100 mb-6">您也有因著本中心的資源而獲得啟發的經驗嗎？歡迎留言告訴我們，您的見證將鼓勵更多人。</p>
+                    <button class="bg-veritas-gold text-veritas-dark font-bold px-6 py-2 rounded-full hover:bg-white transition shadow-md">
+                        我要推薦/留言
+                    </button>
+                    <p class="text-xs text-red-200 mt-3">* 留言將由管理員審核後刊登</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁尾 Footer -->
+    <footer class="bg-veritas-dark text-gray-300 py-12 border-t-4 border-veritas-red">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                        <div class="w-8 h-8 bg-veritas-red rounded flex items-center justify-center text-sm">V</div>
+                        Veritas 護教中心
+                    </h2>
+                    <p class="text-sm text-gray-400 mb-4 max-w-sm">
+                        我們秉持著天主教會的傳統與聖經真理，透過現代數位媒體，為尋道者解惑，為信徒建立堅固的信仰根基。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition"><i class="fa-brands fa-facebook-f text-white"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition"><i class="fa-brands fa-youtube text-white"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-green-500 transition"><i class="fa-brands fa-line text-white"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">快速連結</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 關於我們</a></li>
+                        <li><a href="#" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 護教文章列表</a></li>
+                        <li><a href="#" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 友站資源推薦</a></li>
+                        <li><a href="#" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 邀請神父演講</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">聯絡資訊</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-envelope mt-1 text-veritas-red"></i>
+                            <span>service@veritas.catholic.org.tw</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-veritas-red"></i>
+                            <span>台灣 (具體地址將由後台設定)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-10 pt-6 text-sm text-center md:text-left flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2026 天主教 Veritas 護教中心 版權所有.</p>
+                <p class="mt-2 md:mt-0 text-gray-500">
+                    Powered by <a href="#" class="font-bold text-gray-400 hover:text-white transition">Foday Design Studio</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
