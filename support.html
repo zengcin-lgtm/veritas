@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>支持我們 | 天主教 Veritas 護教中心</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 FontAwesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入 Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        // 設定 Veritas 品牌專屬顏色
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        veritas: {
+                            red: '#8B0000', darkred: '#5C0000', gold: '#D4AF37', light: '#FAFAFA', dark: '#2D3748'
+                        }
+                    },
+                    fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #FAFAFA; }
+        html { scroll-behavior: smooth; }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(139,0,0,0.9) 0%, rgba(92,0,0,0.95) 100%), url('https://images.unsplash.com/photo-1533090161767-e6ffed986c88?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .hover-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="text-veritas-dark antialiased">
+
+    <!-- 頂部導覽列 Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center gap-3">
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-10 h-10 object-contain drop-shadow-md" onerror="this.src='https://placehold.co/100x100/8B0000/FFF?text=V'">
+                        <div>
+                            <h1 class="font-bold text-xl text-veritas-red tracking-wider">Veritas 護教中心</h1>
+                            <p class="text-xs text-gray-500 font-medium">天主教數位弘道平台</p>
+                        </div>
+                    </a>
+                </div>
+                <!-- 電腦版選單 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="about.html" class="text-gray-600 hover:text-veritas-red font-medium transition">關於我們</a>
+                    <a href="knowledge.html" class="text-gray-600 hover:text-veritas-red font-medium transition">護教知識庫</a>
+                    <a href="media.html" class="text-gray-600 hover:text-veritas-red font-medium transition">影音策展</a>
+                    <a href="qa.html" class="text-gray-600 hover:text-veritas-red font-medium transition">真理問答箱</a>
+                    <a href="support.html" class="bg-yellow-500 text-white px-5 py-2 rounded-full font-bold shadow-inner ring-2 ring-yellow-400 ring-offset-2 transition cursor-default">
+                        <i class="fa-solid fa-heart mr-2"></i>支持我們
+                    </a>
+                </div>
+                <!-- 手機版選單按鈕 -->
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-veritas-red focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 手機版下拉選單 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-xl absolute w-full z-40">
+        <div class="px-4 pt-2 pb-6 space-y-2">
+            <a href="about.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">關於我們</a>
+            <a href="knowledge.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">護教知識庫</a>
+            <a href="media.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">影音策展</a>
+            <a href="qa.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">真理問答箱</a>
+            <a href="support.html" class="block px-3 py-3 text-base font-bold text-white bg-yellow-500 rounded-md"><i class="fa-solid fa-heart mr-2"></i>支持我們</a>
+        </div>
+    </div>
+
+    <!-- 頁首 Hero 區塊 -->
+    <header class="hero-gradient relative text-white py-16 md:py-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <span class="text-veritas-gold font-bold tracking-widest text-sm mb-4 block uppercase">Support Us</span>
+            <h2 class="text-3xl md:text-5xl font-black mb-4">支持數位弘道計畫</h2>
+            <p class="text-lg text-gray-200 max-w-2xl mx-auto">「神貧的人是有福的，因為天國是他們的。」<br>您的每一分奉獻，都是讓真理之光照進網路世界的薪柴。</p>
+        </div>
+    </header>
+
+    <!-- 奉獻與進度內容區塊 -->
+    <section class="py-16 md:py-24 bg-veritas-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-12">
+                
+                <!-- 左側：募資進度與計畫說明 -->
+                <div class="lg:w-1/2 space-y-8">
+                    <div>
+                        <h3 class="text-3xl font-bold text-veritas-dark border-l-4 border-veritas-red pl-4 mb-6">為什麼我們需要您的支持？</h3>
+                        <p class="text-gray-600 leading-relaxed mb-4 text-lg">
+                            現代社會中，網路成為了尋找生命答案的第一線。Veritas 護教中心致力於提供高品質的神學文章、影音節目與線上諮詢，幫助信徒與慕道者認識天主。
+                        </p>
+                        <p class="text-gray-600 leading-relaxed text-lg">
+                            維持這個無廣告的平台、定期的影片後製、Podcast 伺服器託管，以及系統的自動化維運，都需要長期穩定的經費支持。我們誠摯邀請您參與這項數位福傳工程。
+                        </p>
+                    </div>
+
+                    <!-- 即時募資進度卡片 (動態抓取 API) -->
+                    <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 relative overflow-hidden mt-8">
+                        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-veritas-red to-veritas-gold"></div>
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                                <i class="fa-solid fa-seedling text-veritas-gold"></i> 本年度建置計畫進度
+                            </h4>
+                            <span class="bg-red-50 text-veritas-red text-xs font-bold px-3 py-1 rounded-full border border-red-100">即時更新</span>
+                        </div>
+                        
+                        <div class="mb-3 flex justify-between text-base font-bold items-end">
+                            <div>
+                                <span class="text-gray-500 text-sm font-normal block mb-1">目前已募得</span>
+                                <span id="api-fund-raised" class="text-3xl text-veritas-red">NT$ --,---</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-gray-400 text-sm font-normal block mb-1">年度目標</span>
+                                <span id="api-fund-target" class="text-xl text-gray-500">NT$ --,---</span>
+                            </div>
+                        </div>
+                        
+                        <div class="w-full bg-gray-100 rounded-full h-4 mb-2 shadow-inner overflow-hidden">
+                            <div id="api-fund-bar" class="bg-gradient-to-r from-veritas-gold to-yellow-400 h-4 rounded-full transition-all duration-1000 ease-out relative" style="width: 0%">
+                                <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+                            </div>
+                        </div>
+                        <div id="api-fund-percent" class="text-right text-sm text-veritas-gold font-bold mb-2">達成率 --%</div>
+                    </div>
+                </div>
+
+                <!-- 右側：奉獻管道資訊 -->
+                <div class="lg:w-1/2">
+                    <h3 class="text-2xl font-bold text-veritas-dark mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-hand-holding-heart text-veritas-red"></i> 奉獻方式
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <!-- 管道 1：銀行匯款 -->
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover-card flex gap-5 items-start">
+                            <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">
+                                <i class="fa-solid fa-building-columns"></i>
+                            </div>
+                            <div class="w-full">
+                                <h4 class="text-lg font-bold text-gray-800 mb-2">銀行轉帳 / ATM 匯款</h4>
+                                <div class="bg-gray-50 p-4 rounded-lg text-gray-700 font-medium text-sm space-y-2 border border-gray-100">
+                                    <div class="flex justify-between border-b border-gray-200 pb-2">
+                                        <span class="text-gray-500">銀行名稱</span>
+                                        <span>國泰世華銀行 (代碼：013)</span>
+                                    </div>
+                                    <div class="flex justify-between border-b border-gray-200 pb-2">
+                                        <span class="text-gray-500">分行名稱</span>
+                                        <span>台北分行</span>
+                                    </div>
+                                    <div class="flex justify-between border-b border-gray-200 pb-2">
+                                        <span class="text-gray-500">戶名</span>
+                                        <span>財團法人天主教會台灣地區主教團</span>
+                                    </div>
+                                    <div class="flex justify-between pt-1 items-center">
+                                        <span class="text-gray-500">帳號</span>
+                                        <span class="font-bold text-lg tracking-wider text-veritas-red">1234-5678-9012</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 管道 2：郵政劃撥 -->
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover-card flex gap-5 items-start">
+                            <div class="w-14 h-14 bg-green-50 text-green-600 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">
+                                <i class="fa-solid fa-envelope-open-text"></i>
+                            </div>
+                            <div class="w-full">
+                                <h4 class="text-lg font-bold text-gray-800 mb-2">郵政劃撥</h4>
+                                <div class="bg-gray-50 p-4 rounded-lg text-gray-700 font-medium text-sm space-y-2 border border-gray-100">
+                                    <div class="flex justify-between border-b border-gray-200 pb-2">
+                                        <span class="text-gray-500">劃撥戶名</span>
+                                        <span>Veritas 護教中心</span>
+                                    </div>
+                                    <div class="flex justify-between pt-1 items-center">
+                                        <span class="text-gray-500">劃撥帳號</span>
+                                        <span class="font-bold text-lg tracking-wider text-veritas-red">50123456</span>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-2">* 請於通訊欄註明：「數位弘道建置計畫」</p>
+                            </div>
+                        </div>
+
+                        <!-- 管道 3：線上金流 / QR Code -->
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover-card flex flex-col sm:flex-row gap-5 items-center sm:items-start text-center sm:text-left">
+                            <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">
+                                <i class="fa-solid fa-qrcode"></i>
+                            </div>
+                            <div class="w-full">
+                                <h4 class="text-lg font-bold text-gray-800 mb-2">線上刷卡 / LINE Pay</h4>
+                                <p class="text-sm text-gray-500 mb-4">您可以透過手機掃描右方 QR Code，或點擊下方按鈕前往安全的第三方支付平台進行線上奉獻。</p>
+                                <a href="#" class="inline-block bg-veritas-dark text-white px-6 py-2 rounded-lg font-bold hover:bg-black transition shadow-md text-sm">
+                                    前往線上奉獻平台 <i class="fa-solid fa-external-link-alt ml-1"></i>
+                                </a>
+                            </div>
+                            <div class="w-28 h-28 bg-gray-100 rounded-lg p-2 flex-shrink-0 shadow-inner border border-gray-200">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://example.com/donate" alt="奉獻 QR Code" class="w-full h-full object-contain">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 奉獻須知說明區 -->
+    <section class="py-12 bg-white border-t border-gray-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-red-50 p-6 rounded-2xl border border-red-100 flex gap-4 items-start">
+                <i class="fa-solid fa-circle-info text-veritas-red text-2xl mt-1"></i>
+                <div>
+                    <h4 class="font-bold text-veritas-dark mb-2">奉獻收據與徵信說明</h4>
+                    <ul class="text-sm text-gray-600 space-y-2 list-disc pl-4 marker:text-veritas-red">
+                        <li>本中心為合法登記之宗教團體，您的奉獻均可開立抵稅收據。</li>
+                        <li>若您透過「銀行匯款」或「郵政劃撥」，請務必來信 <a href="mailto:service@veritas.catholic.org.tw" class="text-veritas-red hover:underline font-medium">service@veritas.catholic.org.tw</a> 或來電告知您的**姓名、匯款帳號後五碼、金額及通訊地址**，以便我們寄送收據。</li>
+                        <li>為落實徵信，我們將定期於網站公告捐助芳名錄。若您希望匿名，請於來信時一併註明。</li>
+                        <li>願天主百倍賞報您的慷慨！</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁尾 Footer -->
+    <footer class="bg-veritas-dark text-gray-300 py-12 border-t-4 border-veritas-red">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-8 h-8 object-contain" onerror="this.src='https://placehold.co/100x100/8B0000/FFF?text=V'">
+                        Veritas 護教中心
+                    </h2>
+                    <p class="text-sm text-gray-400 mb-4 max-w-sm">
+                        我們秉持著天主教會的傳統與聖經真理，透過現代數位媒體，為尋道者解惑，為信徒建立堅固的信仰根基。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition"><i class="fa-brands fa-facebook-f text-white"></i></a>
+                        <a href="https://www.youtube.com/@veritas3098/videos" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition"><i class="fa-brands fa-youtube text-white"></i></a>
+                        <a href="https://podcasts.apple.com/tw/podcast/%E5%A4%A9%E4%B8%BB%E6%95%99veritas%E8%AD%B7%E6%95%99%E4%B8%AD%E5%BF%83/id1542142187" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fa-solid fa-podcast text-white"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">快速連結</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="about.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 關於我們</a></li>
+                        <li><a href="knowledge.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 護教文章列表</a></li>
+                        <li><a href="links.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 友站資源推薦</a></li>
+                        <li><a href="invite.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 邀請神父演講</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">聯絡資訊</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-envelope mt-1 text-veritas-red"></i>
+                            <span>service@veritas.catholic.org.tw</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-veritas-red"></i>
+                            <span>台灣</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-10 pt-6 text-sm text-center md:text-left flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2026 天主教 Veritas 護教中心 版權所有.</p>
+                <p class="mt-2 md:mt-0 text-gray-500">
+                    Powered by <a href="#" class="font-bold text-gray-400 hover:text-white transition">Foday Design Studio</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 手機版選單切換
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // ==========================================
+        // 1. 設定 Google Apps Script API 網址
+        // ==========================================
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz6Iqnjt8r9poHA_l450uly_XkdX6d2iU7Qcc56fBObFbMoFrtXlSvFtznBUiRgO-lN/exec"; 
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchFundingData();
+        });
+
+        // ==========================================
+        // 2. 獲取募資進度資料 (共用 getHomeData API)
+        // ==========================================
+        async function fetchFundingData() {
+            try {
+                const response = await fetch(`${GAS_API_URL}?action=getHomeData`);
+                if (!response.ok) throw new Error('API 網路連線錯誤');
+                const data = await response.json();
+
+                if (data.error) throw new Error(data.error);
+
+                // 更新募資進度
+                if (data.funding) {
+                    const { raised, target } = data.funding;
+                    const percentage = Math.min(Math.round((raised / target) * 100), 100);
+                    
+                    document.getElementById('api-fund-raised').textContent = `NT$ ${raised.toLocaleString()}`;
+                    document.getElementById('api-fund-target').textContent = `NT$ ${target.toLocaleString()}`;
+                    
+                    // 延遲一點點觸發寬度變化，讓 CSS 動畫生效
+                    setTimeout(() => {
+                        document.getElementById('api-fund-bar').style.width = `${percentage}%`;
+                    }, 200);
+                    
+                    document.getElementById('api-fund-percent').textContent = `達成率 ${percentage}%`;
+                }
+
+            } catch (error) {
+                console.error("讀取募資進度失敗:", error);
+                document.getElementById('api-fund-raised').textContent = "系統連線中";
+                document.getElementById('api-fund-target').textContent = "---";
+            }
+        }
+    </script>
+</body>
+</html>
