@@ -181,7 +181,7 @@
         </div>
     </section>
 
-    <!-- 口碑推薦區 (動態抓取前兩筆) -->
+    <!-- 口碑推薦區 (動態抓取聯絡表單紀錄) -->
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl font-bold text-veritas-dark mb-4">教友見證與回饋</h2>
@@ -189,33 +189,33 @@
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- 推薦卡片 1 -->
-                <div class="bg-veritas-light p-8 rounded-2xl relative text-left">
+                <div class="bg-veritas-light p-8 rounded-2xl relative text-left hover-card">
                     <i class="fa-solid fa-quote-left text-4xl text-gray-200 absolute top-4 left-4"></i>
-                    <p id="api-test1-text" class="text-gray-700 mb-6 relative z-10 pt-4">載入中...</p>
-                    <div class="flex items-center gap-3">
-                        <div id="api-test1-avatar" class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-bold">-</div>
+                    <p id="api-test1-text" class="text-gray-700 mb-6 relative z-10 pt-4 line-clamp-4">連線中...</p>
+                    <div class="flex items-center gap-3 mt-auto">
+                        <div id="api-test1-avatar" class="w-10 h-10 bg-veritas-gold rounded-full flex items-center justify-center text-white font-bold">-</div>
                         <div>
-                            <div class="font-bold text-sm"><span id="api-test1-name">--</span></div>
+                            <div class="font-bold text-sm text-veritas-dark"><span id="api-test1-name">--</span></div>
                             <div id="api-test1-tag" class="text-xs text-gray-400">--</div>
                         </div>
                     </div>
                 </div>
                 
                 <!-- 推薦卡片 2 -->
-                <div class="bg-veritas-light p-8 rounded-2xl relative text-left">
+                <div class="bg-veritas-light p-8 rounded-2xl relative text-left hover-card">
                     <i class="fa-solid fa-quote-left text-4xl text-gray-200 absolute top-4 left-4"></i>
-                    <p id="api-test2-text" class="text-gray-700 mb-6 relative z-10 pt-4">載入中...</p>
-                    <div class="flex items-center gap-3">
-                        <div id="api-test2-avatar" class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-bold">-</div>
+                    <p id="api-test2-text" class="text-gray-700 mb-6 relative z-10 pt-4 line-clamp-4">連線中...</p>
+                    <div class="flex items-center gap-3 mt-auto">
+                        <div id="api-test2-avatar" class="w-10 h-10 bg-veritas-red rounded-full flex items-center justify-center text-white font-bold">-</div>
                         <div>
-                            <div class="font-bold text-sm"><span id="api-test2-name">--</span></div>
+                            <div class="font-bold text-sm text-veritas-dark"><span id="api-test2-name">--</span></div>
                             <div id="api-test2-tag" class="text-xs text-gray-400">--</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 推薦卡片 3 (引導投稿) -->
-                <div class="bg-gradient-to-br from-veritas-red to-veritas-darkred p-8 rounded-2xl text-white flex flex-col items-center justify-center text-center shadow-xl">
+                <div class="bg-gradient-to-br from-veritas-red to-veritas-darkred p-8 rounded-2xl text-white flex flex-col items-center justify-center text-center shadow-xl hover-card">
                     <i class="fa-solid fa-pen-to-square text-4xl text-veritas-gold mb-4"></i>
                     <h3 class="text-xl font-bold mb-2">分享您的感動</h3>
                     <p class="text-sm text-red-100 mb-6">您也有因著本中心的資源而獲得啟發的經驗嗎？歡迎留言告訴我們，您的見證將鼓勵更多人。</p>
@@ -294,7 +294,7 @@
         // ==========================================
         // 1. 設定 Google Apps Script API 網址
         // ==========================================
-        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz6Iqnjt8r9poHA_l450uly_XkdX6d2iU7Qcc56fBObFbMoFrtXlSvFtznBUiRgO-lN/exec"; 
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzbuprWzNPRRsz1Sxp4WtNJzrT-fgsQDc04vzF0RrEFK1WxpmUK4-zGdOpi9xdk9I_m/exec"; 
 
         document.addEventListener('DOMContentLoaded', () => {
             fetchHomeData();          // 抓取公告、募資、見證
@@ -330,19 +330,38 @@
                     document.getElementById('api-fund-percent').textContent = `達成率 ${percentage}%`;
                 }
 
-                // 更新教友見證
-                if (data.testimonials && data.testimonials.length >= 2) {
+                // 更新教友見證 (加入數量防呆與預設文字機制)
+                if (data.testimonials && data.testimonials.length > 0) {
                     const t1 = data.testimonials[0];
                     document.getElementById('api-test1-text').textContent = `「${t1.text}」`;
                     document.getElementById('api-test1-name').textContent = t1.name;
                     document.getElementById('api-test1-tag').textContent = t1.tag;
                     document.getElementById('api-test1-avatar').textContent = t1.name.charAt(0);
 
-                    const t2 = data.testimonials[1];
-                    document.getElementById('api-test2-text').textContent = `「${t2.text}」`;
-                    document.getElementById('api-test2-name').textContent = t2.name;
-                    document.getElementById('api-test2-tag').textContent = t2.tag;
-                    document.getElementById('api-test2-avatar').textContent = t2.name.charAt(0);
+                    if (data.testimonials.length > 1) {
+                        const t2 = data.testimonials[1];
+                        document.getElementById('api-test2-text').textContent = `「${t2.text}」`;
+                        document.getElementById('api-test2-name').textContent = t2.name;
+                        document.getElementById('api-test2-tag').textContent = t2.tag;
+                        document.getElementById('api-test2-avatar').textContent = t2.name.charAt(0);
+                    } else {
+                        // 只有1筆資料時，第二張卡片顯示邀請
+                        document.getElementById('api-test2-text').textContent = "「這個平台解答了我許多關於天主教的疑惑，非常推薦！」(等待您的真實見證分享)";
+                        document.getElementById('api-test2-name').textContent = "期待您的回饋";
+                        document.getElementById('api-test2-tag').textContent = "主內弟兄姊妹";
+                        document.getElementById('api-test2-avatar').textContent = "V";
+                    }
+                } else {
+                    // 0筆資料時，兩張卡片皆顯示邀請
+                    document.getElementById('api-test1-text').textContent = "「這個平台解答了我許多關於天主教的疑惑，非常推薦！」(等待您的真實見證分享)";
+                    document.getElementById('api-test1-name').textContent = "期待您的回饋";
+                    document.getElementById('api-test1-tag').textContent = "主內弟兄姊妹";
+                    document.getElementById('api-test1-avatar').textContent = "V";
+                    
+                    document.getElementById('api-test2-text').textContent = "「感謝神父與團隊的用心，讓我在通勤時也能聆聽信仰。」(等待您的真實見證分享)";
+                    document.getElementById('api-test2-name').textContent = "期待您的回饋";
+                    document.getElementById('api-test2-tag').textContent = "主內弟兄姊妹";
+                    document.getElementById('api-test2-avatar').textContent = "V";
                 }
 
             } catch (error) {
@@ -390,7 +409,7 @@
         }
 
         // ==========================================
-        // 4. 渲染首頁知識庫卡片 (修正變數名稱)
+        // 4. 渲染首頁知識庫卡片
         // ==========================================
         function renderHomeCards(data) {
             const grid = document.getElementById('home-knowledge-grid');
@@ -405,7 +424,7 @@
                 let mediaHTML = '';
                 let contentHTML = '';
 
-                if (item.category === 'youtube') {
+                if (item.type === 'youtube') {
                     let tagHtml = '<div class="absolute top-4 left-4 bg-gray-800 text-white text-xs font-bold px-3 py-1 rounded-full z-20 shadow-sm border border-gray-700">精華短片</div>';
                     if (item.title.includes('直播') || item.title.includes('Live')) {
                         tagHtml = `
@@ -434,7 +453,7 @@
                             </div>
                         </div>
                     `;
-                } else if (item.category === 'podcast') {
+                } else if (item.type === 'podcast') {
                     mediaHTML = `
                         <a href="${item.link}" target="_blank" class="relative h-48 bg-veritas-dark flex items-center justify-center overflow-hidden cursor-pointer group block">
                             <div class="absolute inset-0 bg-gradient-to-tr from-purple-900 to-veritas-dark opacity-80 group-hover:opacity-100 transition"></div>
