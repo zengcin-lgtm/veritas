@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>護教知識庫 | 天主教 Veritas 護教中心</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 FontAwesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入 Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        veritas: {
+                            red: '#8B0000', darkred: '#5C0000', gold: '#D4AF37', light: '#FAFAFA', dark: '#2D3748'
+                        }
+                    },
+                    fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #FAFAFA; }
+        html { scroll-behavior: smooth; }
+        .hero-search-gradient {
+            background: linear-gradient(135deg, #2D3748 0%, #1a202c 100%);
+        }
+        .hover-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.15); }
+        /* 隱藏原生 Google 搜尋輸入框的醜陋樣式 (未來套用時備用) */
+        .gsc-control-cse { background-color: transparent !important; border: none !important; padding: 0 !important; }
+    </style>
+</head>
+<body class="text-veritas-dark antialiased">
+
+    <nav class="bg-white shadow-md sticky top-0 z-50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center gap-3">
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-10 h-10 object-contain drop-shadow-md" onerror="this.src='https://placehold.co/100x100/8B0000/FFF?text=V'">
+                        <div>
+                            <h1 class="font-bold text-xl text-veritas-red tracking-wider">Veritas 護教中心</h1>
+                            <p class="text-xs text-gray-500 font-medium">天主教數位弘道平台</p>
+                        </div>
+                    </a>
+                </div>
+                <!-- 電腦版選單 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="about.html" class="text-gray-600 hover:text-veritas-red font-medium transition">關於我們</a>
+                    <a href="knowledge.html" class="text-veritas-red font-bold border-b-2 border-veritas-red pb-1 transition">護教知識庫</a>
+                    <a href="media.html" class="text-gray-600 hover:text-veritas-red font-medium transition">影音策展</a>
+                    <a href="qa.html" class="text-gray-600 hover:text-veritas-red font-medium transition">真理問答箱</a>
+                    <a href="support.html" class="bg-veritas-gold text-white px-5 py-2 rounded-full font-bold hover:bg-yellow-500 transition shadow-md">
+                        <i class="fa-solid fa-heart mr-2"></i>支持我們
+                    </a>
+                </div>
+                <!-- 手機版選單按鈕 -->
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-veritas-red focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- 手機版隱藏選單 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-xl absolute w-full left-0 z-40 pb-4">
+            <div class="px-4 pt-2 space-y-1">
+                <a href="about.html" class="block px-3 py-3 text-gray-800 font-medium hover:text-veritas-red hover:bg-gray-50 rounded-md">關於我們</a>
+                <a href="knowledge.html" class="block px-3 py-3 text-veritas-red font-bold bg-red-50 rounded-md">護教知識庫</a>
+                <a href="media.html" class="block px-3 py-3 text-gray-800 font-medium hover:text-veritas-red hover:bg-gray-50 rounded-md">影音策展</a>
+                <a href="qa.html" class="block px-3 py-3 text-gray-800 font-medium hover:text-veritas-red hover:bg-gray-50 rounded-md">真理問答箱</a>
+                <a href="support.html" class="block mt-4 text-center bg-veritas-gold text-white px-5 py-3 rounded-xl font-bold hover:bg-yellow-500 shadow-md">支持我們</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 智慧搜尋與頁首區塊 -->
+    <header class="hero-search-gradient relative text-white py-12 md:py-20 border-b-4 border-veritas-gold">
+        <!-- 裝飾浮水印 -->
+        <i class="fa-solid fa-book-bible absolute right-10 bottom-[-20px] text-9xl text-white opacity-5"></i>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <h2 class="text-3xl md:text-5xl font-black mb-4">護教知識庫</h2>
+            <p class="text-gray-400 mb-8">整合文章、YouTube 影音與 Podcast，輸入關鍵字進行跨區探索真理。</p>
+            
+            <!-- 全站智慧搜尋列 (Google PSE 預留區) -->
+            <div class="relative max-w-2xl mx-auto">
+                <div class="relative flex items-center w-full h-14 rounded-full focus-within:shadow-lg bg-white overflow-hidden shadow-2xl border-2 border-transparent focus-within:border-veritas-gold transition">
+                    <div class="grid place-items-center h-full w-12 text-gray-300">
+                        <i class="fa-solid fa-magnifying-glass text-xl"></i>
+                    </div>
+                    <!-- 這是給使用者看的漂亮輸入框，實際串接 Google PSE 時，可將其值傳給 PSE -->
+                    <input class="peer h-full w-full outline-none text-sm text-gray-700 pr-2 font-medium" type="text" id="search-input" placeholder="搜尋聖經、倫理、大赦、瑪利亞..." /> 
+                    <button class="bg-veritas-red text-white h-full px-6 font-bold hover:bg-veritas-darkred transition flex items-center gap-2">
+                        搜尋
+                    </button>
+                </div>
+                <p class="text-xs text-gray-500 mt-3 text-left pl-4 flex items-center gap-1">
+                    <i class="fa-brands fa-google"></i> Powered by Google Programmable Search
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-10 bg-white sticky top-20 z-40 shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <!-- 多層次分類 Tabs -->
+                <div class="flex overflow-x-auto w-full md:w-auto pb-2 md:pb-0 gap-2 hide-scrollbar">
+                    <button class="category-btn active px-5 py-2 rounded-full font-bold text-sm bg-veritas-red text-white whitespace-nowrap transition" data-filter="all">綜合全部</button>
+                    <button class="category-btn px-5 py-2 rounded-full font-bold text-sm bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap transition" data-filter="bible">聖經</button>
+                    <button class="category-btn px-5 py-2 rounded-full font-bold text-sm bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap transition" data-filter="theology">神學</button>
+                    <button class="category-btn px-5 py-2 rounded-full font-bold text-sm bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap transition" data-filter="ethics">倫理</button>
+                    <div class="w-px h-8 bg-gray-300 mx-2 hidden md:block"></div>
+                    <button class="category-btn px-5 py-2 rounded-full font-bold text-sm bg-red-50 text-red-600 hover:bg-red-100 whitespace-nowrap transition flex items-center gap-2" data-filter="youtube"><i class="fa-brands fa-youtube"></i> 影音</button>
+                    <button class="category-btn px-5 py-2 rounded-full font-bold text-sm bg-purple-50 text-purple-600 hover:bg-purple-100 whitespace-nowrap transition flex items-center gap-2" data-filter="podcast"><i class="fa-solid fa-podcast"></i> Podcast</button>
+                </div>
+
+                <!-- 排序方式 -->
+                <div class="flex items-center gap-2 text-sm text-gray-600 w-full md:w-auto justify-end">
+                    <span>排序：</span>
+                    <select class="border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:border-veritas-red bg-white">
+                        <option>最新發布</option>
+                        <option>熱門點閱</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 bg-veritas-light min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- 內容瀑布流網格 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="content-grid">
+                
+                <!-- 【文章卡片 - 聖經分類】 -->
+                <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="bible">
+                    <div class="p-6 flex-grow">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full">聖經專欄</span>
+                            <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026/05/15</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 hover:text-veritas-red cursor-pointer"><a href="article.html">舊約裡的殘酷戰爭，天主真的是慈愛的嗎？</a></h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">很多慕道友讀到舊約時，會對以色列人滅族、征戰的經文感到困惑。我們該如何用新約耶穌基督的光照來理解這些經文...</p>
+                        <!-- 關鍵字標籤 -->
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">#舊約</span>
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">#天主的愛</span>
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">#聖經詮釋</span>
+                        </div>
+                    </div>
+                    <div class="px-6 py-4 border-t border-gray-50 bg-gray-50/50 flex justify-between items-center mt-auto">
+                        <span class="text-sm font-medium text-gray-700"><i class="fa-solid fa-pen-nib text-gray-400 mr-1"></i> 伯多祿神父</span>
+                        <a href="article.html" class="text-veritas-red text-sm font-bold hover:underline">閱讀全文 <i class="fa-solid fa-angle-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- 【文章卡片 - 倫理分類】 -->
+                <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="ethics">
+                    <div class="p-6 flex-grow">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full">倫理專欄</span>
+                            <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026/05/10</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 hover:text-veritas-red cursor-pointer"><a href="article.html">天主教對人工智慧 (AI) 發展的倫理觀點</a></h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">教宗方濟各在世界和平日文告中特別提及 AI。科技發展必須以「人的尊嚴」為中心，本文探討科技與信仰的對話...</p>
+                        <!-- 關鍵字標籤 -->
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">#AI</span>
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">#科技倫理</span>
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">#社會教義</span>
+                        </div>
+                    </div>
+                    <div class="px-6 py-4 border-t border-gray-50 bg-gray-50/50 flex justify-between items-center mt-auto">
+                        <span class="text-sm font-medium text-gray-700"><i class="fa-solid fa-pen-nib text-gray-400 mr-1"></i> 瑪利亞 主編</span>
+                        <a href="article.html" class="text-veritas-red text-sm font-bold hover:underline">閱讀全文 <i class="fa-solid fa-angle-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- 【YouTube - 直播回放】 -->
+                <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="youtube">
+                    <!-- YouTube 縮圖模擬 -->
+                    <a href="https://www.youtube.com/@veritas3098/videos" target="_blank" class="relative h-48 bg-gray-800 flex items-center justify-center overflow-hidden group block">
+                        <img src="https://images.unsplash.com/photo-1544411047-c45ba8a4ee05?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="YouTube Thumbnail" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-50 transition duration-300">
+                        <i class="fa-brands fa-youtube text-5xl text-red-600 z-20 group-hover:scale-110 shadow-sm transition drop-shadow-lg"></i>
+                        <!-- 類別標籤：直播回放 -->
+                        <div class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded flex items-center gap-1 z-20 shadow-md">
+                            <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span> 直播回放
+                        </div>
+                        <div class="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded z-20 font-mono">1:24:05</div>
+                    </a>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
+                            <i class="fa-brands fa-youtube text-red-600"></i> 2026/05/08
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 hover:text-veritas-red transition"><a href="https://www.youtube.com/@veritas3098/videos" target="_blank">【真理之夜】神父面對面：解答網友百大提問</a></h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">從聖母敬禮到煉獄教義，伯多祿神父在直播中親自解答網友透過「真理問答箱」留下的問題。</p>
+                        
+                        <a href="https://www.youtube.com/@veritas3098/videos" target="_blank" class="mt-auto inline-flex items-center text-sm font-bold text-red-600 hover:text-red-800">
+                            在 YouTube 觀看 <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- 【Podcast - 單集同步】 -->
+                <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="podcast">
+                    <div class="relative h-48 bg-gradient-to-br from-purple-900 to-veritas-dark flex items-center justify-center p-6 text-center">
+                        <i class="fa-solid fa-podcast text-6xl text-purple-300/30 absolute right-4 bottom-4"></i>
+                        <div class="relative z-10 text-white">
+                            <div class="bg-purple-600/50 backdrop-blur border border-purple-400/50 text-xs font-bold px-3 py-1 rounded-full inline-block mb-3">Podcast 同步</div>
+                            <h4 class="font-bold text-xl line-clamp-2">EP. 45 | 什麼是大赦？跟贖罪券一樣嗎？</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-headphones text-purple-600"></i> 發布於 2026/05/01
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
+                            禧年即將到來，常常聽到教會頒布「全大赦」。這到底是什麼意思？是不是中世紀的贖罪券又回來了？本集用十五分鐘為您釐清這個重要的神學概念。
+                        </p>
+                        
+                        <a href="https://podcasts.apple.com/tw/podcast/%E5%A4%A9%E4%B8%BB%E6%95%99veritas%E8%AD%B7%E6%95%99%E4%B8%AD%E5%BF%83/id1542142187" target="_blank" class="w-full mt-4 bg-gray-900 text-white py-2 rounded-xl text-sm font-bold hover:bg-black transition shadow-md flex justify-center items-center gap-2">
+                            <i class="fa-brands fa-apple text-lg"></i> Apple Podcast 收聽
+                        </a>
+                    </div>
+                </article>
+
+                 <!-- 【文章卡片 - 神學分類】 -->
+                 <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="theology">
+                    <div class="p-6 flex-grow">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="bg-yellow-100 text-yellow-800 text-xs font-bold px-3 py-1 rounded-full">神學專欄</span>
+                            <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026/04/28</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 hover:text-veritas-red cursor-pointer"><a href="article.html">三位一體：難以理解的奧秘，卻是愛的本質</a></h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">為什麼說天主是「三位一體」？這不是數學題，而是關於「關係」的最深啟示。透過聖奧斯定的神學來初探這個奧秘...</p>
+                        <!-- 關鍵字標籤 -->
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">#天主聖三</span>
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">#信理神學</span>
+                        </div>
+                    </div>
+                    <div class="px-6 py-4 border-t border-gray-50 bg-gray-50/50 flex justify-between items-center mt-auto">
+                        <span class="text-sm font-medium text-gray-700"><i class="fa-solid fa-pen-nib text-gray-400 mr-1"></i> 伯多祿神父</span>
+                        <a href="article.html" class="text-veritas-red text-sm font-bold hover:underline">閱讀全文 <i class="fa-solid fa-angle-right"></i></a>
+                    </div>
+                </article>
+
+                 <!-- 【YouTube - 精華短片】 -->
+                 <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="youtube">
+                    <a href="https://www.youtube.com/@veritas3098/videos" target="_blank" class="relative h-48 bg-gray-800 flex items-center justify-center overflow-hidden group block">
+                        <img src="https://images.unsplash.com/photo-1601142634808-38923eb7c560?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="YouTube Shorts" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-50 transition duration-300">
+                        <i class="fa-solid fa-play text-4xl text-white z-20 group-hover:scale-110 transition drop-shadow-md border-2 border-white rounded-full w-12 h-12 flex items-center justify-center pl-1"></i>
+                        <!-- 類別標籤：精華短片 -->
+                        <div class="absolute top-4 left-4 bg-gray-900 text-white text-xs font-bold px-3 py-1 rounded z-20 shadow-md">
+                            精華短片
+                        </div>
+                        <div class="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded z-20 font-mono">03:45</div>
+                    </a>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
+                            <i class="fa-brands fa-youtube text-red-600"></i> 2026/04/20
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 hover:text-veritas-red transition"><a href="https://www.youtube.com/@veritas3098/videos" target="_blank">彌撒中為什麼要單膝跪地？3分鐘看懂禮儀意義</a></h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">從聖體櫃到祭台，我們的肢體動作如何反映出我們對基督真實臨在的敬畏。</p>
+                        
+                        <a href="https://www.youtube.com/@veritas3098/videos" target="_blank" class="mt-auto inline-flex items-center text-sm font-bold text-red-600 hover:text-red-800">
+                            在 YouTube 觀看 <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- 載入更多按鈕 -->
+            <div class="mt-16 text-center">
+                <button class="bg-white border-2 border-veritas-red text-veritas-red font-bold px-10 py-3 rounded-full hover:bg-veritas-red hover:text-white transition shadow-sm inline-flex items-center gap-2">
+                    <i class="fa-solid fa-spinner"></i> 載入更多知識
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="bg-veritas-dark text-gray-300 py-12 border-t-4 border-veritas-red">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-8 h-8 object-contain" onerror="this.src='https://placehold.co/100x100/8B0000/FFF?text=V'">
+                        Veritas 護教中心
+                    </h2>
+                    <p class="text-sm text-gray-400 mb-4 max-w-sm">
+                        我們秉持著天主教會的傳統與聖經真理，透過現代數位媒體，為尋道者解惑，為信徒建立堅固的信仰根基。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition"><i class="fa-brands fa-facebook-f text-white"></i></a>
+                        <a href="https://www.youtube.com/@veritas3098/videos" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition"><i class="fa-brands fa-youtube text-white"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-green-500 transition"><i class="fa-brands fa-line text-white"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">快速連結</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="about.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 關於我們</a></li>
+                        <li><a href="knowledge.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 護教文章列表</a></li>
+                        <li><a href="links.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 友站資源推薦</a></li>
+                        <li><a href="invite.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 邀請神父演講</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">聯絡資訊</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-envelope mt-1 text-veritas-red"></i>
+                            <span>service@veritas.catholic.org.tw</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-veritas-red"></i>
+                            <span>台灣 (具體地址將由後台設定)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-10 pt-6 text-sm text-center md:text-left flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2026 天主教 Veritas 護教中心 版權所有.</p>
+                <p class="mt-2 md:mt-0 text-gray-500">
+                    Powered by <a href="#" class="font-bold text-gray-400 hover:text-white transition">Foday Design Studio</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 手機版選單控制
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+
+            // 類別過濾邏輯 (Frontend Filter Simulation)
+            const filterBtns = document.querySelectorAll('.category-btn');
+            const contentCards = document.querySelectorAll('.content-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 1. 重設所有按鈕樣式
+                    filterBtns.forEach(b => {
+                        // 針對一般按鈕移除 Active 樣式
+                        b.classList.remove('bg-veritas-red', 'text-white');
+                        if(!b.classList.contains('bg-red-50') && !b.classList.contains('bg-purple-50')) {
+                            b.classList.add('bg-gray-100', 'text-gray-600');
+                        }
+                    });
+
+                    // 2. 套用點擊按鈕的 Active 樣式 (如果是特殊的影音按鈕保留原本底色，只改字重或外框)
+                    if(btn.dataset.filter === 'all' || btn.dataset.filter === 'bible' || btn.dataset.filter === 'theology' || btn.dataset.filter === 'ethics') {
+                        btn.classList.remove('bg-gray-100', 'text-gray-600');
+                        btn.classList.add('bg-veritas-red', 'text-white');
+                    } else {
+                        // 點擊影音或 podcast 時的視覺回饋 (可依需求調整，目前用邊框提示)
+                        btn.classList.add('ring-2', 'ring-veritas-red');
+                        setTimeout(() => btn.classList.remove('ring-2', 'ring-veritas-red'), 1000);
+                    }
+
+                    // 3. 執行過濾
+                    const filter = btn.dataset.filter;
+                    contentCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
