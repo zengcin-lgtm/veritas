@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最新消息與公告 | 天主教 Veritas 護教中心</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 FontAwesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入 Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        // 設定 Veritas 品牌專屬顏色
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        veritas: {
+                            red: '#8B0000', darkred: '#5C0000', gold: '#D4AF37', light: '#FAFAFA', dark: '#2D3748'
+                        }
+                    },
+                    fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #FAFAFA; }
+        html { scroll-behavior: smooth; }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(139,0,0,0.9) 0%, rgba(92,0,0,0.95) 100%), url('https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .hover-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="text-veritas-dark antialiased">
+
+    <!-- 頂部導覽列 Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center gap-3">
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-10 h-10 object-contain drop-shadow-md" onerror="this.src='https://placehold.co/100x100/8B0000/FFF?text=V'">
+                        <div>
+                            <h1 class="font-bold text-xl text-veritas-red tracking-wider">Veritas 護教中心</h1>
+                            <p class="text-xs text-gray-500 font-medium">天主教數位弘道平台</p>
+                        </div>
+                    </a>
+                </div>
+                <!-- 電腦版選單 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="about.html" class="text-gray-600 hover:text-veritas-red font-medium transition">關於我們</a>
+                    <a href="knowledge.html" class="text-gray-600 hover:text-veritas-red font-medium transition">護教知識庫</a>
+                    <a href="media.html" class="text-gray-600 hover:text-veritas-red font-medium transition">影音策展</a>
+                    <a href="qa.html" class="text-gray-600 hover:text-veritas-red font-medium transition">真理問答箱</a>
+                    <a href="support.html" class="bg-veritas-gold text-white px-5 py-2 rounded-full font-bold hover:bg-yellow-500 transition shadow-md">
+                        <i class="fa-solid fa-heart mr-2"></i>支持我們
+                    </a>
+                </div>
+                <!-- 手機版選單按鈕 -->
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-veritas-red focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 手機版下拉選單 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-xl absolute w-full z-40">
+        <div class="px-4 pt-2 pb-6 space-y-2">
+            <a href="about.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">關於我們</a>
+            <a href="knowledge.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">護教知識庫</a>
+            <a href="media.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">影音策展</a>
+            <a href="qa.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">真理問答箱</a>
+            <a href="support.html" class="block px-3 py-3 text-base font-bold text-white bg-veritas-gold rounded-md"><i class="fa-solid fa-heart mr-2"></i>支持我們</a>
+        </div>
+    </div>
+
+    <!-- 頁首 Hero 區塊 -->
+    <header class="hero-gradient relative text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <span class="text-veritas-gold font-bold tracking-widest text-sm mb-4 block uppercase">News & Announcements</span>
+            <h2 class="text-3xl md:text-5xl font-black mb-4">最新消息與公告</h2>
+            <p class="text-lg text-gray-200 max-w-2xl mx-auto">為您提供本中心最新的活動報名、行政事務及網站系統公告。</p>
+        </div>
+    </header>
+
+    <!-- 公告列表區塊 -->
+    <section class="py-16 md:py-20 bg-veritas-light min-h-[50vh]">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- 分類過濾 (視覺效果) -->
+            <div class="flex flex-wrap gap-2 mb-10 border-b border-gray-200 pb-6">
+                <span class="text-gray-500 font-bold mr-2 mt-2"><i class="fa-solid fa-filter"></i> 分類：</span>
+                <button class="bg-veritas-dark text-white px-4 py-1.5 rounded-full text-sm font-medium shadow-sm">全部公告</button>
+                <button class="bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 px-4 py-1.5 rounded-full text-sm font-medium transition cursor-default">活動通知</button>
+                <button class="bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 px-4 py-1.5 rounded-full text-sm font-medium transition cursor-default">行政事務</button>
+                <button class="bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 px-4 py-1.5 rounded-full text-sm font-medium transition cursor-default">系統公告</button>
+            </div>
+
+            <!-- 動態公告列表容器 -->
+            <div id="news-container" class="space-y-6">
+                <!-- 預設載入狀態 -->
+                <div class="text-center py-10 text-gray-400">
+                    <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-veritas-gold"></i>
+                    <p>正在載入最新公告...</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 頁尾 Footer -->
+    <footer class="bg-veritas-dark text-gray-300 py-12 border-t-4 border-veritas-red">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-8 h-8 object-contain" onerror="this.src='https://placehold.co/100x100/8B0000/FFF?text=V'">
+                        Veritas 護教中心
+                    </h2>
+                    <p class="text-sm text-gray-400 mb-4 max-w-sm">
+                        我們秉持著天主教會的傳統與聖經真理，透過現代數位媒體，為尋道者解惑，為信徒建立堅固的信仰根基。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition"><i class="fa-brands fa-facebook-f text-white"></i></a>
+                        <a href="https://www.youtube.com/@veritas3098/videos" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition"><i class="fa-brands fa-youtube text-white"></i></a>
+                        <a href="https://podcasts.apple.com/tw/podcast/%E5%A4%A9%E4%B8%BB%E6%95%99veritas%E8%AD%B7%E6%95%99%E4%B8%AD%E5%BF%83/id1542142187" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fa-solid fa-podcast text-white"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">快速連結</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="about.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 關於我們</a></li>
+                        <li><a href="knowledge.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 護教文章列表</a></li>
+                        <li><a href="links.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 友站資源推薦</a></li>
+                        <li><a href="invite.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 邀請神父演講</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">聯絡資訊</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-envelope mt-1 text-veritas-red"></i>
+                            <span>service@veritas.catholic.org.tw</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-veritas-red"></i>
+                            <span>台灣</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-10 pt-6 text-sm text-center md:text-left flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2026 天主教 Veritas 護教中心 版權所有.</p>
+                <p class="mt-2 md:mt-0 text-gray-500">
+                    Powered by <a href="#" class="font-bold text-gray-400 hover:text-white transition">Foday Design Studio</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 手機版選單切換
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // ==========================================
+        // API 網址 (請確認這裡填入的是正確的網址)
+        // ==========================================
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz6Iqnjt8r9poHA_l450uly_XkdX6d2iU7Qcc56fBObFbMoFrtXlSvFtznBUiRgO-lN/exec"; 
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchNewsData();
+        });
+
+        // ==========================================
+        // 抓取公告資料
+        // ==========================================
+        async function fetchNewsData() {
+            const container = document.getElementById('news-container');
+            
+            try {
+                const response = await fetch(`${GAS_API_URL}?action=getNewsData`);
+                if (!response.ok) throw new Error('API 網路連線錯誤');
+                const data = await response.json();
+
+                if (data.error) throw new Error(data.error);
+                
+                container.innerHTML = ''; // 清空預設載入畫面
+                
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="text-center py-10 text-gray-500">目前尚無任何公告。</div>';
+                    return;
+                }
+
+                renderNews(data, container);
+
+            } catch (error) {
+                console.error("讀取公告失敗:", error);
+                container.innerHTML = `
+                    <div class="text-center py-10 text-red-500 bg-red-50 rounded-2xl border border-red-100">
+                        <i class="fa-solid fa-triangle-exclamation text-4xl mb-4"></i>
+                        <p class="font-bold text-lg">資料連線失敗，請稍後再試。</p>
+                        <p class="text-sm mt-2 text-red-400">${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // ==========================================
+        // 渲染公告卡片
+        // ==========================================
+        function renderNews(newsData, container) {
+            newsData.forEach(news => {
+                // 根據分類決定標籤顏色
+                let catColor = "bg-gray-100 text-gray-700 border-gray-200"; // 預設
+                if (news.category === '活動通知') catColor = "bg-green-100 text-green-700 border-green-200";
+                if (news.category === '行政事務') catColor = "bg-blue-100 text-blue-700 border-blue-200";
+                if (news.category === '系統公告') catColor = "bg-orange-100 text-orange-700 border-orange-200";
+
+                // 處理日期格式 (將日期物件或長字串轉為簡單的 YYYY/MM/DD)
+                let dateStr = news.date;
+                try {
+                    const d = new Date(news.date);
+                    if (!isNaN(d.getTime())) {
+                        dateStr = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+                    }
+                } catch(e) {}
+
+                const article = document.createElement('article');
+                article.className = "bg-white rounded-2xl shadow-sm border border-gray-100 hover-card overflow-hidden flex flex-col md:flex-row";
+                
+                article.innerHTML = `
+                    <!-- 左側：日期與分類 -->
+                    <div class="bg-gray-50 md:w-48 flex-shrink-0 p-6 flex flex-row md:flex-col items-center md:items-start justify-between md:justify-start border-b md:border-b-0 md:border-r border-gray-100">
+                        <div class="text-sm font-bold text-gray-400 font-mono tracking-wider mb-0 md:mb-3 flex items-center gap-2">
+                            <i class="fa-regular fa-calendar text-gray-300"></i> ${dateStr}
+                        </div>
+                        <div class="text-xs font-bold px-3 py-1 rounded-full border ${catColor}">
+                            ${news.category || '一般公告'}
+                        </div>
+                    </div>
+                    
+                    <!-- 右側：標題與內文 -->
+                    <div class="p-6 md:p-8 flex-grow flex flex-col justify-center">
+                        <h3 class="text-xl md:text-2xl font-bold text-veritas-dark mb-3 leading-snug hover:text-veritas-red transition">
+                            <a href="${news.link !== '#' ? news.link : 'javascript:void(0)'}">${news.title}</a>
+                        </h3>
+                        <p class="text-gray-600 text-sm md:text-base leading-relaxed mb-4">
+                            ${news.content}
+                        </p>
+                        ${news.link && news.link !== '#' ? `
+                        <div class="mt-auto pt-2">
+                            <a href="${news.link}" target="_blank" class="text-veritas-red font-bold text-sm hover:underline inline-flex items-center gap-1">
+                                閱讀詳情 <i class="fa-solid fa-arrow-right-long"></i>
+                            </a>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+                container.appendChild(article);
+            });
+        }
+    </script>
+</body>
+</html>
