@@ -342,7 +342,7 @@
         // ==========================================
         // 1. 設定 Google Apps Script Web App 網址
         // ==========================================
-        // 請將剛才複製的網址貼在下方的引號中：
+        // 統一使用您提供的真實 API 網址
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz6Iqnjt8r9poHA_l450uly_XkdX6d2iU7Qcc56fBObFbMoFrtXlSvFtznBUiRgO-lN/exec"; 
 
         // 當 HTML 載入完成後執行
@@ -351,22 +351,38 @@
         });
 
         // ==========================================
-        // 2. 獲取資料邏輯
+        // 2. 獲取資料邏輯 (加入強力除錯)
         // ==========================================
         async function fetchHomeData() {
             try {
-                let data;
+                // 顯示載入中
+                document.getElementById('api-announcement-text').textContent = "連線後台中...";
                 
-                // 直接使用正式環境的 API 呼叫，移除模擬判斷
                 const response = await fetch(`${GAS_API_URL}?action=getHomeData`);
-                if (!response.ok) throw new Error('API 網路連線錯誤');
-                data = await response.json();
+                
+                // 先把回傳的東西當作純文字讀取，來檢查是不是被 Google 擋住了
+                const rawText = await response.text();
+                
+                let data;
+                try {
+                    // 嘗試將文字轉換為 JSON 資料
+                    data = JSON.parse(rawText);
+                } catch (e) {
+                    console.error("❌ 伺服器回傳異常，內容為：", rawText);
+                    throw new Error("權限錯誤，API 拒絕存取。請檢查 GAS 的『誰可以存取』是否設為『所有人』。");
+                }
+
+                // 檢查是否有來自我們自己寫的 GAS 錯誤訊息
+                if (data.error) {
+                    console.error("❌ 試算表設定錯誤：", data.error);
+                    throw new Error(data.error);
+                }
 
                 renderData(data);
 
             } catch (error) {
                 console.error("讀取後台資料失敗:", error);
-                document.getElementById('api-announcement-text').textContent = "系統維護中，暫時無法取得最新公告。";
+                document.getElementById('api-announcement-text').textContent = `錯誤：${error.message}`;
             }
         }
 
