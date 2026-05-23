@@ -80,10 +80,21 @@
                 </div>
                 <!-- 手機版選單按鈕 -->
                 <div class="flex items-center md:hidden">
-                    <button class="text-gray-600 hover:text-veritas-red focus:outline-none">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-veritas-red focus:outline-none">
                         <i class="fa-solid fa-bars text-2xl"></i>
                     </button>
                 </div>
+            </div>
+        </div>
+        
+        <!-- 手機版隱藏選單 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-xl absolute w-full left-0 z-40 pb-4">
+            <div class="px-4 pt-2 space-y-1">
+                <a href="about.html" class="block px-3 py-3 text-gray-800 font-medium hover:text-veritas-red hover:bg-gray-50 rounded-md">關於我們</a>
+                <a href="knowledge.html" class="block px-3 py-3 text-gray-800 font-medium hover:text-veritas-red hover:bg-gray-50 rounded-md">護教知識庫</a>
+                <a href="media.html" class="block px-3 py-3 text-gray-800 font-medium hover:text-veritas-red hover:bg-gray-50 rounded-md">影音策展</a>
+                <a href="qa.html" class="block px-3 py-3 text-gray-800 font-medium hover:text-veritas-red hover:bg-gray-50 rounded-md">真理問答箱</a>
+                <a href="support.html" class="block mt-4 text-center bg-veritas-gold text-white px-5 py-3 rounded-xl font-bold hover:bg-yellow-500 shadow-md">支持我們</a>
             </div>
         </div>
     </nav>
@@ -452,6 +463,17 @@
                         ]
                     });
                 }, 800); 
+            });
+        }
+        
+        // ==========================================
+        // 5. 介面互動控制 (手機版選單)
+        // ==========================================
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if(mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
             });
         }
     </script>
