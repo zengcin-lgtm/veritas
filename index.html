@@ -348,6 +348,7 @@
         // 當 HTML 載入完成後執行
         document.addEventListener('DOMContentLoaded', () => {
             fetchHomeData();
+            fetchKnowledgeDataForHome(); // 新增：同時去抓取知識庫資料
         });
 
         // ==========================================
@@ -355,34 +356,54 @@
         // ==========================================
         async function fetchHomeData() {
             try {
-                // 顯示載入中
                 document.getElementById('api-announcement-text').textContent = "連線後台中...";
-                
                 const response = await fetch(`${GAS_API_URL}?action=getHomeData`);
-                
-                // 先把回傳的東西當作純文字讀取，來檢查是不是被 Google 擋住了
                 const rawText = await response.text();
                 
                 let data;
                 try {
-                    // 嘗試將文字轉換為 JSON 資料
                     data = JSON.parse(rawText);
                 } catch (e) {
-                    console.error("❌ 伺服器回傳異常，內容為：", rawText);
-                    throw new Error("權限錯誤，API 拒絕存取。請檢查 GAS 的『誰可以存取』是否設為『所有人』。");
+                    throw new Error("權限錯誤，請檢查 GAS 的『誰可以存取』是否設為『所有人』。");
                 }
-
-                // 檢查是否有來自我們自己寫的 GAS 錯誤訊息
-                if (data.error) {
-                    console.error("❌ 試算表設定錯誤：", data.error);
-                    throw new Error(data.error);
-                }
+                if (data.error) throw new Error(data.error);
 
                 renderData(data);
+            } catch (error) {
+                console.error("讀取首頁資料失敗:", error);
+                document.getElementById('api-announcement-text').textContent = `錯誤：${error.message}`;
+            }
+        }
+
+        // ==========================================
+        // 2.5 獲取知識庫資料並擷取最新 3 筆 (新增功能)
+        // ==========================================
+        async function fetchKnowledgeDataForHome() {
+            try {
+                const response = await fetch(`${GAS_API_URL}?action=getKnowledgeData`);
+                const rawText = await response.text();
+                let data = JSON.parse(rawText);
+                
+                if (data.error) throw new Error(data.error);
+
+                // 依照日期降冪排序 (新到舊)
+                data.sort((a, b) => {
+                    const parseDate = (dateString) => {
+                        if (!dateString) return 0;
+                        let cleanStr = String(dateString).replace(/年|月/g, '/').replace(/日/g, '');
+                        let timeObj = new Date(cleanStr).getTime();
+                        return isNaN(timeObj) ? 0 : timeObj;
+                    };
+                    return parseDate(b.date) - parseDate(a.date); 
+                });
+
+                // 擷取陣列的前 3 筆
+                const top3Data = data.slice(0, 3);
+                renderLatestCards(top3Data);
 
             } catch (error) {
-                console.error("讀取後台資料失敗:", error);
-                document.getElementById('api-announcement-text').textContent = `錯誤：${error.message}`;
+                console.error("載入最新資源失敗:", error);
+                document.getElementById('latest-resources-grid').innerHTML = `<div class="col-span-3 text-center text-red-500 py-10 font-bold bg-red-50 rounded-xl">無法同步最新資源，請稍後再試。</div>`;
             }
         }
 
@@ -403,38 +424,13 @@
 
                 document.getElementById('api-fund-raised').textContent = `已募得 NT$ ${raised.toLocaleString()}`;
                 document.getElementById('api-fund-target').textContent = `目標 NT$ ${target.toLocaleString()}`;
-                // 觸發 CSS 寬度動畫
                 setTimeout(() => {
                     document.getElementById('api-fund-bar').style.width = `${percentage}%`;
                 }, 100);
                 document.getElementById('api-fund-percent').textContent = `達成率 ${percentage}%`;
             }
 
-            // [C] 更新最新資源區塊 (加入防呆保護)
-            if (data.resources) {
-                // 如果試算表有「文章」的資料，才去更新文字
-                if (data.resources.article) {
-                    document.getElementById('api-art-date').textContent = data.resources.article.date;
-                    document.getElementById('api-art-title').textContent = data.resources.article.title;
-                    document.getElementById('api-art-desc').textContent = data.resources.article.desc;
-                    document.getElementById('api-art-author').textContent = data.resources.article.author;
-                }
-                
-                // 如果試算表有「影音」的資料，才去更新文字
-                if (data.resources.youtube) {
-                    document.getElementById('api-yt-date').textContent = data.resources.youtube.date;
-                    document.getElementById('api-yt-title').textContent = data.resources.youtube.title;
-                    document.getElementById('api-yt-desc').textContent = data.resources.youtube.desc;
-                    document.getElementById('api-yt-time').textContent = data.resources.youtube.duration;
-                }
-
-                // 如果試算表有「Podcast」的資料，才去更新文字
-                if (data.resources.podcast) {
-                    document.getElementById('api-pod-ep').textContent = data.resources.podcast.ep;
-                    document.getElementById('api-pod-title').textContent = data.resources.podcast.title;
-                    document.getElementById('api-pod-desc').textContent = data.resources.podcast.desc;
-                }
-            }
+            // [C] 最新資源區塊 (已移除，改由 renderLatestCards 接管)
 
             // [D] 更新教友見證 (抓取前兩筆)
             if (data.testimonials && data.testimonials.length >= 2) {
@@ -442,7 +438,7 @@
                 document.getElementById('api-test1-text').textContent = `「${t1.text}」`;
                 document.getElementById('api-test1-name').textContent = t1.name;
                 document.getElementById('api-test1-tag').textContent = t1.tag;
-                document.getElementById('api-test1-avatar').textContent = t1.name.charAt(0); // 取名字第一個字當頭像
+                document.getElementById('api-test1-avatar').textContent = t1.name.charAt(0);
 
                 const t2 = data.testimonials[1];
                 document.getElementById('api-test2-text').textContent = `「${t2.text}」`;
@@ -453,31 +449,83 @@
         }
 
         // ==========================================
-        // 4. 模擬 Google Sheets 吐出的 JSON 資料格式
+        // 3.5 動態渲染首頁的 3 張資源卡片
         // ==========================================
-        function getMockData() {
-            return new Promise(resolve => {
-                setTimeout(() => { // 模擬 0.8 秒的網路傳輸延遲
-                    resolve({
-                        announcement: {
-                            text: "2026年春季「慕道與護教」線上講座開始報名！(此為測試資料)",
-                            link: "news.html"
-                        },
-                        funding: {
-                            raised: 32500,
-                            target: 50000
-                        },
-                        resources: {
-                            article: { date: "2026年1月22日", title: "為什麼天主教要恭敬聖母？釐清常見的敬禮迷思", desc: "很多基督新教弟兄姊妹常誤解天主教「拜」聖母。本文將從聖經基礎與教會歷史為您解析。", author: "伯多祿神父" },
-                            youtube: { date: "2026年1月19日", title: "【主日講道精華】在苦難中看見天主的旨意", desc: "面對生活中的不順遂，我們該如何以信仰的眼光看待？神父以本週福音為例...", duration: "25:10" },
-                            podcast: { ep: "EP. 24 | 真理之聲", title: "教理輕鬆聊：什麼是大赦？跟贖罪券一樣嗎？", desc: "禧年即將到來，常常聽到教會頒布「全大赦」。這到底是什麼意思？" }
-                        },
-                        testimonials: [
-                            { name: "瑪利亞 (台北)", tag: "青年教友", text: "以前遇到非基督徒朋友問我關於聖經的問題，我常常不知道怎麼有條理地回答。現在我都直接來這邊搜尋文章，分享給他們看，真的非常實用！" },
-                            { name: "保祿 (台中)", tag: "職場信徒", text: "因為工作關係常出差，沒辦法穩定參與堂區的講座。有這個平台後，我可以在通勤時聽 Podcast 補課，感謝神父與護教中心的用心。" }
-                        ]
-                    });
-                }, 800); 
+        function renderLatestCards(items) {
+            const grid = document.getElementById('latest-resources-grid');
+            grid.innerHTML = ''; // 清除 Loading 骨架屏
+            
+            if (!items || items.length === 0) {
+                grid.innerHTML = '<div class="col-span-3 text-center text-gray-500 py-10">目前沒有資料。</div>';
+                return;
+            }
+
+            items.forEach(item => {
+                let cardHTML = '';
+                
+                // 套用與知識庫相同的卡片樣式板型
+                if (item.category === 'youtube') {
+                    cardHTML = `
+                        <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full">
+                            <a href="${item.link}" target="_blank" class="relative h-48 bg-gray-800 flex items-center justify-center overflow-hidden group block">
+                                <img src="${item.thumbnail || 'https://images.unsplash.com/photo-1544411047-c45ba8a4ee05?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}" alt="YouTube" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-50 transition duration-300">
+                                <i class="fa-brands fa-youtube text-5xl text-red-600 z-20 group-hover:scale-110 shadow-sm transition drop-shadow-lg"></i>
+                                <div class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded flex items-center gap-1 z-20 shadow-md">
+                                    <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span> 最新影音
+                                </div>
+                            </a>
+                            <div class="p-6 flex-grow flex flex-col">
+                                <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
+                                    <i class="fa-brands fa-youtube text-red-600"></i> ${item.date}
+                                </div>
+                                <h3 class="text-xl font-bold mb-3 hover:text-veritas-red transition"><a href="${item.link}" target="_blank">${item.title}</a></h3>
+                                <p class="text-gray-600 text-sm mb-4 line-clamp-2">${item.desc}</p>
+                            </div>
+                        </article>
+                    `;
+                } else if (item.category === 'podcast') {
+                    cardHTML = `
+                        <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full">
+                            <a href="${item.link}" target="_blank" class="relative h-48 bg-gradient-to-br from-purple-900 to-veritas-dark flex items-center justify-center p-6 text-center group block">
+                                <i class="fa-solid fa-podcast text-6xl text-purple-300/30 absolute right-4 bottom-4 group-hover:scale-110 transition"></i>
+                                <div class="relative z-10 text-white">
+                                    <div class="bg-purple-600/50 backdrop-blur border border-purple-400/50 text-xs font-bold px-3 py-1 rounded-full inline-block mb-3">Podcast 頻道</div>
+                                    <h4 class="font-bold text-xl line-clamp-2">${item.title}</h4>
+                                </div>
+                            </a>
+                            <div class="p-6 flex-grow flex flex-col">
+                                <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-headphones text-purple-600"></i> 發布於 ${item.date}
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4 line-clamp-2 flex-grow">${item.desc}</p>
+                            </div>
+                        </article>
+                    `;
+                } else {
+                    let tagColor = 'bg-gray-100 text-gray-800';
+                    let tagName = '護教專欄';
+                    if(item.category === 'bible') { tagColor = 'bg-blue-100 text-blue-800'; tagName = '聖經專欄'; }
+                    if(item.category === 'ethics') { tagColor = 'bg-green-100 text-green-800'; tagName = '倫理專欄'; }
+                    if(item.category === 'theology') { tagColor = 'bg-yellow-100 text-yellow-800'; tagName = '神學專欄'; }
+
+                    cardHTML = `
+                        <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full">
+                            <div class="p-6 flex-grow">
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="${tagColor} text-xs font-bold px-3 py-1 rounded-full">${tagName}</span>
+                                    <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> ${item.date}</span>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3 hover:text-veritas-red cursor-pointer"><a href="${item.link || 'article.html'}">${item.title}</a></h3>
+                                <p class="text-gray-600 text-sm mb-4 line-clamp-3">${item.desc}</p>
+                            </div>
+                            <div class="px-6 py-4 border-t border-gray-50 bg-gray-50/50 flex justify-between items-center mt-auto">
+                                <span class="text-sm font-medium text-gray-700"><i class="fa-solid fa-pen-nib text-gray-400 mr-1"></i> ${item.authorOrTime || '編輯部'}</span>
+                                <a href="${item.link || 'article.html'}" class="text-veritas-red text-sm font-bold hover:underline">閱讀全文 <i class="fa-solid fa-angle-right"></i></a>
+                            </div>
+                        </article>
+                    `;
+                }
+                grid.insertAdjacentHTML('beforeend', cardHTML);
             });
         }
         
