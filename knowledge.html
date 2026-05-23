@@ -12,15 +12,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     
     <script>
+        // 設定 Veritas 品牌專屬顏色
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         veritas: {
-                            red: '#8B0000', darkred: '#5C0000', gold: '#D4AF37', light: '#FAFAFA', dark: '#2D3748'
+                            red: '#8B0000',
+                            darkred: '#5C0000',
+                            gold: '#D4AF37',
+                            light: '#FAFAFA',
+                            dark: '#2D3748'
                         }
                     },
-                    fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] }
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    }
                 }
             }
         }
@@ -28,23 +35,39 @@
     <style>
         body { font-family: 'Noto Sans TC', sans-serif; background-color: #FAFAFA; }
         html { scroll-behavior: smooth; }
-        .hero-search-gradient {
-            background: linear-gradient(135deg, #2D3748 0%, #1a202c 100%);
+        /* 漸層背景特效 (知識庫專用) */
+        .header-gradient {
+            background: linear-gradient(135deg, rgba(45, 55, 72, 0.95) 0%, rgba(17, 24, 39, 0.98) 100%), url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
         }
-        .hover-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .hover-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.15); }
-        /* 隱藏原生 Google 搜尋輸入框的醜陋樣式 (未來套用時備用) */
-        .gsc-control-cse { background-color: transparent !important; border: none !important; padding: 0 !important; }
+        .hover-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        /* 隱藏捲軸但可滑動 (用於分類標籤) */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
     </style>
 </head>
 <body class="text-veritas-dark antialiased">
 
-    <nav class="bg-white shadow-md sticky top-0 z-50 relative">
+    <!-- 頂部導覽列 Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20">
+                <!-- Logo 區塊 -->
                 <div class="flex items-center">
                     <a href="index.html" class="flex items-center gap-3">
-                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-10 h-10 object-contain drop-shadow-md" onerror="this.src='https://placehold.co/100x100/8B0000/FFF?text=V'">
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-10 h-10 object-contain drop-shadow-md">
                         <div>
                             <h1 class="font-bold text-xl text-veritas-red tracking-wider">Veritas 護教中心</h1>
                             <p class="text-xs text-gray-500 font-medium">天主教數位弘道平台</p>
@@ -54,7 +77,7 @@
                 <!-- 電腦版選單 -->
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="about.html" class="text-gray-600 hover:text-veritas-red font-medium transition">關於我們</a>
-                    <a href="knowledge.html" class="text-veritas-red font-bold border-b-2 border-veritas-red pb-1 transition">護教知識庫</a>
+                    <a href="knowledge.html" class="text-veritas-red font-bold transition border-b-2 border-veritas-red pb-1">護教知識庫</a>
                     <a href="media.html" class="text-gray-600 hover:text-veritas-red font-medium transition">影音策展</a>
                     <a href="qa.html" class="text-gray-600 hover:text-veritas-red font-medium transition">真理問答箱</a>
                     <a href="support.html" class="bg-veritas-gold text-white px-5 py-2 rounded-full font-bold hover:bg-yellow-500 transition shadow-md">
@@ -69,102 +92,92 @@
                 </div>
             </div>
         </div>
-        <!-- 手機版隱藏選單 -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-xl absolute w-full left-0 z-40 pb-4">
-            <div class="px-4 pt-2 space-y-1">
-                <a href="about.html" class="block px-3 py-3 text-gray-800 font-medium hover:text-veritas-red hover:bg-gray-50 rounded-md">關於我們</a>
-                <a href="knowledge.html" class="block px-3 py-3 text-veritas-red font-bold bg-red-50 rounded-md">護教知識庫</a>
-                <a href="media.html" class="block px-3 py-3 text-gray-800 font-medium hover:text-veritas-red hover:bg-gray-50 rounded-md">影音策展</a>
-                <a href="qa.html" class="block px-3 py-3 text-gray-800 font-medium hover:text-veritas-red hover:bg-gray-50 rounded-md">真理問答箱</a>
-                <a href="support.html" class="block mt-4 text-center bg-veritas-gold text-white px-5 py-3 rounded-xl font-bold hover:bg-yellow-500 shadow-md">支持我們</a>
-            </div>
-        </div>
     </nav>
 
-    <!-- 智慧搜尋與頁首區塊 -->
-    <header class="hero-search-gradient relative text-white py-12 md:py-20 border-b-4 border-veritas-gold">
-        <!-- 裝飾浮水印 -->
-        <i class="fa-solid fa-book-bible absolute right-10 bottom-[-20px] text-9xl text-white opacity-5"></i>
-        
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <h2 class="text-3xl md:text-5xl font-black mb-4">護教知識庫</h2>
-            <p class="text-gray-400 mb-8">整合文章、YouTube 影音與 Podcast，輸入關鍵字進行跨區探索真理。</p>
+    <!-- 手機版下拉選單 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full z-40">
+        <div class="px-4 pt-2 pb-6 space-y-2">
+            <a href="about.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">關於我們</a>
+            <a href="knowledge.html" class="block px-3 py-3 text-base font-bold text-veritas-red bg-red-50 rounded-md">護教知識庫</a>
+            <a href="media.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">影音策展</a>
+            <a href="qa.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">真理問答箱</a>
+            <a href="support.html" class="block px-3 py-3 text-base font-bold text-veritas-gold hover:text-yellow-600 rounded-md"><i class="fa-solid fa-heart mr-2"></i>支持我們</a>
+        </div>
+    </div>
+
+    <!-- 頁首搜尋區塊 -->
+    <header class="header-gradient text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">護教知識庫</h2>
+            <p class="text-gray-300 mb-8 max-w-2xl mx-auto">整合本中心所有神學專欄、YouTube 影音與 Podcast 廣播，輸入關鍵字即可跨區檢索，解答您的信仰疑惑。</p>
             
-            <!-- 全站智慧搜尋列 (Google PSE 預留區) -->
-            <div class="relative max-w-2xl mx-auto">
-                <div class="relative flex items-center w-full h-14 rounded-full focus-within:shadow-lg bg-white overflow-hidden shadow-2xl border-2 border-transparent focus-within:border-veritas-gold transition">
-                    <div class="grid place-items-center h-full w-12 text-gray-300">
-                        <i class="fa-solid fa-magnifying-glass text-xl"></i>
-                    </div>
-                    <!-- 這是給使用者看的漂亮輸入框，實際串接 Google PSE 時，可將其值傳給 PSE -->
-                    <input class="peer h-full w-full outline-none text-sm text-gray-700 pr-2 font-medium" type="text" id="search-input" placeholder="搜尋聖經、倫理、大赦、瑪利亞..." /> 
-                    <button class="bg-veritas-red text-white h-full px-6 font-bold hover:bg-veritas-darkred transition flex items-center gap-2">
-                        搜尋
-                    </button>
+            <!-- Google 程式化搜尋 (PSE) 預留區塊 -->
+            <div class="bg-white p-2 rounded-full shadow-2xl flex items-center max-w-3xl mx-auto focus-within:ring-4 focus-within:ring-veritas-gold/50 transition">
+                <div class="pl-4 text-gray-400">
+                    <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
-                <p class="text-xs text-gray-500 mt-3 text-left pl-4 flex items-center gap-1">
-                    <i class="fa-brands fa-google"></i> Powered by Google Programmable Search
-                </p>
+                <input type="text" placeholder="請輸入關鍵字... (例如: 聖母、大赦、彌撒)" class="w-full bg-transparent border-none text-gray-700 px-4 py-3 focus:outline-none font-medium">
+                <button class="bg-veritas-red hover:bg-veritas-darkred text-white px-8 py-3 rounded-full font-bold transition shadow-md whitespace-nowrap">
+                    全站搜尋
+                </button>
             </div>
+            <p class="text-xs text-gray-400 mt-3">* 搜尋功能由 Google Programmable Search 提供技術支援</p>
         </div>
     </header>
 
-    <section class="py-10 bg-white sticky top-20 z-40 shadow-sm border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <!-- 多層次分類 Tabs -->
-                <div class="flex overflow-x-auto w-full md:w-auto pb-2 md:pb-0 gap-2 hide-scrollbar">
-                    <button class="category-btn active px-5 py-2 rounded-full font-bold text-sm bg-veritas-red text-white whitespace-nowrap transition" data-filter="all">綜合全部</button>
-                    <button class="category-btn px-5 py-2 rounded-full font-bold text-sm bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap transition" data-filter="bible">聖經</button>
-                    <button class="category-btn px-5 py-2 rounded-full font-bold text-sm bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap transition" data-filter="theology">神學</button>
-                    <button class="category-btn px-5 py-2 rounded-full font-bold text-sm bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap transition" data-filter="ethics">倫理</button>
-                    <div class="w-px h-8 bg-gray-300 mx-2 hidden md:block"></div>
-                    <button class="category-btn px-5 py-2 rounded-full font-bold text-sm bg-red-50 text-red-600 hover:bg-red-100 whitespace-nowrap transition flex items-center gap-2" data-filter="youtube"><i class="fa-brands fa-youtube"></i> 影音</button>
-                    <button class="category-btn px-5 py-2 rounded-full font-bold text-sm bg-purple-50 text-purple-600 hover:bg-purple-100 whitespace-nowrap transition flex items-center gap-2" data-filter="podcast"><i class="fa-solid fa-podcast"></i> Podcast</button>
-                </div>
-
-                <!-- 排序方式 -->
-                <div class="flex items-center gap-2 text-sm text-gray-600 w-full md:w-auto justify-end">
-                    <span>排序：</span>
-                    <select class="border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:border-veritas-red bg-white">
-                        <option>最新發布</option>
-                        <option>熱門點閱</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12 bg-veritas-light min-h-screen">
+    <!-- 內容展示區塊 -->
+    <section id="knowledge" class="py-12 bg-veritas-light min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <!-- 內容瀑布流網格 (改由 API 動態載入) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="content-grid">
-                
-                <!-- 載入中骨架屏 -->
-                <div class="col-span-1 md:col-span-3 flex flex-col items-center justify-center py-20 text-gray-400">
-                    <i class="fa-solid fa-spinner fa-spin text-4xl text-veritas-red mb-4"></i>
-                    <p class="font-bold">正在從資料庫同步最新真理知識...</p>
+            <!-- 分類標籤 (Tabs) -->
+            <div class="mb-10 border-b border-gray-200">
+                <div class="flex overflow-x-auto no-scrollbar gap-2 pb-4">
+                    <button id="tab-all" onclick="filterContent('all')" class="filter-tab px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap transition bg-gray-800 text-white shadow-md">
+                        全部資源
+                    </button>
+                    <button id="tab-bible" onclick="filterContent('bible')" class="filter-tab px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap transition bg-white text-gray-600 border border-gray-200 hover:bg-gray-50">
+                        聖經專欄
+                    </button>
+                    <button id="tab-theology" onclick="filterContent('theology')" class="filter-tab px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap transition bg-white text-gray-600 border border-gray-200 hover:bg-gray-50">
+                        神學與教理
+                    </button>
+                    <button id="tab-ethics" onclick="filterContent('ethics')" class="filter-tab px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap transition bg-white text-gray-600 border border-gray-200 hover:bg-gray-50">
+                        倫理與生活
+                    </button>
+                    <div class="w-px bg-gray-300 mx-2"></div>
+                    <button id="tab-youtube" onclick="filterContent('youtube')" class="filter-tab px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap transition bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 flex items-center gap-2">
+                        <i class="fa-brands fa-youtube text-red-600"></i> YouTube 影音
+                    </button>
+                    <button id="tab-podcast" onclick="filterContent('podcast')" class="filter-tab px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap transition bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 flex items-center gap-2">
+                        <i class="fa-solid fa-podcast text-purple-600"></i> Podcast
+                    </button>
                 </div>
-
             </div>
 
-            <!-- 載入更多按鈕 -->
-            <div class="mt-16 text-center">
-                <button class="bg-white border-2 border-veritas-red text-veritas-red font-bold px-10 py-3 rounded-full hover:bg-veritas-red hover:text-white transition shadow-sm inline-flex items-center gap-2">
-                    <i class="fa-solid fa-spinner"></i> 載入更多知識
-                </button>
+            <!-- 瀑布流卡片區塊 -->
+            <div id="knowledge-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-300">
+                <!-- 預設骨架屏 / 載入中狀態 -->
+                <div class="col-span-full text-center py-20 text-gray-400">
+                    <i class="fa-solid fa-spinner fa-spin text-4xl mb-4 text-veritas-gold"></i>
+                    <p class="font-medium">連線至資料庫，載入最新內容中...</p>
+                </div>
             </div>
-
+            
+            <!-- 分頁按鈕容器 -->
+            <div id="pagination-container" class="mt-16 flex justify-center items-center gap-2 flex-wrap">
+                <!-- 分頁按鈕將由 JS 動態產生 -->
+            </div>
+            
         </div>
     </section>
 
+    <!-- 頁尾 Footer -->
     <footer class="bg-veritas-dark text-gray-300 py-12 border-t-4 border-veritas-red">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="md:col-span-2">
                     <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-8 h-8 object-contain" onerror="this.src='https://placehold.co/100x100/8B0000/FFF?text=V'">
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-8 h-8 object-contain">
                         Veritas 護教中心
                     </h2>
                     <p class="text-sm text-gray-400 mb-4 max-w-sm">
@@ -173,7 +186,7 @@
                     <div class="flex space-x-4">
                         <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition"><i class="fa-brands fa-facebook-f text-white"></i></a>
                         <a href="https://www.youtube.com/@veritas3098/videos" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition"><i class="fa-brands fa-youtube text-white"></i></a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-green-500 transition"><i class="fa-brands fa-line text-white"></i></a>
+                        <a href="https://podcasts.apple.com/tw/podcast/%E5%A4%A9%E4%B8%BB%E6%95%99veritas%E8%AD%B7%E6%95%99%E4%B8%AD%E5%BF%83/id1542142187" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fa-solid fa-podcast text-white"></i></a>
                     </div>
                 </div>
                 <div>
@@ -194,7 +207,7 @@
                         </li>
                         <li class="flex items-start gap-3">
                             <i class="fa-solid fa-location-dot mt-1 text-veritas-red"></i>
-                            <span>台灣 (具體地址將由後台設定)</span>
+                            <span>台灣</span>
                         </li>
                     </ul>
                 </div>
@@ -208,217 +221,271 @@
         </div>
     </footer>
 
+    <!-- GAS API 前端串接與分頁腳本 -->
     <script>
-        // 設定與首頁共用的 GAS API 網址 (請換成您自己的)
+        // 手機版選單切換
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // ==========================================
+        // 1. 設定 API 網址與全域變數
+        // ==========================================
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz6Iqnjt8r9poHA_l450uly_XkdX6d2iU7Qcc56fBObFbMoFrtXlSvFtznBUiRgO-lN/exec"; 
+        
+        let allKnowledgeData = []; // 儲存從 API 抓回來的所有原始資料
+        let filteredData = [];     // 儲存經過「分類過濾」後的資料
+        
+        // 分頁相關設定
+        let currentPage = 1;       // 目前頁碼
+        const itemsPerPage = 9;    // 每頁顯示幾筆資料 (9筆 = 3x3 網格)
 
         document.addEventListener('DOMContentLoaded', () => {
-            // 手機版選單控制
-            const btn = document.getElementById('mobile-menu-btn');
-            const menu = document.getElementById('mobile-menu');
-            if(btn && menu) {
-                btn.addEventListener('click', () => {
-                    menu.classList.toggle('hidden');
-                });
-            }
-
-            // 啟動資料抓取
             fetchKnowledgeData();
         });
 
         // ==========================================
-        // 抓取知識庫資料 (加入強力除錯)
+        // 2. 獲取資料邏輯 (依日期排序)
         // ==========================================
         async function fetchKnowledgeData() {
             try {
                 const response = await fetch(`${GAS_API_URL}?action=getKnowledgeData`);
-                const rawText = await response.text();
-                
-                let data;
-                try {
-                    data = JSON.parse(rawText);
-                } catch (e) {
-                    console.error("❌ 伺服器回傳異常，內容為：", rawText);
-                    throw new Error("權限設定錯誤。請回 GAS 將『誰可以存取』改為『所有人』。");
-                }
-                
-                if (data.error) {
-                    throw new Error(data.error);
-                }
-                
-                // === [新增排序邏輯] 確保資料依據日期「由新到舊」降冪排列 ===
-                data.sort((a, b) => {
-                    // 建立一個小工具來解析日期字串
-                    const parseDate = (dateString) => {
-                        if (!dateString) return 0;
-                        // 將中文的「年月日」替換成斜線，確保 JS 的 Date 物件能看懂
-                        let cleanStr = String(dateString).replace(/年|月/g, '/').replace(/日/g, '');
-                        let timeObj = new Date(cleanStr).getTime();
-                        return isNaN(timeObj) ? 0 : timeObj; // 如果解析失敗則視為0
-                    };
-                    
-                    // b 減 a 代表降冪排序 (數字大的，也就是比較新的時間，會排在前面)
-                    return parseDate(b.date) - parseDate(a.date); 
-                });
-                // ==============================================================
+                if (!response.ok) throw new Error('API 網路連線錯誤');
+                const rawData = await response.json();
 
-                renderCards(data);
-                setupFilters(); // 資料載入完畢後，綁定過濾器功能
+                // 檢查是否回傳錯誤訊息 (例如權限沒開)
+                if (rawData.error) {
+                    throw new Error(rawData.error);
+                }
+
+                // 根據日期由新到舊排序 (轉換字串日期為真實時間)
+                allKnowledgeData = rawData.sort((a, b) => {
+                    const dateA = a.date.replace(/年|月/g, '/').replace(/日/g, '');
+                    const dateB = b.date.replace(/年|月/g, '/').replace(/日/g, '');
+                    return new Date(dateB) - new Date(dateA);
+                });
+                
+                filteredData = [...allKnowledgeData]; // 初始顯示全部
+                currentPage = 1; // 重置頁碼
+                
+                updateDisplay(); // 更新畫面 (卡片 + 分頁)
+
             } catch (error) {
-                console.error("載入失敗:", error);
-                document.getElementById('content-grid').innerHTML = `<div class="col-span-1 md:col-span-3 text-center text-red-500 py-10 font-bold bg-red-50 rounded-xl"><i class="fa-solid fa-triangle-exclamation mr-2 text-2xl mb-2 block"></i>資料連線失敗<br><span class="text-sm font-normal">${error.message}</span></div>`;
+                console.error("讀取後台資料失敗:", error);
+                document.getElementById('knowledge-grid').innerHTML = `
+                    <div class="col-span-full text-center py-20 text-red-500 bg-red-50 rounded-2xl border border-red-100">
+                        <i class="fa-solid fa-triangle-exclamation text-4xl mb-4"></i>
+                        <p class="font-bold text-lg">資料連線失敗，請稍後再試。</p>
+                        <p class="text-sm mt-2 text-red-400">系統除錯訊息: ${error.message}</p>
+                    </div>
+                `;
             }
         }
 
         // ==========================================
-        // 動態生成卡片 HTML
+        // 3. 更新畫面總管 (負責分配資料給卡片與分頁列)
         // ==========================================
-        function renderCards(items) {
-            const grid = document.getElementById('content-grid');
-            grid.innerHTML = ''; // 清除 Loading
-            
-            if (!items || items.length === 0) {
-                grid.innerHTML = '<div class="col-span-3 text-center text-gray-500 py-10">目前沒有資料。</div>';
-                return;
-            }
+        function updateDisplay() {
+            renderCards(filteredData);
+            renderPagination(filteredData.length);
+        }
 
-            items.forEach(item => {
-                let cardHTML = '';
+        // ==========================================
+        // 4. 將資料填入 HTML 卡片 (配合分頁裁切)
+        // ==========================================
+        function renderCards(data) {
+            const grid = document.getElementById('knowledge-grid');
+            grid.style.opacity = 0; // 淡出特效
+
+            setTimeout(() => {
+                grid.innerHTML = '';
                 
-                // 根據分類渲染不同版型的卡片
-                if (item.category === 'youtube') {
-                    // YouTube 影音卡片
-                    cardHTML = `
-                        <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="youtube">
-                            <a href="${item.link}" target="_blank" class="relative h-48 bg-gray-800 flex items-center justify-center overflow-hidden group block">
-                                <img src="${item.thumbnail || 'https://images.unsplash.com/photo-1544411047-c45ba8a4ee05?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}" alt="YouTube Thumbnail" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-50 transition duration-300">
-                                <i class="fa-brands fa-youtube text-5xl text-red-600 z-20 group-hover:scale-110 shadow-sm transition drop-shadow-lg"></i>
-                                <div class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded flex items-center gap-1 z-20 shadow-md">
-                                    <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span> 最新影音
-                                </div>
-                            </a>
-                            <div class="p-6 flex-grow flex flex-col">
-                                <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
-                                    <i class="fa-brands fa-youtube text-red-600"></i> ${item.date}
-                                </div>
-                                <h3 class="text-xl font-bold mb-3 hover:text-veritas-red transition"><a href="${item.link}" target="_blank">${item.title}</a></h3>
-                                <p class="text-gray-600 text-sm mb-4 line-clamp-2">${item.desc}</p>
-                                <a href="${item.link}" target="_blank" class="mt-auto inline-flex items-center text-sm font-bold text-red-600 hover:text-red-800">
-                                    在 YouTube 觀看 <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
-                                </a>
-                            </div>
-                        </article>
-                    `;
-                } else if (item.category === 'podcast') {
-                    // Podcast 聲音卡片
-                    cardHTML = `
-                        <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="podcast">
-                            <div class="relative h-48 bg-gradient-to-br from-purple-900 to-veritas-dark flex items-center justify-center p-6 text-center">
-                                <i class="fa-solid fa-podcast text-6xl text-purple-300/30 absolute right-4 bottom-4"></i>
-                                <div class="relative z-10 text-white">
-                                    <div class="bg-purple-600/50 backdrop-blur border border-purple-400/50 text-xs font-bold px-3 py-1 rounded-full inline-block mb-3">Podcast 同步</div>
-                                    <h4 class="font-bold text-xl line-clamp-2">${item.title}</h4>
-                                </div>
-                            </div>
-                            <div class="p-6 flex-grow flex flex-col">
-                                <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
-                                    <i class="fa-solid fa-headphones text-purple-600"></i> 發布於 ${item.date}
-                                </div>
-                                <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">${item.desc}</p>
-                                <a href="${item.link}" target="_blank" class="w-full mt-4 bg-gray-900 text-white py-2 rounded-xl text-sm font-bold hover:bg-black transition shadow-md flex justify-center items-center gap-2">
-                                    <i class="fa-brands fa-apple text-lg"></i> Apple Podcast 收聽
-                                </a>
-                            </div>
-                        </article>
+                // 計算當前頁面要顯示的陣列範圍
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const pageData = data.slice(startIndex, endIndex);
+
+                if (pageData.length === 0) {
+                    grid.innerHTML = `
+                        <div class="col-span-full text-center py-20 text-gray-400 bg-gray-50 rounded-2xl">
+                            <i class="fa-solid fa-folder-open text-4xl mb-4"></i>
+                            <p class="font-medium">此分類目前尚無資料</p>
+                        </div>
                     `;
                 } else {
-                    // 一般文章卡片 (包含聖經、倫理、神學)
-                    let tagColor = 'bg-gray-100 text-gray-800';
-                    let tagName = '護教專欄';
-                    if(item.category === 'bible') { tagColor = 'bg-blue-100 text-blue-800'; tagName = '聖經專欄'; }
-                    if(item.category === 'ethics') { tagColor = 'bg-green-100 text-green-800'; tagName = '倫理專欄'; }
-                    if(item.category === 'theology') { tagColor = 'bg-yellow-100 text-yellow-800'; tagName = '神學專欄'; }
+                    pageData.forEach(item => {
+                        const card = document.createElement('article');
+                        card.className = "bg-white rounded-2xl overflow-hidden shadow-md hover-card border border-gray-100 flex flex-col h-full";
+                        
+                        let mediaHTML = '';
+                        let contentHTML = '';
 
-                    cardHTML = `
-                        <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="${item.category}">
-                            <div class="p-6 flex-grow">
-                                <div class="flex justify-between items-start mb-3">
-                                    <span class="${tagColor} text-xs font-bold px-3 py-1 rounded-full">${tagName}</span>
-                                    <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> ${item.date}</span>
+                        if (item.type === 'youtube') {
+                            // YouTube 卡片
+                            let tagHtml = '<div class="absolute top-4 left-4 bg-gray-800 text-white text-xs font-bold px-3 py-1 rounded-full z-20 shadow-sm border border-gray-700">精華短片</div>';
+                            if (item.title.includes('直播') || item.title.includes('Live')) {
+                                tagHtml = `
+                                <div class="absolute top-4 left-4 bg-red-100 text-red-800 text-xs font-bold px-3 py-1 rounded-full z-20 shadow-sm flex items-center gap-1">
+                                    <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span> 直播回放
+                                </div>`;
+                            }
+
+                            mediaHTML = `
+                                <a href="${item.link}" target="_blank" class="relative h-48 bg-gray-900 flex items-center justify-center overflow-hidden group cursor-pointer block">
+                                    <img src="${item.thumbnail}" alt="${item.title}" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-40 transition duration-300">
+                                    <i class="fa-brands fa-youtube text-5xl text-red-600 z-20 group-hover:scale-110 transition shadow-sm"></i>
+                                    ${tagHtml}
+                                    <div class="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded z-20 font-medium tracking-wide">${item.author || '--:--'}</div>
+                                </a>
+                            `;
+                            contentHTML = `
+                                <div class="p-6 flex flex-col flex-grow">
+                                    <div class="text-xs text-red-600 font-bold mb-2 flex items-center gap-2">
+                                        <i class="fa-solid fa-play"></i> 影音同步
+                                    </div>
+                                    <h3 class="text-lg font-bold mb-3 line-clamp-2 hover:text-veritas-red"><a href="${item.link}" target="_blank">${item.title}</a></h3>
+                                    <p class="text-gray-500 text-sm mb-4 line-clamp-2 flex-grow">${item.desc}</p>
+                                    <div class="text-xs text-gray-400 flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
+                                        <span><i class="fa-regular fa-calendar mr-1"></i> ${item.date}</span>
+                                    </div>
                                 </div>
-                                <h3 class="text-xl font-bold mb-3 hover:text-veritas-red cursor-pointer"><a href="${item.link || 'article.html'}">${item.title}</a></h3>
-                                <p class="text-gray-600 text-sm mb-4 line-clamp-3">${item.desc}</p>
-                            </div>
-                            <div class="px-6 py-4 border-t border-gray-50 bg-gray-50/50 flex justify-between items-center mt-auto">
-                                <span class="text-sm font-medium text-gray-700"><i class="fa-solid fa-pen-nib text-gray-400 mr-1"></i> ${item.authorOrTime || '編輯部'}</span>
-                                <a href="${item.link || 'article.html'}" class="text-veritas-red text-sm font-bold hover:underline">閱讀全文 <i class="fa-solid fa-angle-right"></i></a>
-                            </div>
-                        </article>
-                    `;
-                }
-                
-                // 將產生的卡片加入網格中
-                grid.insertAdjacentHTML('beforeend', cardHTML);
-            });
-        }
-
-        // ==========================================
-        // 類別過濾邏輯 (需在 DOM 產生後執行)
-        // ==========================================
-        function setupFilters() {
-            const filterBtns = document.querySelectorAll('.category-btn');
-            // 注意：這裡必須在卡片產生後才抓取 NodeList
-            
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const contentCards = document.querySelectorAll('.content-card');
-                    
-                    // 1. 重設所有按鈕樣式
-                    filterBtns.forEach(b => {
-                        b.classList.remove('bg-veritas-red', 'text-white');
-                        if(!b.classList.contains('bg-red-50') && !b.classList.contains('bg-purple-50')) {
-                            b.classList.add('bg-gray-100', 'text-gray-600');
-                        }
-                    });
-
-                    // 2. 套用 active 樣式
-                    if(['all', 'bible', 'theology', 'ethics'].includes(btn.dataset.filter)) {
-                        btn.classList.remove('bg-gray-100', 'text-gray-600');
-                        btn.classList.add('bg-veritas-red', 'text-white');
-                    } else {
-                        btn.classList.add('ring-2', 'ring-veritas-red');
-                        setTimeout(() => btn.classList.remove('ring-2', 'ring-veritas-red'), 1000);
-                    }
-
-                    // 3. 執行過濾顯示
-                    const filter = btn.dataset.filter;
-                    contentCards.forEach(card => {
-                        if (filter === 'all' || card.dataset.category === filter) {
-                            card.style.display = 'flex';
+                            `;
+                        } else if (item.type === 'podcast') {
+                            // Podcast 卡片
+                            mediaHTML = `
+                                <a href="${item.link}" target="_blank" class="relative h-48 bg-veritas-dark flex items-center justify-center overflow-hidden cursor-pointer group block">
+                                    <div class="absolute inset-0 bg-gradient-to-tr from-purple-900 to-veritas-dark opacity-80 group-hover:opacity-100 transition"></div>
+                                    <i class="fa-solid fa-podcast text-5xl text-purple-300 z-20 group-hover:scale-110 transition"></i>
+                                    <div class="absolute top-4 left-4 bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full z-20 shadow-sm">Podcast 單集</div>
+                                </a>
+                            `;
+                            contentHTML = `
+                                <div class="p-6 flex flex-col flex-grow">
+                                    <div class="text-xs text-purple-600 font-bold mb-2 flex items-center gap-2">
+                                        <i class="fa-solid fa-headphones"></i> ${item.author || '最新單集'}
+                                    </div>
+                                    <h3 class="text-lg font-bold mb-3 line-clamp-2 hover:text-veritas-red"><a href="${item.link}" target="_blank">${item.title}</a></h3>
+                                    <p class="text-gray-500 text-sm mb-4 line-clamp-2 flex-grow">${item.desc}</p>
+                                    <div class="text-xs text-gray-400 flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
+                                        <span><i class="fa-regular fa-calendar mr-1"></i> ${item.date}</span>
+                                    </div>
+                                </div>
+                            `;
                         } else {
-                            card.style.display = 'none';
+                            // 預設文章卡片
+                            let catLabel = '專欄文章';
+                            let catColor = 'bg-blue-100 text-blue-800';
+                            if(item.category === 'bible') { catLabel = '聖經'; catColor = 'bg-green-100 text-green-800'; }
+                            if(item.category === 'theology') { catLabel = '神學'; catColor = 'bg-blue-100 text-blue-800'; }
+                            if(item.category === 'ethics') { catLabel = '倫理'; catColor = 'bg-orange-100 text-orange-800'; }
+
+                            mediaHTML = `
+                                <a href="article.html?id=${item.title}" class="relative h-48 bg-gray-100 flex items-center justify-center overflow-hidden group block">
+                                    ${item.thumbnail ? `<img src="${item.thumbnail}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500">` : `<div class="text-gray-300 text-5xl group-hover:scale-110 transition duration-500"><i class="fa-solid fa-book-bible"></i></div>`}
+                                    <div class="absolute top-4 left-4 ${catColor} text-xs font-bold px-3 py-1 rounded-full z-10 shadow-sm">${catLabel}</div>
+                                </a>
+                            `;
+                            contentHTML = `
+                                <div class="p-6 flex flex-col flex-grow">
+                                    <h3 class="text-xl font-bold mb-3 line-clamp-2 hover:text-veritas-red"><a href="article.html?id=${item.title}">${item.title}</a></h3>
+                                    <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">${item.desc}</p>
+                                    <div class="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
+                                        <span class="text-sm font-medium text-gray-700"><i class="fa-solid fa-pen-nib text-gray-400 mr-1"></i> ${item.author || '編輯部'}</span>
+                                        <span class="text-xs text-gray-400">${item.date}</span>
+                                    </div>
+                                </div>
+                            `;
                         }
+
+                        card.innerHTML = mediaHTML + contentHTML;
+                        grid.appendChild(card);
                     });
-                });
-            });
+                }
+                grid.style.opacity = 1; // 淡入特效
+            }, 300);
         }
 
         // ==========================================
-        // Mock 資料 (供尚未設定 API 時預覽使用)
+        // 5. 渲染分頁按鈕列
         // ==========================================
-        function getMockKnowledgeData() {
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    resolve([
-                        { category: "youtube", title: "【真理之夜】神父面對面：解答網友百大提問", date: "2026/05/08", desc: "從聖母敬禮到煉獄教義，神父親自解答。", link: "https://www.youtube.com/@veritas3098/videos", authorOrTime: "", thumbnail: "https://images.unsplash.com/photo-1544411047-c45ba8a4ee05?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
-                        { category: "podcast", title: "EP. 45 | 什麼是大赦？跟贖罪券一樣嗎？", date: "2026/05/01", desc: "禧年即將到來，常常聽到教會頒布「全大赦」。這到底是什麼意思？", link: "https://podcasts.apple.com/tw/podcast/%E5%A4%A9%E4%B8%BB%E6%95%99veritas%E8%AD%B7%E6%95%99%E4%B8%AD%E5%BF%83/id1542142187", authorOrTime: "", thumbnail: "" },
-                        { category: "bible", title: "舊約裡的殘酷戰爭，天主真的是慈愛的嗎？", date: "2026/05/15", desc: "很多慕道友讀到舊約時，會對以色列人滅族、征戰的經文感到困惑...", link: "article.html", authorOrTime: "伯多祿神父", thumbnail: "" },
-                        { category: "ethics", title: "天主教對人工智慧 (AI) 發展的倫理觀點", date: "2026/05/10", desc: "科技發展必須以「人的尊嚴」為中心，本文探討科技與信仰的對話...", link: "article.html", authorOrTime: "瑪利亞 主編", thumbnail: "" },
-                        { category: "theology", title: "三位一體：難以理解的奧秘，卻是愛的本質", date: "2026/04/28", desc: "為什麼說天主是「三位一體」？這不是數學題，而是關於「關係」的啟示。", link: "article.html", authorOrTime: "伯多祿神父", thumbnail: "" },
-                        { category: "youtube", title: "彌撒中為什麼要單膝跪地？3分鐘看懂禮儀意義", date: "2026/04/20", desc: "從聖體櫃到祭台，我們的肢體動作如何反映出對基督真實臨在的敬畏。", link: "https://www.youtube.com/@veritas3098/videos", authorOrTime: "", thumbnail: "https://images.unsplash.com/photo-1601142634808-38923eb7c560?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" }
-                    ]);
-                }, 800);
+        function renderPagination(totalItems) {
+            const container = document.getElementById('pagination-container');
+            container.innerHTML = ''; // 清空原本的按鈕
+            
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            
+            // 如果總頁數只有 1 頁或 0 頁，就不顯示分頁列
+            if (totalPages <= 1) return;
+
+            // 建立「上一頁」按鈕
+            const prevBtn = document.createElement('button');
+            prevBtn.innerHTML = '<i class="fa-solid fa-angle-left"></i> 上一頁';
+            prevBtn.className = `px-4 py-2 rounded-lg font-medium transition ${currentPage === 1 ? 'text-gray-400 bg-gray-100 cursor-not-allowed' : 'text-veritas-red bg-white border border-veritas-red hover:bg-veritas-red hover:text-white'}`;
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updateDisplay();
+                    document.getElementById('knowledge').scrollIntoView({ behavior: 'smooth' }); // 自動捲動回標題區
+                }
+            };
+            container.appendChild(prevBtn);
+
+            // 建立「數字頁碼」按鈕
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.textContent = i;
+                pageBtn.className = `w-10 h-10 rounded-lg font-bold transition flex items-center justify-center ${currentPage === i ? 'bg-veritas-red text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}`;
+                pageBtn.onclick = () => {
+                    currentPage = i;
+                    updateDisplay();
+                    document.getElementById('knowledge').scrollIntoView({ behavior: 'smooth' });
+                };
+                container.appendChild(pageBtn);
+            }
+
+            // 建立「下一頁」按鈕
+            const nextBtn = document.createElement('button');
+            nextBtn.innerHTML = '下一頁 <i class="fa-solid fa-angle-right"></i>';
+            nextBtn.className = `px-4 py-2 rounded-lg font-medium transition ${currentPage === totalPages ? 'text-gray-400 bg-gray-100 cursor-not-allowed' : 'text-veritas-red bg-white border border-veritas-red hover:bg-veritas-red hover:text-white'}`;
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updateDisplay();
+                    document.getElementById('knowledge').scrollIntoView({ behavior: 'smooth' });
+                }
+            };
+            container.appendChild(nextBtn);
+        }
+
+        // ==========================================
+        // 6. 分類切換過濾器
+        // ==========================================
+        function filterContent(type) {
+            // 處理標籤樣式切換
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('bg-gray-800', 'text-white', 'shadow-md');
+                tab.classList.add('bg-white', 'text-gray-600', 'hover:bg-gray-50');
             });
+            document.getElementById(`tab-${type}`).classList.remove('bg-white', 'text-gray-600', 'hover:bg-gray-50');
+            document.getElementById(`tab-${type}`).classList.add('bg-gray-800', 'text-white', 'shadow-md');
+
+            // 執行資料過濾
+            if (type === 'all') {
+                filteredData = [...allKnowledgeData];
+            } else if (type === 'youtube' || type === 'podcast') {
+                filteredData = allKnowledgeData.filter(item => item.type === type);
+            } else {
+                filteredData = allKnowledgeData.filter(item => item.type === 'article' && item.category === type);
+            }
+            
+            // 重要：切換分類時，必須將頁碼強制重置回第一頁
+            currentPage = 1;
+            
+            // 更新畫面 (包含卡片與重新計算分頁)
+            updateDisplay();
         }
     </script>
 </body>
