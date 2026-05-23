@@ -232,15 +232,11 @@
         async function fetchKnowledgeData() {
             try {
                 let data = [];
-                // 尚未設定網址前，給予假資料預覽排版
-                if (GAS_API_URL === "https://script.google.com/macros/s/AKfycbzbuprWzNPRRsz1Sxp4WtNJzrT-fgsQDc04vzF0RrEFK1WxpmUK4-zGdOpi9xdk9I_m/exec") {
-                    console.log("使用模擬資料載入知識庫。");
-                    data = await getMockKnowledgeData();
-                } else {
-                    const response = await fetch(`${GAS_API_URL}?action=getKnowledgeData`);
-                    if (!response.ok) throw new Error('API 連線錯誤');
-                    data = await response.json();
-                }
+                // 直接使用真實 API 載入資料，移除原本的模擬判斷
+                const response = await fetch(`${GAS_API_URL}?action=getKnowledgeData`);
+                if (!response.ok) throw new Error('API 連線錯誤');
+                data = await response.json();
+                
                 renderCards(data);
                 setupFilters(); // 資料載入完畢後，綁定過濾器功能
             } catch (error) {
