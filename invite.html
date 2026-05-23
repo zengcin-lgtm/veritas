@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邀請演講與合作 | 天主教 Veritas 護教中心</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 FontAwesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入 Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        // 設定 Veritas 品牌專屬顏色
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        veritas: {
+                            red: '#8B0000', darkred: '#5C0000', gold: '#D4AF37', light: '#FAFAFA', dark: '#2D3748'
+                        }
+                    },
+                    fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #FAFAFA; }
+        html { scroll-behavior: smooth; }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(139,0,0,0.9) 0%, rgba(92,0,0,0.95) 100%), url('https://images.unsplash.com/photo-1544367567-0f2fcb0d9c8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        /* 表單輸入框聚焦特效 */
+        .form-input-focus:focus { outline: none; border-color: #8B0000; box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="text-veritas-dark antialiased">
+
+    <!-- 頂部導覽列 Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center gap-3">
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-10 h-10 object-contain drop-shadow-md" onerror="this.src='https://placehold.co/100x100/8B0000/FFF?text=V'">
+                        <div>
+                            <h1 class="font-bold text-xl text-veritas-red tracking-wider">Veritas 護教中心</h1>
+                            <p class="text-xs text-gray-500 font-medium">天主教數位弘道平台</p>
+                        </div>
+                    </a>
+                </div>
+                <!-- 電腦版選單 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="about.html" class="text-gray-600 hover:text-veritas-red font-medium transition">關於我們</a>
+                    <a href="knowledge.html" class="text-gray-600 hover:text-veritas-red font-medium transition">護教知識庫</a>
+                    <a href="media.html" class="text-gray-600 hover:text-veritas-red font-medium transition">影音策展</a>
+                    <a href="qa.html" class="text-gray-600 hover:text-veritas-red font-medium transition">真理問答箱</a>
+                    <a href="support.html" class="bg-veritas-gold text-white px-5 py-2 rounded-full font-bold hover:bg-yellow-500 transition shadow-md">
+                        <i class="fa-solid fa-heart mr-2"></i>支持我們
+                    </a>
+                </div>
+                <!-- 手機版選單按鈕 -->
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-veritas-red focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 手機版下拉選單 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-xl absolute w-full z-40">
+        <div class="px-4 pt-2 pb-6 space-y-2">
+            <a href="about.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">關於我們</a>
+            <a href="knowledge.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">護教知識庫</a>
+            <a href="media.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">影音策展</a>
+            <a href="qa.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">真理問答箱</a>
+            <a href="support.html" class="block px-3 py-3 text-base font-bold text-veritas-gold hover:text-yellow-600 rounded-md"><i class="fa-solid fa-heart mr-2"></i>支持我們</a>
+        </div>
+    </div>
+
+    <!-- 頁首 Hero 區塊 -->
+    <header class="hero-gradient relative text-white py-16 md:py-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <span class="text-veritas-gold font-bold tracking-widest text-sm mb-4 block uppercase">Invitation</span>
+            <h2 class="text-3xl md:text-5xl font-black mb-4">邀請演講與合作</h2>
+            <p class="text-lg text-gray-200 max-w-2xl mx-auto">歡迎各堂區、善會、學校及主內機構來信邀約。<br>我們期盼將真理的亮光，帶進您的團體之中。</p>
+        </div>
+    </header>
+
+    <!-- 表單與說明區塊 -->
+    <section class="py-16 bg-veritas-light">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-12">
+                
+                <!-- 左側：邀約須知 -->
+                <div class="lg:w-1/3">
+                    <h3 class="text-2xl font-bold text-veritas-dark border-l-4 border-veritas-red pl-4 mb-6">邀約須知</h3>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8 space-y-5">
+                        
+                        <div>
+                            <h4 class="font-bold text-veritas-red mb-2 flex items-center gap-2"><i class="fa-solid fa-person-chalkboard"></i> 常見講題方向</h4>
+                            <ul class="text-sm text-gray-600 space-y-2 pl-6 list-disc marker:text-veritas-gold">
+                                <li>天主教護教與釋疑</li>
+                                <li>聖經神學與生活應用</li>
+                                <li>倫理神學與現代社會議題</li>
+                                <li>數位媒體與福傳實務操作</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="border-t border-gray-100 pt-4">
+                            <h4 class="font-bold text-gray-800 mb-1 flex items-center gap-2"><i class="fa-regular fa-calendar-check text-blue-500"></i> 作業時間</h4>
+                            <p class="text-sm text-gray-500">建議於活動前 <span class="font-bold text-veritas-dark">1 至 2 個月</span> 提出申請。中心收到表單後，將於 3-5 個工作天內由專人透過 Email 或電話與您聯繫細節。</p>
+                        </div>
+                        
+                        <div class="border-t border-gray-100 pt-4">
+                            <h4 class="font-bold text-gray-800 mb-1 flex items-center gap-2"><i class="fa-solid fa-car-side text-green-500"></i> 交通與鐘點</h4>
+                            <p class="text-sm text-gray-500">講師鐘點費及交通費，依邀請單位之內部規定或常規辦理即可，若有困難亦可於備註欄提出，我們將盡力協助。</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 右側：表單填寫區 -->
+                <div class="lg:w-2/3">
+                    <div class="bg-white p-8 md:p-10 rounded-2xl shadow-lg border border-gray-100">
+                        <h3 class="text-2xl font-bold text-veritas-dark mb-6"><i class="fa-solid fa-file-signature text-veritas-red mr-2"></i> 演講申請表單</h3>
+                        
+                        <!-- 成功送出提示訊息 (預設隱藏) -->
+                        <div id="success-message" class="hidden mb-6 bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-circle-check text-green-500 text-xl mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold text-green-800">申請已成功送出！</h4>
+                                    <p class="text-sm text-green-700 mt-1">系統已發送通知給管理員。團隊將於 3-5 個工作日內與您聯繫，感謝您的邀請。</p>
+                                </div>
+                            </div>
+                            <button onclick="resetForm()" class="mt-4 text-sm font-bold text-green-600 hover:text-green-800 underline">填寫其他申請</button>
+                        </div>
+
+                        <!-- 錯誤提示訊息 (預設隱藏) -->
+                        <div id="error-message" class="hidden mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-circle-exclamation text-red-500 text-xl mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold text-red-800">傳送失敗</h4>
+                                    <p id="error-text" class="text-sm text-red-700 mt-1">抱歉，系統目前忙線中，請稍後再試。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form id="invite-form" class="space-y-6">
+                            
+                            <!-- 單位與聯絡人 -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="orgName" class="block text-sm font-bold text-gray-700 mb-2">邀請單位名稱 <span class="text-red-500">*</span></label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fa-regular fa-building text-gray-400"></i>
+                                        </div>
+                                        <input type="text" id="orgName" name="orgName" required class="form-input-focus block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl text-gray-900 bg-gray-50 focus:bg-white transition" placeholder="例如：台北聖家堂、XX青年會">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="contactName" class="block text-sm font-bold text-gray-700 mb-2">聯絡人姓名 <span class="text-red-500">*</span></label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fa-regular fa-user text-gray-400"></i>
+                                        </div>
+                                        <input type="text" id="contactName" name="contactName" required class="form-input-focus block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl text-gray-900 bg-gray-50 focus:bg-white transition" placeholder="您的姓名">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 電話與 Email -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="phone" class="block text-sm font-bold text-gray-700 mb-2">聯絡電話 <span class="text-red-500">*</span></label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fa-solid fa-mobile-screen text-gray-400"></i>
+                                        </div>
+                                        <input type="tel" id="phone" name="phone" required class="form-input-focus block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl text-gray-900 bg-gray-50 focus:bg-white transition" placeholder="手機或市話">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-bold text-gray-700 mb-2">電子信箱 <span class="text-red-500">*</span></label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fa-regular fa-envelope text-gray-400"></i>
+                                        </div>
+                                        <input type="email" id="email" name="email" required class="form-input-focus block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl text-gray-900 bg-gray-50 focus:bg-white transition" placeholder="example@email.com">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 活動時間與人數 -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="eventDate" class="block text-sm font-bold text-gray-700 mb-2">預計日期與時間 <span class="text-red-500">*</span></label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fa-regular fa-calendar-days text-gray-400"></i>
+                                        </div>
+                                        <input type="text" id="eventDate" name="eventDate" required class="form-input-focus block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl text-gray-900 bg-gray-50 focus:bg-white transition" placeholder="例如：10/25 (五) 19:30-21:00">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="attendees" class="block text-sm font-bold text-gray-700 mb-2">預計人數 <span class="text-red-500">*</span></label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fa-solid fa-users text-gray-400"></i>
+                                        </div>
+                                        <select id="attendees" name="attendees" required class="form-input-focus block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-xl text-gray-900 bg-gray-50 focus:bg-white transition appearance-none">
+                                            <option value="" disabled selected>請選擇預估參與人數</option>
+                                            <option value="20人以下">20 人以下 (小型聚會)</option>
+                                            <option value="21-50人">21 - 50 人 (中型講座)</option>
+                                            <option value="51-100人">51 - 100 人 (大型講座)</option>
+                                            <option value="100人以上">100 人以上 (營隊/大會)</option>
+                                        </select>
+                                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                            <i class="fa-solid fa-chevron-down text-gray-400"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 活動地點 -->
+                            <div>
+                                <label for="location" class="block text-sm font-bold text-gray-700 mb-2">活動地點 <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fa-solid fa-location-dot text-gray-400"></i>
+                                    </div>
+                                    <input type="text" id="location" name="location" required class="form-input-focus block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl text-gray-900 bg-gray-50 focus:bg-white transition" placeholder="請填寫完整地址或場地名稱">
+                                </div>
+                            </div>
+
+                            <!-- 講題需求 -->
+                            <div>
+                                <label for="topic" class="block text-sm font-bold text-gray-700 mb-2">講題需求 / 活動主旨 <span class="text-red-500">*</span></label>
+                                <textarea id="topic" name="topic" rows="4" required class="form-input-focus block w-full p-4 border border-gray-300 rounded-xl text-gray-900 bg-gray-50 focus:bg-white transition resize-none" placeholder="請簡述您希望講師分享的主題方向，或該活動的背景目的..."></textarea>
+                            </div>
+                            
+                            <!-- 備註 -->
+                            <div>
+                                <label for="notes" class="block text-sm font-bold text-gray-700 mb-2">其他備註 <span class="text-gray-400 font-normal ml-1">(選填)</span></label>
+                                <textarea id="notes" name="notes" rows="2" class="form-input-focus block w-full p-4 border border-gray-300 rounded-xl text-gray-900 bg-gray-50 focus:bg-white transition resize-none" placeholder="是否有特殊器材需求、車馬費說明或其他需要協助的事項？"></textarea>
+                            </div>
+
+                            <!-- 隱藏的 action 欄位供 GAS 判斷 -->
+                            <input type="hidden" name="action" value="submitInvite">
+
+                            <!-- 送出按鈕 -->
+                            <div>
+                                <button type="submit" id="submit-btn" class="w-full bg-veritas-red text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:bg-veritas-darkred hover:shadow-xl transition transform hover:-translate-y-1 flex justify-center items-center gap-2">
+                                    <span>送出申請</span>
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁尾 Footer -->
+    <footer class="bg-veritas-dark text-gray-300 py-12 border-t-4 border-veritas-red">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-8 h-8 object-contain">
+                        Veritas 護教中心
+                    </h2>
+                    <p class="text-sm text-gray-400 mb-4 max-w-sm">
+                        我們秉持著天主教會的傳統與聖經真理，透過現代數位媒體，為尋道者解惑，為信徒建立堅固的信仰根基。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition"><i class="fa-brands fa-facebook-f text-white"></i></a>
+                        <a href="https://www.youtube.com/@veritas3098/videos" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition"><i class="fa-brands fa-youtube text-white"></i></a>
+                        <a href="https://podcasts.apple.com/tw/podcast/%E5%A4%A9%E4%B8%BB%E6%95%99veritas%E8%AD%B7%E6%95%99%E4%B8%AD%E5%BF%83/id1542142187" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fa-solid fa-podcast text-white"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">快速連結</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="about.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 關於我們</a></li>
+                        <li><a href="knowledge.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 護教文章列表</a></li>
+                        <li><a href="links.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 友站資源推薦</a></li>
+                        <li><a href="invite.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 邀請神父演講</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">聯絡資訊</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-envelope mt-1 text-veritas-red"></i>
+                            <span>service@veritas.catholic.org.tw</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-veritas-red"></i>
+                            <span>台灣</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-10 pt-6 text-sm text-center md:text-left flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2026 天主教 Veritas 護教中心 版權所有.</p>
+                <p class="mt-2 md:mt-0 text-gray-500">
+                    Powered by <a href="#" class="font-bold text-gray-400 hover:text-white transition">Foday Design Studio</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GAS API 表單傳送腳本 -->
+    <script>
+        // 手機版選單
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // 填入您的 Google Apps Script 網址
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz6Iqnjt8r9poHA_l450uly_XkdX6d2iU7Qcc56fBObFbMoFrtXlSvFtznBUiRgO-lN/exec";
+
+        const form = document.getElementById('invite-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const successMsg = document.getElementById('success-message');
+        const errorMsg = document.getElementById('error-message');
+        const errorText = document.getElementById('error-text');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // 改變按鈕狀態為處理中
+            const originalBtnHTML = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 正在傳送...';
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+            
+            // 隱藏先前的訊息
+            successMsg.classList.add('hidden');
+            errorMsg.classList.add('hidden');
+
+            try {
+                // 將表單資料打包
+                const formData = new FormData(form);
+                const urlEncodedData = new URLSearchParams(formData).toString();
+
+                const response = await fetch(GAS_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: urlEncodedData
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    form.classList.add('hidden');
+                    successMsg.classList.remove('hidden');
+                    // 畫面自動捲動到成功訊息處
+                    successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    throw new Error(result.message || '伺服器回傳異常');
+                }
+
+            } catch (error) {
+                console.error("表單傳送失敗:", error);
+                errorText.textContent = "抱歉，連線至系統時發生錯誤，請稍後再試。 (" + error.message + ")";
+                errorMsg.classList.remove('hidden');
+            } finally {
+                submitBtn.innerHTML = originalBtnHTML;
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+            }
+        });
+
+        // 重新填寫表單
+        function resetForm() {
+            form.reset();
+            form.classList.remove('hidden');
+            successMsg.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
