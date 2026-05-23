@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>關於我們 | 天主教 Veritas 護教中心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        veritas: {
+                            red: '#8B0000', darkred: '#5C0000', gold: '#D4AF37', light: '#FAFAFA', dark: '#2D3748'
+                        }
+                    },
+                    fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #FAFAFA; }
+        html { scroll-behavior: smooth; }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(139,0,0,0.9) 0%, rgba(92,0,0,0.95) 100%), url('https://images.unsplash.com/photo-1437603568260-1950d3ca6eab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .hover-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+        /* 時間軸特效 */
+        .timeline-dot { position: absolute; left: -9px; top: 6px; width: 16px; height: 16px; border-radius: 50%; background-color: #D4AF37; border: 3px solid #FFF; box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2); }
+    </style>
+</head>
+<body class="text-veritas-dark antialiased">
+
+    <nav class="bg-white shadow-md sticky top-0 z-50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center gap-3">
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-10 h-10 object-contain drop-shadow-md" onerror="this.src='https://placehold.co/100x100/8B0000/FFF?text=V'">
+                        <div>
+                            <h1 class="font-bold text-xl text-veritas-red tracking-wider">Veritas 護教中心</h1>
+                            <p class="text-xs text-gray-500 font-medium">天主教數位弘道平台</p>
+                        </div>
+                    </a>
+                </div>
+                <!-- 電腦版選單 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="about.html" class="text-veritas-red font-bold border-b-2 border-veritas-red pb-1 transition">關於我們</a>
+                    <a href="knowledge.html" class="text-gray-600 hover:text-veritas-red font-medium transition">護教知識庫</a>
+                    <a href="media.html" class="text-gray-600 hover:text-veritas-red font-medium transition">影音策展</a>
+                    <a href="qa.html" class="text-gray-600 hover:text-veritas-red font-medium transition">真理問答箱</a>
+                    <a href="support.html" class="bg-veritas-gold text-white px-5 py-2 rounded-full font-bold hover:bg-yellow-500 transition shadow-md">
+                        <i class="fa-solid fa-heart mr-2"></i>支持我們
+                    </a>
+                </div>
+                <!-- 手機版選單按鈕 -->
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-veritas-red focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- 手機版隱藏選單 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-xl absolute w-full left-0 z-40 pb-4">
+            <div class="px-4 pt-2 space-y-1">
+                <a href="about.html" class="block px-3 py-3 text-veritas-red font-bold bg-red-50 rounded-md">關於我們</a>
+                <a href="knowledge.html" class="block px-3 py-3 text-gray-800 font-medium hover:text-veritas-red hover:bg-gray-50 rounded-md">護教知識庫</a>
+                <a href="media.html" class="block px-3 py-3 text-gray-800 font-medium hover:text-veritas-red hover:bg-gray-50 rounded-md">影音策展</a>
+                <a href="qa.html" class="block px-3 py-3 text-gray-800 font-medium hover:text-veritas-red hover:bg-gray-50 rounded-md">真理問答箱</a>
+                <a href="support.html" class="block mt-4 text-center bg-veritas-gold text-white px-5 py-3 rounded-xl font-bold hover:bg-yellow-500 shadow-md">支持我們</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-gradient relative text-white py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <span class="text-veritas-gold font-bold tracking-widest text-sm mb-4 block uppercase">About Us</span>
+            <h2 class="text-3xl md:text-5xl font-black mb-4">認識 Veritas</h2>
+            <p class="text-lg text-gray-200 max-w-2xl mx-auto">我們秉持天主教會的傳統與聖經真理，致力於數位時代中的福傳與護教工作。</p>
+        </div>
+    </header>
+
+    <section class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/2">
+                    <h3 class="text-3xl font-bold text-veritas-dark border-l-4 border-veritas-red pl-4 mb-6">我們的使命</h3>
+                    <p class="text-gray-600 leading-relaxed mb-6 text-lg">
+                        「Veritas」在拉丁文中意為「真理」。天主教 Veritas 護教中心成立的初衷，是為了回應現代社會對信仰的諸多疑問與挑戰。我們深信，真理不怕考驗，而理性的探討能帶領人更深地認識天主的愛。
+                    </p>
+                    <p class="text-gray-600 leading-relaxed mb-8 text-lg">
+                        透過文字專欄、多媒體影音與線上互動，我們期盼能：<br>
+                        1. 為慕道者與教外朋友解答對天主教會的常見誤解。<br>
+                        2. 幫助教友建立更堅固的神學與聖經根基。<br>
+                        3. 培育更多具備護教能力的平信徒。
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-veritas-light p-4 rounded-xl flex items-center gap-3 border border-gray-100">
+                            <i class="fa-solid fa-book-bible text-2xl text-veritas-gold"></i>
+                            <span class="font-bold text-veritas-dark">聖經為基</span>
+                        </div>
+                        <div class="bg-veritas-light p-4 rounded-xl flex items-center gap-3 border border-gray-100">
+                            <i class="fa-solid fa-church text-2xl text-veritas-gold"></i>
+                            <span class="font-bold text-veritas-dark">傳承聖傳</span>
+                        </div>
+                        <div class="bg-veritas-light p-4 rounded-xl flex items-center gap-3 border border-gray-100">
+                            <i class="fa-solid fa-heart text-2xl text-veritas-gold"></i>
+                            <span class="font-bold text-veritas-dark">以愛對話</span>
+                        </div>
+                        <div class="bg-veritas-light p-4 rounded-xl flex items-center gap-3 border border-gray-100">
+                            <i class="fa-solid fa-laptop-code text-2xl text-veritas-gold"></i>
+                            <span class="font-bold text-veritas-dark">數位弘道</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 w-full">
+                    <img src="https://images.unsplash.com/photo-1548625361-ec853713fdd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="教堂光影" class="rounded-2xl shadow-xl w-full object-cover h-[400px]">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-veritas-light">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-veritas-dark inline-block relative">
+                    歷史大事記
+                    <div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-veritas-red rounded"></div>
+                </h3>
+            </div>
+
+            <div class="relative border-l-2 border-gray-200 ml-3 md:ml-6 space-y-12">
+                <!-- 節點 1 -->
+                <div class="relative pl-8 md:pl-12">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover-card">
+                        <span class="text-veritas-red font-bold text-sm bg-red-50 px-3 py-1 rounded-full mb-3 inline-block">2020 年 9 月</span>
+                        <h4 class="text-xl font-bold mb-2">Veritas 護教中心正式成立</h4>
+                        <p class="text-gray-600">由數名熱心神父與平信徒共同發起，初期以實體堂區講座與讀書會為主，致力於基層教友的教理培育。</p>
+                    </div>
+                </div>
+                <!-- 節點 2 -->
+                <div class="relative pl-8 md:pl-12">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover-card">
+                        <span class="text-veritas-red font-bold text-sm bg-red-50 px-3 py-1 rounded-full mb-3 inline-block">2023 年 3 月</span>
+                        <h4 class="text-xl font-bold mb-2">多媒體影音事工啟動</h4>
+                        <p class="text-gray-600">因應疫情後的數位趨勢，正式開啟 YouTube 頻道與 Podcast 廣播，將護教內容從實體推廣至無遠弗屆的網路世界。</p>
+                    </div>
+                </div>
+                <!-- 節點 3 -->
+                <div class="relative pl-8 md:pl-12">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover-card border-l-4 border-l-veritas-gold">
+                        <span class="text-veritas-gold font-bold text-sm bg-yellow-50 px-3 py-1 rounded-full mb-3 inline-block">2026 年 1 月</span>
+                        <h4 class="text-xl font-bold mb-2">數位弘道平台全面建置</h4>
+                        <p class="text-gray-600">整合文章知識庫、影音策展與線上問答系統，打造全新的官方網站，並推動自動化管理，讓福音的傳播更具效率與影響力。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h3 class="text-3xl font-bold text-veritas-dark mb-4">核心團隊介紹</h3>
+            <p class="text-gray-500 mb-12 max-w-2xl mx-auto">我們是由神職人員與專業平信徒組成的熱血團隊，以各自的專業服事天主。</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 團隊成員 1 -->
+                <div class="bg-veritas-light rounded-2xl overflow-hidden hover-card border border-gray-100">
+                    <img src="https://placehold.co/400x300/E2E8F0/475569?text=神父照片" alt="伯多祿神父" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold text-veritas-dark">伯多祿 神父</h4>
+                        <p class="text-veritas-red text-sm font-bold mb-4">中心主任 / 駐站神師</p>
+                        <p class="text-gray-600 text-sm">擁有羅馬宗座大學神學博士學位。負責帶領團隊的神學方向，並親自撰寫核心護教專欄與回覆複雜的信仰提問。</p>
+                    </div>
+                </div>
+                <!-- 團隊成員 2 -->
+                <div class="bg-veritas-light rounded-2xl overflow-hidden hover-card border border-gray-100">
+                    <img src="https://placehold.co/400x300/E2E8F0/475569?text=工作人員照片" alt="瑪利亞" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold text-veritas-dark">瑪利亞 (Maria)</h4>
+                        <p class="text-veritas-red text-sm font-bold mb-4">內容主編 / 社群經理</p>
+                        <p class="text-gray-600 text-sm">資深媒體人，負責網站文章的編修、社群平台的日常維運，以及「真理問答箱」的初步審閱與彙整工作。</p>
+                    </div>
+                </div>
+                <!-- 團隊成員 3 -->
+                <div class="bg-veritas-light rounded-2xl overflow-hidden hover-card border border-gray-100">
+                    <img src="https://placehold.co/400x300/E2E8F0/475569?text=工作人員照片" alt="若望" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold text-veritas-dark">若望 (John)</h4>
+                        <p class="text-veritas-red text-sm font-bold mb-4">多媒體製作人</p>
+                        <p class="text-gray-600 text-sm">專精於影像拍攝與剪輯。負責所有 YouTube 影片的後製工作以及 Podcast 的錄音工程，確保數位弘道的品質。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center">
+                <a href="invite.html" class="bg-transparent border-2 border-veritas-red text-veritas-red px-8 py-3 rounded-full font-bold hover:bg-veritas-red hover:text-white transition inline-block">
+                    <i class="fa-solid fa-bullhorn mr-2"></i> 邀請神父/團隊演講
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-veritas-dark text-gray-300 py-12 border-t-4 border-veritas-red">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-8 h-8 object-contain" onerror="this.src='https://placehold.co/100x100/8B0000/FFF?text=V'">
+                        Veritas 護教中心
+                    </h2>
+                    <p class="text-sm text-gray-400 mb-4 max-w-sm">
+                        我們秉持著天主教會的傳統與聖經真理，透過現代數位媒體，為尋道者解惑，為信徒建立堅固的信仰根基。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition"><i class="fa-brands fa-facebook-f text-white"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition"><i class="fa-brands fa-youtube text-white"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-green-500 transition"><i class="fa-brands fa-line text-white"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">快速連結</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="about.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 關於我們</a></li>
+                        <li><a href="knowledge.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 護教文章列表</a></li>
+                        <li><a href="links.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 友站資源推薦</a></li>
+                        <li><a href="invite.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 邀請神父演講</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">聯絡資訊</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-envelope mt-1 text-veritas-red"></i>
+                            <span>service@veritas.catholic.org.tw</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-veritas-red"></i>
+                            <span>台灣 (具體地址將由後台設定)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-10 pt-6 text-sm text-center md:text-left flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2026 天主教 Veritas 護教中心 版權所有.</p>
+                <p class="mt-2 md:mt-0 text-gray-500">
+                    Powered by <a href="#" class="font-bold text-gray-400 hover:text-white transition">Foday Design Studio</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
