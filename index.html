@@ -410,24 +410,30 @@
                 document.getElementById('api-fund-percent').textContent = `達成率 ${percentage}%`;
             }
 
-            // [C] 更新最新資源區塊
+            // [C] 更新最新資源區塊 (加入防呆保護)
             if (data.resources) {
-                // 文章
-                document.getElementById('api-art-date').textContent = data.resources.article.date;
-                document.getElementById('api-art-title').textContent = data.resources.article.title;
-                document.getElementById('api-art-desc').textContent = data.resources.article.desc;
-                document.getElementById('api-art-author').textContent = data.resources.article.author;
+                // 如果試算表有「文章」的資料，才去更新文字
+                if (data.resources.article) {
+                    document.getElementById('api-art-date').textContent = data.resources.article.date;
+                    document.getElementById('api-art-title').textContent = data.resources.article.title;
+                    document.getElementById('api-art-desc').textContent = data.resources.article.desc;
+                    document.getElementById('api-art-author').textContent = data.resources.article.author;
+                }
                 
-                // YouTube
-                document.getElementById('api-yt-date').textContent = data.resources.youtube.date;
-                document.getElementById('api-yt-title').textContent = data.resources.youtube.title;
-                document.getElementById('api-yt-desc').textContent = data.resources.youtube.desc;
-                document.getElementById('api-yt-time').textContent = data.resources.youtube.duration;
+                // 如果試算表有「影音」的資料，才去更新文字
+                if (data.resources.youtube) {
+                    document.getElementById('api-yt-date').textContent = data.resources.youtube.date;
+                    document.getElementById('api-yt-title').textContent = data.resources.youtube.title;
+                    document.getElementById('api-yt-desc').textContent = data.resources.youtube.desc;
+                    document.getElementById('api-yt-time').textContent = data.resources.youtube.duration;
+                }
 
-                // Podcast
-                document.getElementById('api-pod-ep').textContent = data.resources.podcast.ep;
-                document.getElementById('api-pod-title').textContent = data.resources.podcast.title;
-                document.getElementById('api-pod-desc').textContent = data.resources.podcast.desc;
+                // 如果試算表有「Podcast」的資料，才去更新文字
+                if (data.resources.podcast) {
+                    document.getElementById('api-pod-ep').textContent = data.resources.podcast.ep;
+                    document.getElementById('api-pod-title').textContent = data.resources.podcast.title;
+                    document.getElementById('api-pod-desc').textContent = data.resources.podcast.desc;
+                }
             }
 
             // [D] 更新教友見證 (抓取前兩筆)
