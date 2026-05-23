@@ -294,7 +294,7 @@
         // ==========================================
         // 1. 設定 Google Apps Script API 網址
         // ==========================================
-        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz6Iqnjt8r9poHA_l450uly_XkdX6d2iU7Qcc56fBObFbMoFrtXlSvFtznBUiRgO-lN/exec"; 
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzbuprWzNPRRsz1Sxp4WtNJzrT-fgsQDc04vzF0RrEFK1WxpmUK4-zGdOpi9xdk9I_m/exec"; 
 
         document.addEventListener('DOMContentLoaded', () => {
             fetchHomeData();          // 抓取公告、募資、見證
@@ -363,7 +363,7 @@
 
                 if (rawData.error) throw new Error(rawData.error);
 
-                // 根據日期由新到舊排序 (加入防呆機制，轉換字串日期為真實時間)
+                // 根據日期由新到舊排序
                 const sortedData = rawData.sort((a, b) => {
                     const dateA = a.date.replace(/年|月/g, '/').replace(/日/g, '');
                     const dateB = b.date.replace(/年|月/g, '/').replace(/日/g, '');
@@ -390,13 +390,13 @@
         }
 
         // ==========================================
-        // 4. 渲染首頁知識庫卡片
+        // 4. 渲染首頁知識庫卡片 (修正變數名稱)
         // ==========================================
         function renderHomeCards(data) {
             const grid = document.getElementById('home-knowledge-grid');
-            if (!grid) return; // 避免找不到 HTML 元素報錯
+            if (!grid) return; 
             
-            grid.innerHTML = ''; // 清空預設的骨架屏
+            grid.innerHTML = ''; 
             
             data.forEach(item => {
                 const card = document.createElement('article');
@@ -405,7 +405,7 @@
                 let mediaHTML = '';
                 let contentHTML = '';
 
-                if (item.type === 'youtube') {
+                if (item.category === 'youtube') {
                     let tagHtml = '<div class="absolute top-4 left-4 bg-gray-800 text-white text-xs font-bold px-3 py-1 rounded-full z-20 shadow-sm border border-gray-700">精華短片</div>';
                     if (item.title.includes('直播') || item.title.includes('Live')) {
                         tagHtml = `
@@ -419,7 +419,7 @@
                             <img src="${item.thumbnail}" alt="${item.title}" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-40 transition duration-300">
                             <i class="fa-brands fa-youtube text-5xl text-red-600 z-20 group-hover:scale-110 transition shadow-sm"></i>
                             ${tagHtml}
-                            <div class="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded z-20 font-medium tracking-wide">${item.author || '--:--'}</div>
+                            <div class="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded z-20 font-medium tracking-wide">${item.authorOrTime || '--:--'}</div>
                         </a>
                     `;
                     contentHTML = `
@@ -434,7 +434,7 @@
                             </div>
                         </div>
                     `;
-                } else if (item.type === 'podcast') {
+                } else if (item.category === 'podcast') {
                     mediaHTML = `
                         <a href="${item.link}" target="_blank" class="relative h-48 bg-veritas-dark flex items-center justify-center overflow-hidden cursor-pointer group block">
                             <div class="absolute inset-0 bg-gradient-to-tr from-purple-900 to-veritas-dark opacity-80 group-hover:opacity-100 transition"></div>
@@ -445,7 +445,7 @@
                     contentHTML = `
                         <div class="p-6 flex flex-col flex-grow">
                             <div class="text-xs text-purple-600 font-bold mb-2 flex items-center gap-2">
-                                <i class="fa-solid fa-headphones"></i> ${item.author || '最新單集'}
+                                <i class="fa-solid fa-headphones"></i> ${item.authorOrTime || '最新單集'}
                             </div>
                             <h3 class="text-lg font-bold mb-3 line-clamp-2 hover:text-veritas-red"><a href="${item.link}" target="_blank">${item.title}</a></h3>
                             <p class="text-gray-500 text-sm mb-4 line-clamp-2 flex-grow">${item.desc}</p>
@@ -472,7 +472,7 @@
                             <h3 class="text-xl font-bold mb-3 line-clamp-2 hover:text-veritas-red"><a href="article.html?id=${item.title}">${item.title}</a></h3>
                             <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">${item.desc}</p>
                             <div class="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
-                                <span class="text-sm font-medium text-gray-700"><i class="fa-solid fa-pen-nib text-gray-400 mr-1"></i> ${item.author || '編輯部'}</span>
+                                <span class="text-sm font-medium text-gray-700"><i class="fa-solid fa-pen-nib text-gray-400 mr-1"></i> ${item.authorOrTime || '編輯部'}</span>
                                 <span class="text-xs text-gray-400">${item.date}</span>
                             </div>
                         </div>
