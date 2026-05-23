@@ -196,20 +196,21 @@
                             </div>
                         </div>
 
-                        <!-- 管道 3：線上金流 / QR Code -->
+                        <!-- 管道 3：TWQR 掃碼轉帳 (替換線上金流) -->
                         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover-card flex flex-col sm:flex-row gap-5 items-center sm:items-start text-center sm:text-left">
                             <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">
                                 <i class="fa-solid fa-qrcode"></i>
                             </div>
                             <div class="w-full">
-                                <h4 class="text-lg font-bold text-gray-800 mb-2">線上刷卡 / LINE Pay</h4>
-                                <p class="text-sm text-gray-500 mb-4">您可以透過手機掃描右方 QR Code，或點擊下方按鈕前往安全的第三方支付平台進行線上奉獻。</p>
-                                <a href="#" class="inline-block bg-veritas-dark text-white px-6 py-2 rounded-lg font-bold hover:bg-black transition shadow-md text-sm">
-                                    前往線上奉獻平台 <i class="fa-solid fa-external-link-alt ml-1"></i>
-                                </a>
+                                <h4 class="text-lg font-bold text-gray-800 mb-2">TWQR 掃碼轉帳</h4>
+                                <p class="text-sm text-gray-500 mb-4">請使用您的行動銀行 App 或支援 TWQR (台灣 Pay) 的支付工具，掃描右方 QR Code 進行轉帳奉獻。</p>
+                                <div class="inline-flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100 text-xs text-gray-500">
+                                    <i class="fa-solid fa-mobile-screen-button text-gray-400"></i> 免手續費・即時入帳
+                                </div>
                             </div>
-                            <div class="w-28 h-28 bg-gray-100 rounded-lg p-2 flex-shrink-0 shadow-inner border border-gray-200">
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://example.com/donate" alt="奉獻 QR Code" class="w-full h-full object-contain">
+                            <div class="w-28 h-28 bg-gray-100 rounded-lg p-2 flex-shrink-0 shadow-inner border border-gray-200 relative overflow-hidden group">
+                                <!-- 預設使用範例 QR Code 產生器，您後續可替換成真實的 TWQR 圖片連結 -->
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TWQR_Donate_Example" alt="TWQR 奉獻碼" class="w-full h-full object-contain group-hover:scale-105 transition-transform">
                             </div>
                         </div>
 
