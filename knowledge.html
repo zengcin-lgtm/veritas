@@ -138,145 +138,14 @@
     <section class="py-12 bg-veritas-light min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <!-- 內容瀑布流網格 -->
+            <!-- 內容瀑布流網格 (改由 API 動態載入) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="content-grid">
                 
-                <!-- 【文章卡片 - 聖經分類】 -->
-                <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="bible">
-                    <div class="p-6 flex-grow">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full">聖經專欄</span>
-                            <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026/05/15</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3 hover:text-veritas-red cursor-pointer"><a href="article.html">舊約裡的殘酷戰爭，天主真的是慈愛的嗎？</a></h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">很多慕道友讀到舊約時，會對以色列人滅族、征戰的經文感到困惑。我們該如何用新約耶穌基督的光照來理解這些經文...</p>
-                        <!-- 關鍵字標籤 -->
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">#舊約</span>
-                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">#天主的愛</span>
-                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">#聖經詮釋</span>
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 border-t border-gray-50 bg-gray-50/50 flex justify-between items-center mt-auto">
-                        <span class="text-sm font-medium text-gray-700"><i class="fa-solid fa-pen-nib text-gray-400 mr-1"></i> 伯多祿神父</span>
-                        <a href="article.html" class="text-veritas-red text-sm font-bold hover:underline">閱讀全文 <i class="fa-solid fa-angle-right"></i></a>
-                    </div>
-                </article>
-
-                <!-- 【文章卡片 - 倫理分類】 -->
-                <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="ethics">
-                    <div class="p-6 flex-grow">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full">倫理專欄</span>
-                            <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026/05/10</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3 hover:text-veritas-red cursor-pointer"><a href="article.html">天主教對人工智慧 (AI) 發展的倫理觀點</a></h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">教宗方濟各在世界和平日文告中特別提及 AI。科技發展必須以「人的尊嚴」為中心，本文探討科技與信仰的對話...</p>
-                        <!-- 關鍵字標籤 -->
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">#AI</span>
-                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">#科技倫理</span>
-                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">#社會教義</span>
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 border-t border-gray-50 bg-gray-50/50 flex justify-between items-center mt-auto">
-                        <span class="text-sm font-medium text-gray-700"><i class="fa-solid fa-pen-nib text-gray-400 mr-1"></i> 瑪利亞 主編</span>
-                        <a href="article.html" class="text-veritas-red text-sm font-bold hover:underline">閱讀全文 <i class="fa-solid fa-angle-right"></i></a>
-                    </div>
-                </article>
-
-                <!-- 【YouTube - 直播回放】 -->
-                <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="youtube">
-                    <!-- YouTube 縮圖模擬 -->
-                    <a href="https://www.youtube.com/@veritas3098/videos" target="_blank" class="relative h-48 bg-gray-800 flex items-center justify-center overflow-hidden group block">
-                        <img src="https://images.unsplash.com/photo-1544411047-c45ba8a4ee05?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="YouTube Thumbnail" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-50 transition duration-300">
-                        <i class="fa-brands fa-youtube text-5xl text-red-600 z-20 group-hover:scale-110 shadow-sm transition drop-shadow-lg"></i>
-                        <!-- 類別標籤：直播回放 -->
-                        <div class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded flex items-center gap-1 z-20 shadow-md">
-                            <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span> 直播回放
-                        </div>
-                        <div class="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded z-20 font-mono">1:24:05</div>
-                    </a>
-                    <div class="p-6 flex-grow flex flex-col">
-                        <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
-                            <i class="fa-brands fa-youtube text-red-600"></i> 2026/05/08
-                        </div>
-                        <h3 class="text-xl font-bold mb-3 hover:text-veritas-red transition"><a href="https://www.youtube.com/@veritas3098/videos" target="_blank">【真理之夜】神父面對面：解答網友百大提問</a></h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">從聖母敬禮到煉獄教義，伯多祿神父在直播中親自解答網友透過「真理問答箱」留下的問題。</p>
-                        
-                        <a href="https://www.youtube.com/@veritas3098/videos" target="_blank" class="mt-auto inline-flex items-center text-sm font-bold text-red-600 hover:text-red-800">
-                            在 YouTube 觀看 <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- 【Podcast - 單集同步】 -->
-                <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="podcast">
-                    <div class="relative h-48 bg-gradient-to-br from-purple-900 to-veritas-dark flex items-center justify-center p-6 text-center">
-                        <i class="fa-solid fa-podcast text-6xl text-purple-300/30 absolute right-4 bottom-4"></i>
-                        <div class="relative z-10 text-white">
-                            <div class="bg-purple-600/50 backdrop-blur border border-purple-400/50 text-xs font-bold px-3 py-1 rounded-full inline-block mb-3">Podcast 同步</div>
-                            <h4 class="font-bold text-xl line-clamp-2">EP. 45 | 什麼是大赦？跟贖罪券一樣嗎？</h4>
-                        </div>
-                    </div>
-                    <div class="p-6 flex-grow flex flex-col">
-                        <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-headphones text-purple-600"></i> 發布於 2026/05/01
-                        </div>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
-                            禧年即將到來，常常聽到教會頒布「全大赦」。這到底是什麼意思？是不是中世紀的贖罪券又回來了？本集用十五分鐘為您釐清這個重要的神學概念。
-                        </p>
-                        
-                        <a href="https://podcasts.apple.com/tw/podcast/%E5%A4%A9%E4%B8%BB%E6%95%99veritas%E8%AD%B7%E6%95%99%E4%B8%AD%E5%BF%83/id1542142187" target="_blank" class="w-full mt-4 bg-gray-900 text-white py-2 rounded-xl text-sm font-bold hover:bg-black transition shadow-md flex justify-center items-center gap-2">
-                            <i class="fa-brands fa-apple text-lg"></i> Apple Podcast 收聽
-                        </a>
-                    </div>
-                </article>
-
-                 <!-- 【文章卡片 - 神學分類】 -->
-                 <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="theology">
-                    <div class="p-6 flex-grow">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="bg-yellow-100 text-yellow-800 text-xs font-bold px-3 py-1 rounded-full">神學專欄</span>
-                            <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> 2026/04/28</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3 hover:text-veritas-red cursor-pointer"><a href="article.html">三位一體：難以理解的奧秘，卻是愛的本質</a></h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">為什麼說天主是「三位一體」？這不是數學題，而是關於「關係」的最深啟示。透過聖奧斯定的神學來初探這個奧秘...</p>
-                        <!-- 關鍵字標籤 -->
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">#天主聖三</span>
-                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">#信理神學</span>
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 border-t border-gray-50 bg-gray-50/50 flex justify-between items-center mt-auto">
-                        <span class="text-sm font-medium text-gray-700"><i class="fa-solid fa-pen-nib text-gray-400 mr-1"></i> 伯多祿神父</span>
-                        <a href="article.html" class="text-veritas-red text-sm font-bold hover:underline">閱讀全文 <i class="fa-solid fa-angle-right"></i></a>
-                    </div>
-                </article>
-
-                 <!-- 【YouTube - 精華短片】 -->
-                 <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="youtube">
-                    <a href="https://www.youtube.com/@veritas3098/videos" target="_blank" class="relative h-48 bg-gray-800 flex items-center justify-center overflow-hidden group block">
-                        <img src="https://images.unsplash.com/photo-1601142634808-38923eb7c560?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="YouTube Shorts" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-50 transition duration-300">
-                        <i class="fa-solid fa-play text-4xl text-white z-20 group-hover:scale-110 transition drop-shadow-md border-2 border-white rounded-full w-12 h-12 flex items-center justify-center pl-1"></i>
-                        <!-- 類別標籤：精華短片 -->
-                        <div class="absolute top-4 left-4 bg-gray-900 text-white text-xs font-bold px-3 py-1 rounded z-20 shadow-md">
-                            精華短片
-                        </div>
-                        <div class="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded z-20 font-mono">03:45</div>
-                    </a>
-                    <div class="p-6 flex-grow flex flex-col">
-                        <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
-                            <i class="fa-brands fa-youtube text-red-600"></i> 2026/04/20
-                        </div>
-                        <h3 class="text-xl font-bold mb-3 hover:text-veritas-red transition"><a href="https://www.youtube.com/@veritas3098/videos" target="_blank">彌撒中為什麼要單膝跪地？3分鐘看懂禮儀意義</a></h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">從聖體櫃到祭台，我們的肢體動作如何反映出我們對基督真實臨在的敬畏。</p>
-                        
-                        <a href="https://www.youtube.com/@veritas3098/videos" target="_blank" class="mt-auto inline-flex items-center text-sm font-bold text-red-600 hover:text-red-800">
-                            在 YouTube 觀看 <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
-                        </a>
-                    </div>
-                </article>
+                <!-- 載入中骨架屏 -->
+                <div class="col-span-1 md:col-span-3 flex flex-col items-center justify-center py-20 text-gray-400">
+                    <i class="fa-solid fa-spinner fa-spin text-4xl text-veritas-red mb-4"></i>
+                    <p class="font-bold">正在從資料庫同步最新真理知識...</p>
+                </div>
 
             </div>
 
@@ -340,40 +209,167 @@
     </footer>
 
     <script>
+        // 設定與首頁共用的 GAS API 網址 (請換成您自己的)
+        const GAS_API_URL = "在此貼上您剛剛複製的_網頁應用程式網址_URL"; 
+
         document.addEventListener('DOMContentLoaded', () => {
             // 手機版選單控制
             const btn = document.getElementById('mobile-menu-btn');
             const menu = document.getElementById('mobile-menu');
-            btn.addEventListener('click', () => {
-                menu.classList.toggle('hidden');
-            });
-
-            // 類別過濾邏輯 (Frontend Filter Simulation)
-            const filterBtns = document.querySelectorAll('.category-btn');
-            const contentCards = document.querySelectorAll('.content-card');
-
-            filterBtns.forEach(btn => {
+            if(btn && menu) {
                 btn.addEventListener('click', () => {
+                    menu.classList.toggle('hidden');
+                });
+            }
+
+            // 啟動資料抓取
+            fetchKnowledgeData();
+        });
+
+        // ==========================================
+        // 抓取知識庫資料
+        // ==========================================
+        async function fetchKnowledgeData() {
+            try {
+                let data = [];
+                // 尚未設定網址前，給予假資料預覽排版
+                if (GAS_API_URL === "https://script.google.com/macros/s/AKfycbzbuprWzNPRRsz1Sxp4WtNJzrT-fgsQDc04vzF0RrEFK1WxpmUK4-zGdOpi9xdk9I_m/exec") {
+                    console.log("使用模擬資料載入知識庫。");
+                    data = await getMockKnowledgeData();
+                } else {
+                    const response = await fetch(`${GAS_API_URL}?action=getKnowledgeData`);
+                    if (!response.ok) throw new Error('API 連線錯誤');
+                    data = await response.json();
+                }
+                renderCards(data);
+                setupFilters(); // 資料載入完畢後，綁定過濾器功能
+            } catch (error) {
+                console.error("載入失敗:", error);
+                document.getElementById('content-grid').innerHTML = '<div class="col-span-3 text-center text-red-500 py-10">資料連線失敗，請稍後再試。</div>';
+            }
+        }
+
+        // ==========================================
+        // 動態生成卡片 HTML
+        // ==========================================
+        function renderCards(items) {
+            const grid = document.getElementById('content-grid');
+            grid.innerHTML = ''; // 清除 Loading
+            
+            if (!items || items.length === 0) {
+                grid.innerHTML = '<div class="col-span-3 text-center text-gray-500 py-10">目前沒有資料。</div>';
+                return;
+            }
+
+            items.forEach(item => {
+                let cardHTML = '';
+                
+                // 根據分類渲染不同版型的卡片
+                if (item.category === 'youtube') {
+                    // YouTube 影音卡片
+                    cardHTML = `
+                        <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="youtube">
+                            <a href="${item.link}" target="_blank" class="relative h-48 bg-gray-800 flex items-center justify-center overflow-hidden group block">
+                                <img src="${item.thumbnail || 'https://images.unsplash.com/photo-1544411047-c45ba8a4ee05?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}" alt="YouTube Thumbnail" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-50 transition duration-300">
+                                <i class="fa-brands fa-youtube text-5xl text-red-600 z-20 group-hover:scale-110 shadow-sm transition drop-shadow-lg"></i>
+                                <div class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded flex items-center gap-1 z-20 shadow-md">
+                                    <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span> 最新影音
+                                </div>
+                            </a>
+                            <div class="p-6 flex-grow flex flex-col">
+                                <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
+                                    <i class="fa-brands fa-youtube text-red-600"></i> ${item.date}
+                                </div>
+                                <h3 class="text-xl font-bold mb-3 hover:text-veritas-red transition"><a href="${item.link}" target="_blank">${item.title}</a></h3>
+                                <p class="text-gray-600 text-sm mb-4 line-clamp-2">${item.desc}</p>
+                                <a href="${item.link}" target="_blank" class="mt-auto inline-flex items-center text-sm font-bold text-red-600 hover:text-red-800">
+                                    在 YouTube 觀看 <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
+                                </a>
+                            </div>
+                        </article>
+                    `;
+                } else if (item.category === 'podcast') {
+                    // Podcast 聲音卡片
+                    cardHTML = `
+                        <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="podcast">
+                            <div class="relative h-48 bg-gradient-to-br from-purple-900 to-veritas-dark flex items-center justify-center p-6 text-center">
+                                <i class="fa-solid fa-podcast text-6xl text-purple-300/30 absolute right-4 bottom-4"></i>
+                                <div class="relative z-10 text-white">
+                                    <div class="bg-purple-600/50 backdrop-blur border border-purple-400/50 text-xs font-bold px-3 py-1 rounded-full inline-block mb-3">Podcast 同步</div>
+                                    <h4 class="font-bold text-xl line-clamp-2">${item.title}</h4>
+                                </div>
+                            </div>
+                            <div class="p-6 flex-grow flex flex-col">
+                                <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-headphones text-purple-600"></i> 發布於 ${item.date}
+                                </div>
+                                <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">${item.desc}</p>
+                                <a href="${item.link}" target="_blank" class="w-full mt-4 bg-gray-900 text-white py-2 rounded-xl text-sm font-bold hover:bg-black transition shadow-md flex justify-center items-center gap-2">
+                                    <i class="fa-brands fa-apple text-lg"></i> Apple Podcast 收聽
+                                </a>
+                            </div>
+                        </article>
+                    `;
+                } else {
+                    // 一般文章卡片 (包含聖經、倫理、神學)
+                    let tagColor = 'bg-gray-100 text-gray-800';
+                    let tagName = '護教專欄';
+                    if(item.category === 'bible') { tagColor = 'bg-blue-100 text-blue-800'; tagName = '聖經專欄'; }
+                    if(item.category === 'ethics') { tagColor = 'bg-green-100 text-green-800'; tagName = '倫理專欄'; }
+                    if(item.category === 'theology') { tagColor = 'bg-yellow-100 text-yellow-800'; tagName = '神學專欄'; }
+
+                    cardHTML = `
+                        <article class="content-card bg-white rounded-2xl overflow-hidden shadow-sm hover-card border border-gray-100 flex flex-col h-full" data-category="${item.category}">
+                            <div class="p-6 flex-grow">
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="${tagColor} text-xs font-bold px-3 py-1 rounded-full">${tagName}</span>
+                                    <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar"></i> ${item.date}</span>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3 hover:text-veritas-red cursor-pointer"><a href="${item.link || 'article.html'}">${item.title}</a></h3>
+                                <p class="text-gray-600 text-sm mb-4 line-clamp-3">${item.desc}</p>
+                            </div>
+                            <div class="px-6 py-4 border-t border-gray-50 bg-gray-50/50 flex justify-between items-center mt-auto">
+                                <span class="text-sm font-medium text-gray-700"><i class="fa-solid fa-pen-nib text-gray-400 mr-1"></i> ${item.authorOrTime || '編輯部'}</span>
+                                <a href="${item.link || 'article.html'}" class="text-veritas-red text-sm font-bold hover:underline">閱讀全文 <i class="fa-solid fa-angle-right"></i></a>
+                            </div>
+                        </article>
+                    `;
+                }
+                
+                // 將產生的卡片加入網格中
+                grid.insertAdjacentHTML('beforeend', cardHTML);
+            });
+        }
+
+        // ==========================================
+        // 類別過濾邏輯 (需在 DOM 產生後執行)
+        // ==========================================
+        function setupFilters() {
+            const filterBtns = document.querySelectorAll('.category-btn');
+            // 注意：這裡必須在卡片產生後才抓取 NodeList
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const contentCards = document.querySelectorAll('.content-card');
+                    
                     // 1. 重設所有按鈕樣式
                     filterBtns.forEach(b => {
-                        // 針對一般按鈕移除 Active 樣式
                         b.classList.remove('bg-veritas-red', 'text-white');
                         if(!b.classList.contains('bg-red-50') && !b.classList.contains('bg-purple-50')) {
                             b.classList.add('bg-gray-100', 'text-gray-600');
                         }
                     });
 
-                    // 2. 套用點擊按鈕的 Active 樣式 (如果是特殊的影音按鈕保留原本底色，只改字重或外框)
-                    if(btn.dataset.filter === 'all' || btn.dataset.filter === 'bible' || btn.dataset.filter === 'theology' || btn.dataset.filter === 'ethics') {
+                    // 2. 套用 active 樣式
+                    if(['all', 'bible', 'theology', 'ethics'].includes(btn.dataset.filter)) {
                         btn.classList.remove('bg-gray-100', 'text-gray-600');
                         btn.classList.add('bg-veritas-red', 'text-white');
                     } else {
-                        // 點擊影音或 podcast 時的視覺回饋 (可依需求調整，目前用邊框提示)
                         btn.classList.add('ring-2', 'ring-veritas-red');
                         setTimeout(() => btn.classList.remove('ring-2', 'ring-veritas-red'), 1000);
                     }
 
-                    // 3. 執行過濾
+                    // 3. 執行過濾顯示
                     const filter = btn.dataset.filter;
                     contentCards.forEach(card => {
                         if (filter === 'all' || card.dataset.category === filter) {
@@ -384,7 +380,25 @@
                     });
                 });
             });
-        });
+        }
+
+        // ==========================================
+        // Mock 資料 (供尚未設定 API 時預覽使用)
+        // ==========================================
+        function getMockKnowledgeData() {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    resolve([
+                        { category: "youtube", title: "【真理之夜】神父面對面：解答網友百大提問", date: "2026/05/08", desc: "從聖母敬禮到煉獄教義，神父親自解答。", link: "https://www.youtube.com/@veritas3098/videos", authorOrTime: "", thumbnail: "https://images.unsplash.com/photo-1544411047-c45ba8a4ee05?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
+                        { category: "podcast", title: "EP. 45 | 什麼是大赦？跟贖罪券一樣嗎？", date: "2026/05/01", desc: "禧年即將到來，常常聽到教會頒布「全大赦」。這到底是什麼意思？", link: "https://podcasts.apple.com/tw/podcast/%E5%A4%A9%E4%B8%BB%E6%95%99veritas%E8%AD%B7%E6%95%99%E4%B8%AD%E5%BF%83/id1542142187", authorOrTime: "", thumbnail: "" },
+                        { category: "bible", title: "舊約裡的殘酷戰爭，天主真的是慈愛的嗎？", date: "2026/05/15", desc: "很多慕道友讀到舊約時，會對以色列人滅族、征戰的經文感到困惑...", link: "article.html", authorOrTime: "伯多祿神父", thumbnail: "" },
+                        { category: "ethics", title: "天主教對人工智慧 (AI) 發展的倫理觀點", date: "2026/05/10", desc: "科技發展必須以「人的尊嚴」為中心，本文探討科技與信仰的對話...", link: "article.html", authorOrTime: "瑪利亞 主編", thumbnail: "" },
+                        { category: "theology", title: "三位一體：難以理解的奧秘，卻是愛的本質", date: "2026/04/28", desc: "為什麼說天主是「三位一體」？這不是數學題，而是關於「關係」的啟示。", link: "article.html", authorOrTime: "伯多祿神父", thumbnail: "" },
+                        { category: "youtube", title: "彌撒中為什麼要單膝跪地？3分鐘看懂禮儀意義", date: "2026/04/20", desc: "從聖體櫃到祭台，我們的肢體動作如何反映出對基督真實臨在的敬畏。", link: "https://www.youtube.com/@veritas3098/videos", authorOrTime: "", thumbnail: "https://images.unsplash.com/photo-1601142634808-38923eb7c560?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" }
+                    ]);
+                }, 800);
+            });
+        }
     </script>
 </body>
 </html>
