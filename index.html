@@ -60,10 +60,8 @@
             <div class="flex justify-between h-20">
                 <!-- Logo 區塊 -->
                 <div class="flex items-center">
-                    <a href="#" class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-veritas-red rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                            V
-                        </div>
+                    <a href="index.html" class="flex items-center gap-3">
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-10 h-10 object-contain drop-shadow-md">
                         <div>
                             <h1 class="font-bold text-xl text-veritas-red tracking-wider">Veritas 護教中心</h1>
                             <p class="text-xs text-gray-500 font-medium">天主教數位弘道平台</p>
@@ -72,11 +70,11 @@
                 </div>
                 <!-- 電腦版選單 -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#" class="text-gray-600 hover:text-veritas-red font-medium transition">關於我們</a>
-                    <a href="#" class="text-gray-600 hover:text-veritas-red font-medium transition">護教知識庫</a>
-                    <a href="#" class="text-gray-600 hover:text-veritas-red font-medium transition">影音策展</a>
-                    <a href="#" class="text-gray-600 hover:text-veritas-red font-medium transition">真理問答箱</a>
-                    <a href="#" class="bg-veritas-gold text-white px-5 py-2 rounded-full font-bold hover:bg-yellow-500 transition shadow-md">
+                    <a href="about.html" class="text-gray-600 hover:text-veritas-red font-medium transition">關於我們</a>
+                    <a href="knowledge.html" class="text-gray-600 hover:text-veritas-red font-medium transition">護教知識庫</a>
+                    <a href="media.html" class="text-gray-600 hover:text-veritas-red font-medium transition">影音策展</a>
+                    <a href="qa.html" class="text-gray-600 hover:text-veritas-red font-medium transition">真理問答箱</a>
+                    <a href="support.html" class="bg-veritas-gold text-white px-5 py-2 rounded-full font-bold hover:bg-yellow-500 transition shadow-md">
                         <i class="fa-solid fa-heart mr-2"></i>支持我們
                     </a>
                 </div>
@@ -94,10 +92,11 @@
     <div class="bg-yellow-50 border-b border-yellow-200 py-2">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center gap-3">
             <span class="bg-veritas-red text-white text-xs font-bold px-2 py-1 rounded">最新公告</span>
-            <p class="text-sm text-yellow-800 font-medium truncate">
-                2026年春季「慕道與護教」線上講座開始報名！詳情請點擊此處了解更多。
+            <p id="api-announcement-text" class="text-sm text-yellow-800 font-medium truncate">
+                <!-- 資料將由 API 載入 -->
+                資料連線載入中...
             </p>
-            <a href="#" class="text-sm text-veritas-red font-bold hover:underline whitespace-nowrap">查看詳情 <i class="fa-solid fa-angle-right"></i></a>
+            <a id="api-announcement-link" href="#" class="text-sm text-veritas-red font-bold hover:underline whitespace-nowrap">查看詳情 <i class="fa-solid fa-angle-right"></i></a>
         </div>
     </div>
 
@@ -114,16 +113,16 @@
                     我們致力於透過數位平台、護教文章與多媒體影音，解答信仰疑惑，幫助教友與慕道者更深認識羅馬天主教會的豐富寶藏。
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 pt-4 justify-center md:justify-start">
-                    <a href="#knowledge" class="bg-white text-veritas-red px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition shadow-lg text-center">
+                    <a href="knowledge.html" class="bg-white text-veritas-red px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition shadow-lg text-center">
                         開始探索知識庫
                     </a>
-                    <a href="#qa" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-white/10 transition text-center">
+                    <a href="qa.html" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-white/10 transition text-center">
                         提出信仰問題
                     </a>
                 </div>
             </div>
             
-            <!-- 募資進度卡片 (放在 Hero 區塊右側) -->
+                    <!-- 募資進度卡片 (放在 Hero 區塊右側) -->
             <div class="md:w-2/5 mt-12 md:mt-0 w-full max-w-md mx-auto md:ml-auto">
                 <div class="bg-white rounded-2xl shadow-2xl p-6 text-veritas-dark relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-2 bg-veritas-gold"></div>
@@ -134,17 +133,17 @@
                     
                     <!-- 進度條 -->
                     <div class="mb-2 flex justify-between text-sm font-bold">
-                        <span class="text-veritas-red">已募得 NT$ 24,000</span>
-                        <span class="text-gray-400">目標 NT$ 50,000</span>
+                        <span id="api-fund-raised" class="text-veritas-red">已募得 NT$ --,---</span>
+                        <span id="api-fund-target" class="text-gray-400">目標 NT$ --,---</span>
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-3 mb-4">
-                        <div class="bg-gradient-to-r from-veritas-gold to-yellow-400 h-3 rounded-full" style="width: 48%"></div>
+                        <div id="api-fund-bar" class="bg-gradient-to-r from-veritas-gold to-yellow-400 h-3 rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
                     </div>
-                    <div class="text-right text-xs text-gray-400 font-medium mb-6">達成率 48%</div>
+                    <div id="api-fund-percent" class="text-right text-xs text-gray-400 font-medium mb-6">達成率 --%</div>
                     
-                    <button class="w-full bg-veritas-red text-white py-3 rounded-xl font-bold hover:bg-veritas-darkred transition shadow-md flex justify-center items-center gap-2">
+                    <a href="support.html" class="w-full bg-veritas-red text-white py-3 rounded-xl font-bold hover:bg-veritas-darkred transition shadow-md flex justify-center items-center gap-2">
                         <i class="fa-solid fa-hand-holding-heart"></i> 我要支持奉獻
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -158,7 +157,7 @@
                     <h2 class="text-3xl font-bold text-veritas-dark border-l-4 border-veritas-red pl-4">最新護教資源</h2>
                     <p class="text-gray-500 mt-2 pl-4">整合 YouTube、Podcast 與專欄文章，一站搜尋。</p>
                 </div>
-                <a href="#" class="hidden sm:block text-veritas-red font-bold hover:underline">查看全部 <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                <a href="knowledge.html" class="hidden sm:block text-veritas-red font-bold hover:underline">查看全部 <i class="fa-solid fa-arrow-right ml-1"></i></a>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -171,13 +170,13 @@
                     </div>
                     <div class="p-6">
                         <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
-                            <i class="fa-regular fa-calendar"></i> 2026年1月20日
+                            <i class="fa-regular fa-calendar"></i> <span id="api-art-date">載入中...</span>
                         </div>
-                        <h3 class="text-xl font-bold mb-3 line-clamp-2 hover:text-veritas-red cursor-pointer">為什麼天主教要恭敬聖母？釐清常見的敬禮迷思</h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">很多基督新教弟兄姊妹常誤解天主教「拜」聖母。本文將從聖經基礎與教會歷史，為您解析「敬禮」與「朝拜」的本質差異...</p>
+                        <h3 id="api-art-title" class="text-xl font-bold mb-3 line-clamp-2 hover:text-veritas-red cursor-pointer">載入中...</h3>
+                        <p id="api-art-desc" class="text-gray-600 text-sm mb-4 line-clamp-3">資料讀取中，請稍候...</p>
                         
                         <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-100">
-                            <span class="text-sm font-medium text-gray-700"><i class="fa-solid fa-pen-nib text-gray-400 mr-1"></i> 伯多祿神父</span>
+                            <span class="text-sm font-medium text-gray-700"><i class="fa-solid fa-pen-nib text-gray-400 mr-1"></i> <span id="api-art-author">--</span></span>
                             <!-- 一鍵分享按鈕 (預覽) -->
                             <div class="flex gap-2">
                                 <button class="w-8 h-8 rounded-full bg-green-100 text-green-600 hover:bg-green-500 hover:text-white transition flex items-center justify-center" title="分享至 LINE"><i class="fa-brands fa-line"></i></button>
@@ -193,14 +192,14 @@
                         <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition z-10"></div>
                         <i class="fa-brands fa-youtube text-5xl text-red-600 z-20 group-hover:scale-110 transition"></i>
                         <div class="absolute top-4 left-4 bg-red-100 text-red-800 text-xs font-bold px-3 py-1 rounded-full z-20">YouTube 直播</div>
-                        <div class="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded z-20">45:20</div>
+                        <div id="api-yt-time" class="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded z-20">--:--</div>
                     </div>
                     <div class="p-6">
                         <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
-                            <i class="fa-regular fa-calendar"></i> 2026年1月18日
+                            <i class="fa-regular fa-calendar"></i> <span id="api-yt-date">載入中...</span>
                         </div>
-                        <h3 class="text-xl font-bold mb-3 line-clamp-2 hover:text-veritas-red cursor-pointer">【主日講道精華】在苦難中看見天主的旨意</h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">面對生活中的不順遂，我們該如何以信仰的眼光看待？神父以本週福音為例，帶領大家反思...</p>
+                        <h3 id="api-yt-title" class="text-xl font-bold mb-3 line-clamp-2 hover:text-veritas-red cursor-pointer">載入中...</h3>
+                        <p id="api-yt-desc" class="text-gray-600 text-sm mb-4 line-clamp-2">資料讀取中，請稍候...</p>
                     </div>
                 </article>
 
@@ -213,10 +212,10 @@
                     </div>
                     <div class="p-6">
                         <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-headphones"></i> EP. 24 | 真理之聲
+                            <i class="fa-solid fa-headphones"></i> <span id="api-pod-ep">EP. --</span>
                         </div>
-                        <h3 class="text-xl font-bold mb-3 line-clamp-2 hover:text-veritas-red cursor-pointer">教理輕鬆聊：什麼是大赦？跟贖罪券一樣嗎？</h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">禧年即將到來，常常聽到教會頒布「全大赦」。這到底是什麼意思？讓我們用十分鐘為您解答。</p>
+                        <h3 id="api-pod-title" class="text-xl font-bold mb-3 line-clamp-2 hover:text-veritas-red cursor-pointer">載入中...</h3>
+                        <p id="api-pod-desc" class="text-gray-600 text-sm mb-4 line-clamp-2">資料讀取中，請稍候...</p>
                         <button class="text-sm font-bold text-veritas-red hover:text-veritas-darkred flex items-center gap-1">
                             <i class="fa-solid fa-circle-play"></i> 立即收聽
                         </button>
@@ -240,12 +239,12 @@
                 <!-- 推薦卡片 1 -->
                 <div class="bg-veritas-light p-8 rounded-2xl relative text-left">
                     <i class="fa-solid fa-quote-left text-4xl text-gray-200 absolute top-4 left-4"></i>
-                    <p class="text-gray-700 mb-6 relative z-10 pt-4">「以前遇到非基督徒朋友問我關於聖經的問題，我常常不知道怎麼有條理地回答。現在我都直接來這邊搜尋文章，分享給他們看，真的非常實用！」</p>
+                    <p id="api-test1-text" class="text-gray-700 mb-6 relative z-10 pt-4">載入中...</p>
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-bold">瑪</div>
+                        <div id="api-test1-avatar" class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-bold">-</div>
                         <div>
-                            <div class="font-bold text-sm">瑪利亞 (台北)</div>
-                            <div class="text-xs text-gray-400">青年教友</div>
+                            <div class="font-bold text-sm"><span id="api-test1-name">--</span></div>
+                            <div id="api-test1-tag" class="text-xs text-gray-400">--</div>
                         </div>
                     </div>
                 </div>
@@ -253,12 +252,12 @@
                 <!-- 推薦卡片 2 -->
                 <div class="bg-veritas-light p-8 rounded-2xl relative text-left">
                     <i class="fa-solid fa-quote-left text-4xl text-gray-200 absolute top-4 left-4"></i>
-                    <p class="text-gray-700 mb-6 relative z-10 pt-4">「因為工作關係常出差，沒辦法穩定參與堂區的講座。有這個平台後，我可以在通勤時聽 Podcast 補課，感謝神父與護教中心的用心。」</p>
+                    <p id="api-test2-text" class="text-gray-700 mb-6 relative z-10 pt-4">載入中...</p>
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-bold">保</div>
+                        <div id="api-test2-avatar" class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-bold">-</div>
                         <div>
-                            <div class="font-bold text-sm">保祿 (台中)</div>
-                            <div class="text-xs text-gray-400">職場信徒</div>
+                            <div class="font-bold text-sm"><span id="api-test2-name">--</span></div>
+                            <div id="api-test2-tag" class="text-xs text-gray-400">--</div>
                         </div>
                     </div>
                 </div>
@@ -268,9 +267,9 @@
                     <i class="fa-solid fa-pen-to-square text-4xl text-veritas-gold mb-4"></i>
                     <h3 class="text-xl font-bold mb-2">分享您的感動</h3>
                     <p class="text-sm text-red-100 mb-6">您也有因著本中心的資源而獲得啟發的經驗嗎？歡迎留言告訴我們，您的見證將鼓勵更多人。</p>
-                    <button class="bg-veritas-gold text-veritas-dark font-bold px-6 py-2 rounded-full hover:bg-white transition shadow-md">
+                    <a href="contact.html#feedback" class="bg-veritas-gold text-veritas-dark font-bold px-6 py-2 rounded-full hover:bg-white transition shadow-md">
                         我要推薦/留言
-                    </button>
+                    </a>
                     <p class="text-xs text-red-200 mt-3">* 留言將由管理員審核後刊登</p>
                 </div>
             </div>
@@ -283,7 +282,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="md:col-span-2">
                     <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                        <div class="w-8 h-8 bg-veritas-red rounded flex items-center justify-center text-sm">V</div>
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-8 h-8 object-contain">
                         Veritas 護教中心
                     </h2>
                     <p class="text-sm text-gray-400 mb-4 max-w-sm">
@@ -298,10 +297,10 @@
                 <div>
                     <h3 class="text-lg font-bold text-white mb-4">快速連結</h3>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 關於我們</a></li>
-                        <li><a href="#" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 護教文章列表</a></li>
-                        <li><a href="#" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 友站資源推薦</a></li>
-                        <li><a href="#" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 邀請神父演講</a></li>
+                        <li><a href="about.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 關於我們</a></li>
+                        <li><a href="knowledge.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 護教文章列表</a></li>
+                        <li><a href="links.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 友站資源推薦</a></li>
+                        <li><a href="invite.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 邀請神父演講</a></li>
                     </ul>
                 </div>
                 <div>
@@ -327,5 +326,134 @@
         </div>
     </footer>
 
+    <!-- GAS API 前端串接腳本 -->
+    <script>
+        // ==========================================
+        // 1. 設定 Google Apps Script Web App 網址
+        // ==========================================
+        // 請將剛才複製的網址貼在下方的引號中：
+        const GAS_API_URL = "在此貼上您剛剛複製的_網頁應用程式網址_URL"; 
+
+        // 當 HTML 載入完成後執行
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchHomeData();
+        });
+
+        // ==========================================
+        // 2. 獲取資料邏輯
+        // ==========================================
+        async function fetchHomeData() {
+            try {
+                let data;
+                
+                // 為了在您尚未部署 GAS 之前能順利預覽排版，設計了「Mock (假資料)」機制。
+                // 若偵測到 URL 未替換，則自動切換為模擬資料。
+                if (GAS_API_URL === "https://script.google.com/macros/s/AKfycbzbuprWzNPRRsz1Sxp4WtNJzrT-fgsQDc04vzF0RrEFK1WxpmUK4-zGdOpi9xdk9I_m/exec") {
+                    console.log("提示: 尚未設定 GAS_API_URL，目前使用模擬資料載入前端。");
+                    data = await getMockData(); 
+                } else {
+                    // 正式環境的 API 呼叫 (假設回傳 JSON)
+                    const response = await fetch(`${GAS_API_URL}?action=getHomeData`);
+                    if (!response.ok) throw new Error('API 網路連線錯誤');
+                    data = await response.json();
+                }
+
+                renderData(data);
+
+            } catch (error) {
+                console.error("讀取後台資料失敗:", error);
+                document.getElementById('api-announcement-text').textContent = "系統維護中，暫時無法取得最新公告。";
+            }
+        }
+
+        // ==========================================
+        // 3. 將資料填入 HTML (DOM 渲染)
+        // ==========================================
+        function renderData(data) {
+            // [A] 更新行政公告
+            if (data.announcement) {
+                document.getElementById('api-announcement-text').textContent = data.announcement.text;
+                document.getElementById('api-announcement-link').href = data.announcement.link;
+            }
+
+            // [B] 更新募資進度
+            if (data.funding) {
+                const { raised, target } = data.funding;
+                const percentage = Math.min(Math.round((raised / target) * 100), 100);
+
+                document.getElementById('api-fund-raised').textContent = `已募得 NT$ ${raised.toLocaleString()}`;
+                document.getElementById('api-fund-target').textContent = `目標 NT$ ${target.toLocaleString()}`;
+                // 觸發 CSS 寬度動畫
+                setTimeout(() => {
+                    document.getElementById('api-fund-bar').style.width = `${percentage}%`;
+                }, 100);
+                document.getElementById('api-fund-percent').textContent = `達成率 ${percentage}%`;
+            }
+
+            // [C] 更新最新資源區塊
+            if (data.resources) {
+                // 文章
+                document.getElementById('api-art-date').textContent = data.resources.article.date;
+                document.getElementById('api-art-title').textContent = data.resources.article.title;
+                document.getElementById('api-art-desc').textContent = data.resources.article.desc;
+                document.getElementById('api-art-author').textContent = data.resources.article.author;
+                
+                // YouTube
+                document.getElementById('api-yt-date').textContent = data.resources.youtube.date;
+                document.getElementById('api-yt-title').textContent = data.resources.youtube.title;
+                document.getElementById('api-yt-desc').textContent = data.resources.youtube.desc;
+                document.getElementById('api-yt-time').textContent = data.resources.youtube.duration;
+
+                // Podcast
+                document.getElementById('api-pod-ep').textContent = data.resources.podcast.ep;
+                document.getElementById('api-pod-title').textContent = data.resources.podcast.title;
+                document.getElementById('api-pod-desc').textContent = data.resources.podcast.desc;
+            }
+
+            // [D] 更新教友見證 (抓取前兩筆)
+            if (data.testimonials && data.testimonials.length >= 2) {
+                const t1 = data.testimonials[0];
+                document.getElementById('api-test1-text').textContent = `「${t1.text}」`;
+                document.getElementById('api-test1-name').textContent = t1.name;
+                document.getElementById('api-test1-tag').textContent = t1.tag;
+                document.getElementById('api-test1-avatar').textContent = t1.name.charAt(0); // 取名字第一個字當頭像
+
+                const t2 = data.testimonials[1];
+                document.getElementById('api-test2-text').textContent = `「${t2.text}」`;
+                document.getElementById('api-test2-name').textContent = t2.name;
+                document.getElementById('api-test2-tag').textContent = t2.tag;
+                document.getElementById('api-test2-avatar').textContent = t2.name.charAt(0);
+            }
+        }
+
+        // ==========================================
+        // 4. 模擬 Google Sheets 吐出的 JSON 資料格式
+        // ==========================================
+        function getMockData() {
+            return new Promise(resolve => {
+                setTimeout(() => { // 模擬 0.8 秒的網路傳輸延遲
+                    resolve({
+                        announcement: {
+                            text: "2026年春季「慕道與護教」線上講座開始報名！(此為測試資料)",
+                            link: "news.html"
+                        },
+                        funding: {
+                            raised: 32500,
+                            target: 50000
+                        },
+                        resources: {
+                            article: { date: "2026年1月22日", title: "為什麼天主教要恭敬聖母？釐清常見的敬禮迷思", desc: "很多基督新教弟兄姊妹常誤解天主教「拜」聖母。本文將從聖經基礎與教會歷史為您解析。", author: "伯多祿神父" },
+                            youtube: { date: "2026年1月19日", title: "【主日講道精華】在苦難中看見天主的旨意", desc: "面對生活中的不順遂，我們該如何以信仰的眼光看待？神父以本週福音為例...", duration: "25:10" },
+                            podcast: { ep: "EP. 24 | 真理之聲", title: "教理輕鬆聊：什麼是大赦？跟贖罪券一樣嗎？", desc: "禧年即將到來，常常聽到教會頒布「全大赦」。這到底是什麼意思？" }
+                        },
+                        testimonials: [
+                            { name: "瑪利亞 (台北)", tag: "青年教友", text: "以前遇到非基督徒朋友問我關於聖經的問題，我常常不知道怎麼有條理地回答。現在我都直接來這邊搜尋文章，分享給他們看，真的非常實用！" },
+                            { name: "保祿 (台中)", tag: "職場信徒", text: "因為工作關係常出差，沒辦法穩定參與堂區的講座。有這個平台後，我可以在通勤時聽 Podcast 補課，感謝神父與護教中心的用心。" }
+                        ]
+                    });
+                }, 800); 
+            });
+        }
+    </script>
 </body>
 </html>
