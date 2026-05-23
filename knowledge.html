@@ -210,7 +210,7 @@
 
     <script>
         // 設定與首頁共用的 GAS API 網址 (請換成您自己的)
-        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzbuprWzNPRRsz1Sxp4WtNJzrT-fgsQDc04vzF0RrEFK1WxpmUK4-zGdOpi9xdk9I_m/exec"; 
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz6Iqnjt8r9poHA_l450uly_XkdX6d2iU7Qcc56fBObFbMoFrtXlSvFtznBUiRgO-lN/exec"; 
 
         document.addEventListener('DOMContentLoaded', () => {
             // 手機版選單控制
@@ -227,21 +227,30 @@
         });
 
         // ==========================================
-        // 抓取知識庫資料
+        // 抓取知識庫資料 (加入強力除錯)
         // ==========================================
         async function fetchKnowledgeData() {
             try {
-                let data = [];
-                // 直接使用真實 API 載入資料，移除原本的模擬判斷
                 const response = await fetch(`${GAS_API_URL}?action=getKnowledgeData`);
-                if (!response.ok) throw new Error('API 連線錯誤');
-                data = await response.json();
+                const rawText = await response.text();
+                
+                let data;
+                try {
+                    data = JSON.parse(rawText);
+                } catch (e) {
+                    console.error("❌ 伺服器回傳異常，內容為：", rawText);
+                    throw new Error("權限設定錯誤。請回 GAS 將『誰可以存取』改為『所有人』。");
+                }
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
                 
                 renderCards(data);
                 setupFilters(); // 資料載入完畢後，綁定過濾器功能
             } catch (error) {
                 console.error("載入失敗:", error);
-                document.getElementById('content-grid').innerHTML = '<div class="col-span-3 text-center text-red-500 py-10">資料連線失敗，請稍後再試。</div>';
+                document.getElementById('content-grid').innerHTML = `<div class="col-span-1 md:col-span-3 text-center text-red-500 py-10 font-bold bg-red-50 rounded-xl"><i class="fa-solid fa-triangle-exclamation mr-2 text-2xl mb-2 block"></i>資料連線失敗<br><span class="text-sm font-normal">${error.message}</span></div>`;
             }
         }
 
