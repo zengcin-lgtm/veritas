@@ -343,7 +343,7 @@
         // 1. 設定 Google Apps Script Web App 網址
         // ==========================================
         // 請將剛才複製的網址貼在下方的引號中：
-        const GAS_API_URL = "在此貼上您剛剛複製的_網頁應用程式網址_URL"; 
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzbuprWzNPRRsz1Sxp4WtNJzrT-fgsQDc04vzF0RrEFK1WxpmUK4-zGdOpi9xdk9I_m/exec"; 
 
         // 當 HTML 載入完成後執行
         document.addEventListener('DOMContentLoaded', () => {
@@ -359,7 +359,7 @@
                 
                 // 為了在您尚未部署 GAS 之前能順利預覽排版，設計了「Mock (假資料)」機制。
                 // 若偵測到 URL 未替換，則自動切換為模擬資料。
-                if (GAS_API_URL === "https://script.google.com/macros/s/AKfycbzbuprWzNPRRsz1Sxp4WtNJzrT-fgsQDc04vzF0RrEFK1WxpmUK4-zGdOpi9xdk9I_m/exec") {
+                if (GAS_API_URL === "在此貼上您剛剛複製的_網頁應用程式網址_URL") {
                     console.log("提示: 尚未設定 GAS_API_URL，目前使用模擬資料載入前端。");
                     data = await getMockData(); 
                 } else {
