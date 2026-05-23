@@ -246,6 +246,22 @@
                     throw new Error(data.error);
                 }
                 
+                // === [新增排序邏輯] 確保資料依據日期「由新到舊」降冪排列 ===
+                data.sort((a, b) => {
+                    // 建立一個小工具來解析日期字串
+                    const parseDate = (dateString) => {
+                        if (!dateString) return 0;
+                        // 將中文的「年月日」替換成斜線，確保 JS 的 Date 物件能看懂
+                        let cleanStr = String(dateString).replace(/年|月/g, '/').replace(/日/g, '');
+                        let timeObj = new Date(cleanStr).getTime();
+                        return isNaN(timeObj) ? 0 : timeObj; // 如果解析失敗則視為0
+                    };
+                    
+                    // b 減 a 代表降冪排序 (數字大的，也就是比較新的時間，會排在前面)
+                    return parseDate(b.date) - parseDate(a.date); 
+                });
+                // ==============================================================
+
                 renderCards(data);
                 setupFilters(); // 資料載入完畢後，綁定過濾器功能
             } catch (error) {
