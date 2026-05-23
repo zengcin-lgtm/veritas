@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聯絡我們 | 天主教 Veritas 護教中心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        veritas: {
+                            red: '#8B0000',
+                            darkred: '#5C0000',
+                            gold: '#D4AF37',
+                            light: '#FAFAFA',
+                            dark: '#2D3748'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #FAFAFA; }
+        html { scroll-behavior: smooth; }
+        .header-gradient {
+            background: linear-gradient(135deg, rgba(45, 55, 72, 0.95) 0%, rgba(17, 24, 39, 0.98) 100%), url('https://images.unsplash.com/photo-1437603568260-1950d3ca6eab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="text-veritas-dark antialiased">
+
+    <!-- 頂部導覽列 Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center gap-3">
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-10 h-10 object-contain drop-shadow-md">
+                        <div>
+                            <h1 class="font-bold text-xl text-veritas-red tracking-wider">Veritas 護教中心</h1>
+                            <p class="text-xs text-gray-500 font-medium">天主教數位弘道平台</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="about.html" class="text-gray-600 hover:text-veritas-red font-medium transition">關於我們</a>
+                    <a href="knowledge.html" class="text-gray-600 hover:text-veritas-red font-medium transition">護教知識庫</a>
+                    <a href="media.html" class="text-gray-600 hover:text-veritas-red font-medium transition">影音策展</a>
+                    <a href="qa.html" class="text-gray-600 hover:text-veritas-red font-medium transition">真理問答箱</a>
+                    <a href="support.html" class="bg-veritas-gold text-white px-5 py-2 rounded-full font-bold hover:bg-yellow-500 transition shadow-md">
+                        <i class="fa-solid fa-heart mr-2"></i>支持我們
+                    </a>
+                </div>
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-veritas-red focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 手機版下拉選單 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full z-40">
+        <div class="px-4 pt-2 pb-6 space-y-2">
+            <a href="about.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">關於我們</a>
+            <a href="knowledge.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">護教知識庫</a>
+            <a href="media.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">影音策展</a>
+            <a href="qa.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">真理問答箱</a>
+            <a href="support.html" class="block px-3 py-3 text-base font-bold text-veritas-gold hover:text-yellow-600 rounded-md"><i class="fa-solid fa-heart mr-2"></i>支持我們</a>
+        </div>
+    </div>
+
+    <!-- 頁首區塊 -->
+    <header class="header-gradient text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">聯絡與回饋</h2>
+            <p class="text-gray-300 max-w-2xl mx-auto">無論是網站建議、見證分享，或是任何合作洽詢，我們都非常期待收到您的來信。</p>
+        </div>
+    </header>
+
+    <!-- 聯絡表單與資訊區 -->
+    <section class="py-16 bg-veritas-light" id="feedback">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-12">
+                
+                <!-- 左側：聯絡資訊 -->
+                <div class="lg:w-1/3">
+                    <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-100 h-full">
+                        <h3 class="text-2xl font-bold text-veritas-dark mb-6 border-l-4 border-veritas-gold pl-4">保持聯繫</h3>
+                        <p class="text-gray-600 mb-8 leading-relaxed">
+                            您的每一份回饋都是我們進步的動力。若您對護教中心的運作、數位內容有任何想法，或願意分享您的信仰見證，請隨時與我們聯絡。
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-red-50 text-veritas-red flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-envelope text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">電子信箱</h4>
+                                    <p class="text-gray-600 text-sm mt-1">service@veritas.catholic.org.tw</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                                    <i class="fa-brands fa-facebook-messenger text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">粉絲專頁私訊</h4>
+                                    <p class="text-gray-600 text-sm mt-1">天主教 Veritas 護教中心</p>
+                                    <a href="#" class="text-blue-600 text-sm hover:underline mt-1 inline-block">前往粉專 <i class="fa-solid fa-angle-right"></i></a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-clock text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">回覆時間</h4>
+                                    <p class="text-gray-600 text-sm mt-1">我們將於收到信件後的 3-5 個工作天內由專人為您回覆。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右側：聯絡表單 -->
+                <div class="lg:w-2/3">
+                    <div class="bg-white p-8 md:p-10 rounded-2xl shadow-xl border-t-4 border-veritas-red relative">
+                        <h3 class="text-2xl font-bold text-veritas-dark mb-6">線上留言表單</h3>
+                        
+                        <form id="contact-form" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">您的姓名 / 稱呼 <span class="text-red-500">*</span></label>
+                                    <input type="text" name="name" required placeholder="例如：若望、陳弟兄" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-veritas-red focus:border-veritas-red outline-none transition">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">電子信箱 Email <span class="text-red-500">*</span></label>
+                                    <input type="email" name="email" required placeholder="example@email.com" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-veritas-red focus:border-veritas-red outline-none transition">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">留言分類 <span class="text-red-500">*</span></label>
+                                <select name="category" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-veritas-red focus:border-veritas-red outline-none transition bg-white">
+                                    <option value="" disabled selected>請選擇您想反映的項目</option>
+                                    <option value="一般詢問">一般詢問</option>
+                                    <option value="見證分享">見證分享 (同意刊登於網站)</option>
+                                    <option value="網站建議/錯誤回報">網站建議 / 錯誤回報</option>
+                                    <option value="合作提案">合作提案</option>
+                                    <option value="其他事項">其他事項</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">留言內容 <span class="text-red-500">*</span></label>
+                                <textarea name="message" rows="6" required placeholder="請輸入您的訊息..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-veritas-red focus:border-veritas-red outline-none transition resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" id="submit-btn" class="w-full bg-veritas-red text-white py-4 rounded-xl font-bold text-lg hover:bg-veritas-darkred transition shadow-md flex justify-center items-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i> 確認送出留言
+                            </button>
+                        </form>
+
+                        <!-- 載入中遮罩 -->
+                        <div id="loading-overlay" class="hidden absolute inset-0 bg-white/90 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center z-10">
+                            <i class="fa-solid fa-spinner fa-spin text-5xl text-veritas-gold mb-4"></i>
+                            <p class="font-bold text-gray-700">正在傳送您的訊息...</p>
+                        </div>
+
+                        <!-- 成功訊息 -->
+                        <div id="success-message" class="hidden absolute inset-0 bg-white rounded-2xl flex flex-col items-center justify-center z-20 text-center p-8">
+                            <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6">
+                                <i class="fa-solid fa-check text-4xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">訊息已成功送出！</h3>
+                            <p class="text-gray-600 mb-6">感謝您的來信，我們已收到您的訊息，將會盡快給予回覆。</p>
+                            <button onclick="resetForm()" class="bg-gray-800 text-white px-8 py-3 rounded-full font-bold hover:bg-gray-700 transition">
+                                重新填寫
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁尾 Footer -->
+    <footer class="bg-veritas-dark text-gray-300 py-12 border-t-4 border-veritas-red">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-8 h-8 object-contain">
+                        Veritas 護教中心
+                    </h2>
+                    <p class="text-sm text-gray-400 mb-4 max-w-sm">
+                        我們秉持著天主教會的傳統與聖經真理，透過現代數位媒體，為尋道者解惑，為信徒建立堅固的信仰根基。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition"><i class="fa-brands fa-facebook-f text-white"></i></a>
+                        <a href="https://www.youtube.com/@veritas3098/videos" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition"><i class="fa-brands fa-youtube text-white"></i></a>
+                        <a href="https://podcasts.apple.com/tw/podcast/%E5%A4%A9%E4%B8%BB%E6%95%99veritas%E8%AD%B7%E6%95%99%E4%B8%AD%E5%BF%83/id1542142187" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition"><i class="fa-solid fa-podcast text-white"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">快速連結</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="about.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 關於我們</a></li>
+                        <li><a href="knowledge.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 護教文章列表</a></li>
+                        <li><a href="links.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 友站資源推薦</a></li>
+                        <li><a href="invite.html" class="hover:text-veritas-gold transition"><i class="fa-solid fa-angle-right mr-1 text-veritas-red"></i> 邀請神父演講</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">聯絡資訊</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-envelope mt-1 text-veritas-red"></i>
+                            <span>service@veritas.catholic.org.tw</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-veritas-red"></i>
+                            <span>台灣</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-10 pt-6 text-sm text-center md:text-left flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2026 天主教 Veritas 護教中心 版權所有.</p>
+                <p class="mt-2 md:mt-0 text-gray-500">
+                    Powered by <a href="#" class="font-bold text-gray-400 hover:text-white transition">Foday Design Studio</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 手機版選單切換
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // GAS API 網址
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz6Iqnjt8r9poHA_l450uly_XkdX6d2iU7Qcc56fBObFbMoFrtXlSvFtznBUiRgO-lN/exec"; 
+
+        // 表單送出處理
+        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const overlay = document.getElementById('loading-overlay');
+            const successMsg = document.getElementById('success-message');
+            
+            // 顯示載入中
+            overlay.classList.remove('hidden');
+
+            const formData = new FormData(form);
+            const data = new URLSearchParams();
+            data.append('action', 'submitContact');
+            for (const pair of formData) {
+                data.append(pair[0], pair[1]);
+            }
+
+            try {
+                const response = await fetch(GAS_API_URL, {
+                    method: 'POST',
+                    body: data
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    // 顯示成功畫面
+                    overlay.classList.add('hidden');
+                    successMsg.classList.remove('hidden');
+                    form.reset();
+                } else {
+                    throw new Error(result.message || '伺服器發生未知錯誤');
+                }
+            } catch (error) {
+                console.error('送出失敗:', error);
+                alert('抱歉，訊息傳送失敗，請稍後再試。錯誤原因：' + error.message);
+                overlay.classList.add('hidden');
+            }
+        });
+
+        // 重置表單狀態
+        function resetForm() {
+            document.getElementById('success-message').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
