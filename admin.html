@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veritas CMS | 後台管理系統</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 FontAwesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入 Quill Rich Text Editor (視覺化編輯器) -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+    <style>
+        body { background-color: #F3F4F6; }
+        /* 讓 Quill 編輯器的高度變大且字體好看 */
+        .ql-container { height: 400px; font-size: 16px; font-family: sans-serif; background-color: white; border-radius: 0 0 0.5rem 0.5rem; }
+        .ql-toolbar { background-color: #F9FAFB; border-radius: 0.5rem 0.5rem 0 0; border-color: #D1D5DB; }
+        .ql-editor p { margin-bottom: 1rem; line-height: 1.8; }
+        
+        .nav-active { background-color: #8B0000; color: white; }
+        .nav-inactive { color: #4B5563; }
+        .nav-inactive:hover { background-color: #F3F4F6; color: #1F2937; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden antialiased">
+
+    <!-- 側邊導覽列 (Sidebar) -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col hidden md:flex">
+        <div class="h-20 flex items-center px-6 border-b border-gray-200 bg-gray-50">
+            <h1 class="font-bold text-xl text-gray-800 tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-server text-red-800"></i> Veritas CMS
+            </h1>
+        </div>
+        <div class="flex-1 overflow-y-auto py-6 px-4 space-y-2">
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 px-2">內容發布</p>
+            <button onclick="switchTab('tab-article')" id="btn-article" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium nav-active transition">
+                <i class="fa-solid fa-pen-nib w-5"></i> 發布新文章
+            </button>
+            <button onclick="switchTab('tab-news')" id="btn-news" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium nav-inactive transition">
+                <i class="fa-solid fa-bullhorn w-5"></i> 發布行政公告
+            </button>
+            
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 px-2 mt-8">系統捷徑</p>
+            <a href="index.html" target="_blank" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium nav-inactive transition">
+                <i class="fa-solid fa-globe w-5"></i> 預覽前台網站
+            </a>
+            <!-- 在實際運作時，這裡可以放試算表後台的連結 -->
+            <a href="#" target="_blank" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium nav-inactive transition">
+                <i class="fa-solid fa-table w-5"></i> 開啟資料庫(Sheet)
+            </a>
+        </div>
+    </aside>
+
+    <!-- 主內容區塊 (Main Content) -->
+    <main class="flex-1 flex flex-col overflow-hidden relative">
+        <!-- 頂部 Header -->
+        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-8 z-10 shadow-sm">
+            <h2 id="page-title" class="text-2xl font-bold text-gray-800">發布新文章 (知識庫)</h2>
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full"><i class="fa-solid fa-circle text-green-500 text-[10px] mr-1"></i> 系統連線正常</span>
+                <div class="w-10 h-10 bg-red-800 rounded-full flex items-center justify-center text-white font-bold shadow-md">
+                    Admin
+                </div>
+            </div>
+        </header>
+
+        <!-- 內容滑動區 -->
+        <div class="flex-1 overflow-y-auto p-8">
+            <div class="max-w-4xl mx-auto">
+
+                <!-- 全域載入遮罩 -->
+                <div id="loading-overlay" class="hidden fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-50 flex flex-col items-center justify-center">
+                    <i class="fa-solid fa-spinner fa-spin text-5xl text-white mb-4"></i>
+                    <p class="text-xl font-bold text-white tracking-widest">資料處理中，請稍候...</p>
+                </div>
+
+                <!-- 模塊 1：發布文章 (知識庫) -->
+                <div id="tab-article" class="block space-y-6">
+                    <form id="form-article" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">文章標題 <span class="text-red-500">*</span></label>
+                                <input type="text" name="title" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none" placeholder="請輸入吸睛的標題">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">文章分類 <span class="text-red-500">*</span></label>
+                                <select name="category" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none bg-white">
+                                    <option value="theology">神學與教理</option>
+                                    <option value="bible">聖經專欄</option>
+                                    <option value="ethics">倫理與生活</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">作者 <span class="text-red-500">*</span></label>
+                                <input type="text" name="author" required value="編輯部" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">發布日期 <span class="text-red-500">*</span></label>
+                                <input type="date" name="date" id="article-date" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none">
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-gray-700 mb-2">前台卡片簡介 (約 50 字) <span class="text-red-500">*</span></label>
+                            <textarea name="desc" rows="2" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none resize-none" placeholder="這段文字會顯示在知識庫首頁的卡片上..."></textarea>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-gray-700 mb-2">封面縮圖網址 (選填)</label>
+                            <input type="url" name="thumbnail" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none" placeholder="請貼上圖片的 URL (例如: https://...)">
+                            <p class="text-xs text-gray-400 mt-1">留空將顯示預設的聖經圖示。</p>
+                        </div>
+
+                        <div class="mb-8">
+                            <label class="block text-sm font-bold text-gray-700 mb-2">文章完整內容 (支援圖片拖曳與文字排版) <span class="text-red-500">*</span></label>
+                            <!-- Quill 編輯器容器 -->
+                            <div id="quill-editor"></div>
+                            <!-- 隱藏的 Input 用來裝 HTML 資料送給 API -->
+                            <input type="hidden" name="content" id="article-html-content">
+                        </div>
+
+                        <input type="hidden" name="action" value="addArticle">
+                        
+                        <div class="flex justify-end border-t border-gray-100 pt-6">
+                            <button type="submit" class="bg-red-800 text-white px-8 py-3 rounded-xl font-bold shadow-md hover:bg-red-900 transition flex items-center gap-2">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> 儲存並發布至前台
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 模塊 2：發布公告 -->
+                <div id="tab-news" class="hidden space-y-6">
+                    <form id="form-news" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">公告標題 <span class="text-red-500">*</span></label>
+                                <input type="text" name="title" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none" placeholder="例如：2026 線上講座報名">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">分類標籤 <span class="text-red-500">*</span></label>
+                                <select name="category" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none bg-white">
+                                    <option value="活動通知">活動通知</option>
+                                    <option value="行政事務">行政事務</option>
+                                    <option value="系統公告">系統公告</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">發布日期 <span class="text-red-500">*</span></label>
+                                <input type="date" name="date" id="news-date" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">外部連結 (選填)</label>
+                                <input type="url" name="link" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none" placeholder="若有報名表單，請貼上網址">
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <label class="block text-sm font-bold text-gray-700 mb-2">公告內文 <span class="text-red-500">*</span></label>
+                            <textarea name="content" rows="5" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none resize-none" placeholder="請輸入詳細的公告內容..."></textarea>
+                        </div>
+
+                        <input type="hidden" name="action" value="addNews">
+                        
+                        <div class="flex justify-end border-t border-gray-100 pt-6">
+                            <button type="submit" class="bg-gray-800 text-white px-8 py-3 rounded-xl font-bold shadow-md hover:bg-gray-900 transition flex items-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i> 發布公告
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ==========================================
+        // 1. 基本設定與初始化
+        // ==========================================
+        // 請填入您的 GAS API 網址！
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz6Iqnjt8r9poHA_l450uly_XkdX6d2iU7Qcc56fBObFbMoFrtXlSvFtznBUiRgO-lN/exec"; 
+
+        // 自動填入今天的日期
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('article-date').value = today;
+        document.getElementById('news-date').value = today;
+
+        // ==========================================
+        // 2. 側邊欄 Tab 切換邏輯
+        // ==========================================
+        function switchTab(tabId) {
+            // 隱藏所有內容
+            document.getElementById('tab-article').classList.add('hidden');
+            document.getElementById('tab-news').classList.add('hidden');
+            
+            // 重置所有按鈕樣式
+            document.getElementById('btn-article').className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium nav-inactive transition";
+            document.getElementById('btn-news').className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium nav-inactive transition";
+
+            // 顯示目標內容與設定按鈕啟用樣式
+            document.getElementById(tabId).classList.remove('hidden');
+            if(tabId === 'tab-article') {
+                document.getElementById('btn-article').className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium nav-active transition";
+                document.getElementById('page-title').textContent = "發布新文章 (知識庫)";
+            } else {
+                document.getElementById('btn-news').className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium nav-active transition";
+                document.getElementById('page-title').textContent = "發布行政公告";
+            }
+        }
+
+        // ==========================================
+        // 3. 初始化 Quill 視覺化編輯器
+        // ==========================================
+        var quill = new Quill('#quill-editor', {
+            theme: 'snow',
+            placeholder: '在此撰寫您的神學專欄，支援粗體、標題、清單與插入圖片...',
+            modules: {
+                toolbar: [
+                    [{ 'header': [2, 3, false] }], // 允許 H2, H3 標題
+                    ['bold', 'italic', 'underline', 'strike'], // 字體樣式
+                    [{ 'color': [] }, { 'background': [] }],   // 顏色
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }], // 清單
+                    ['blockquote', 'link', 'image', 'video'], // 引用、圖片、影片
+                    ['clean'] // 清除格式
+                ]
+            }
+        });
+
+        // ==========================================
+        // 4. 表單送出機制 (串接 GAS POST)
+        // ==========================================
+        async function submitData(formElement, isArticle = false) {
+            const overlay = document.getElementById('loading-overlay');
+            overlay.classList.remove('hidden'); // 顯示載入中
+
+            // 若是文章表單，必須把 Quill 編輯器裡的 HTML 拿出來塞進 input 裡面
+            if (isArticle) {
+                const htmlContent = document.querySelector('#quill-editor .ql-editor').innerHTML;
+                document.getElementById('article-html-content').value = htmlContent;
+                
+                if (quill.getText().trim().length === 0) {
+                    alert("文章內容不能為空！");
+                    overlay.classList.add('hidden');
+                    return;
+                }
+            }
+
+            const formData = new FormData(formElement);
+            const data = new URLSearchParams();
+            for (const pair of formData) {
+                // 將日期格式從 YYYY-MM-DD 轉成更友善的格式 (可選)
+                if(pair[0] === 'date') {
+                    const d = new Date(pair[1]);
+                    data.append('date', `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`);
+                } else {
+                    data.append(pair[0], pair[1]);
+                }
+            }
+
+            try {
+                const response = await fetch(GAS_API_URL, {
+                    method: 'POST',
+                    body: data
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    alert('✅ 發布成功！資料已寫入資料庫，前台網站已同步更新。');
+                    formElement.reset(); // 清空表單
+                    if (isArticle) quill.setContents([]); // 清空編輯器
+                    document.getElementById('article-date').value = today; // 恢復日期
+                    document.getElementById('news-date').value = today;
+                } else {
+                    throw new Error(result.message || '伺服器發生未知錯誤');
+                }
+            } catch (error) {
+                console.error('發布失敗:', error);
+                alert('❌ 抱歉，資料傳送失敗。請確認 GAS 網址是否正確。錯誤原因：' + error.message);
+            } finally {
+                overlay.classList.add('hidden'); // 隱藏載入中
+            }
+        }
+
+        // 綁定事件監聽器
+        document.getElementById('form-article').addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitData(e.target, true);
+        });
+
+        document.getElementById('form-news').addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitData(e.target, false);
+        });
+    </script>
+</body>
+</html>
