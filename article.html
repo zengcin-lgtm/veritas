@@ -218,10 +218,6 @@
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get('id');
 
-            // 設定 FB 留言板網址為當前真實網址
-            const currentUrl = window.location.href;
-            document.querySelector('.fb-comments').setAttribute('data-href', currentUrl);
-
             if (!articleId) {
                 showError("找不到指定的文章。");
                 return;
@@ -284,9 +280,28 @@
                 heroContainer.classList.remove('hidden');
             }
 
-            // 重新解析 FB 留言板外掛 (解決動態載入時外掛不顯示的問題)
-            if (window.FB) {
-                FB.XFBML.parse(document.getElementById('fb-comments-container'));
+            // === 修正此處：處理 FB 留言板動態顯示 ===
+            const currentUrl = window.location.href;
+            
+            // 防呆機制：如果是本地端測試 (file:// 或 localhost)，給予一個真實的假網址來讓外掛順利顯示預覽
+            const fbUrl = (currentUrl.includes('file://') || currentUrl.includes('localhost') || currentUrl.includes('127.0.0.1')) 
+                          ? 'https://www.foday.idv.tw/' 
+                          : currentUrl;
+
+            const fbContainer = document.getElementById('fb-comments-container');
+            // 動態塞入新的 fb-comments 標籤，確保網址正確綁定
+            fbContainer.innerHTML = `<div class="fb-comments" data-href="${fbUrl}" data-width="100%" data-numposts="5"></div>`;
+
+            // 重新要求 FB 解析留言板外掛
+            if (typeof FB !== 'undefined') {
+                FB.XFBML.parse(fbContainer);
+            } else {
+                // 如果 FB 官方 SDK 載入比較慢，我們等它 1.5 秒後再強制解析一次
+                setTimeout(() => {
+                    if (typeof FB !== 'undefined') {
+                        FB.XFBML.parse(fbContainer);
+                    }
+                }, 1500);
             }
         }
 
