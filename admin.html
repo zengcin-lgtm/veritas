@@ -4,33 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Veritas CMS | 後台管理總控中心</title>
-    <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入 FontAwesome 圖示 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- 引入 Quill Rich Text Editor (視覺化編輯器) -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 
     <style>
         body { background-color: #F3F4F6; font-family: sans-serif; }
-        /* 讓 Quill 編輯器的高度變大且字體好看 */
         .ql-container { height: 400px; font-size: 16px; background-color: white; border-radius: 0 0 0.5rem 0.5rem; }
         .ql-toolbar { background-color: #F9FAFB; border-radius: 0.5rem 0.5rem 0 0; border-color: #D1D5DB; }
         .ql-editor p { margin-bottom: 1rem; line-height: 1.8; }
         
-        /* 選單啟動狀態 */
         .nav-active { background-color: #8B0000; color: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
         .nav-inactive { color: #4B5563; }
         .nav-inactive:hover { background-color: #E5E7EB; color: #1F2937; }
-        
-        /* 隱藏捲軸 */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="flex h-screen overflow-hidden antialiased">
 
+    <!-- Toast 通知容器 -->
     <div id="toast-container" class="fixed top-5 right-5 z-[100] flex flex-col gap-3 pointer-events-none"></div>
 
     <aside class="w-64 bg-white border-r border-gray-200 flex flex-col hidden md:flex shadow-sm z-20 shrink-0">
@@ -45,6 +39,9 @@
             <button onclick="switchTab('tab-article', '文章管理 (知識庫)')" id="btn-tab-article" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium nav-active transition">
                 <i class="fa-solid fa-book-open w-5"></i> 文章管理
             </button>
+            <button onclick="switchTab('tab-category', '文章分類設定')" id="btn-tab-category" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium nav-inactive transition">
+                <i class="fa-solid fa-tags w-5"></i> 文章分類設定
+            </button>
             <button onclick="switchTab('tab-news', '行政公告管理')" id="btn-tab-news" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium nav-inactive transition">
                 <i class="fa-solid fa-bullhorn w-5"></i> 公告管理
             </button>
@@ -56,9 +53,8 @@
             <button onclick="switchTab('tab-home', '首頁與募資設定'); loadHomeSettings();" id="btn-tab-home" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium nav-inactive transition">
                 <i class="fa-solid fa-house-chimney w-5"></i> 首頁與募資設定
             </button>
-            <button onclick="switchTab('tab-inbox', '系統收件匣 (表單與見證)'); loadInboxData();" id="btn-tab-inbox" class="w-full flex items-center justify-between px-4 py-3 rounded-xl font-medium nav-inactive transition">
+            <button onclick="switchTab('tab-inbox', '系統收件匣 (表單與見證)')" id="btn-tab-inbox" class="w-full flex items-center justify-between px-4 py-3 rounded-xl font-medium nav-inactive transition">
                 <div class="flex items-center gap-3"><i class="fa-solid fa-inbox w-5"></i> 系統收件匣</div>
-                <span class="bg-red-100 text-red-800 text-[10px] font-bold px-2 py-0.5 rounded-full"><i class="fa-solid fa-circle text-[8px] animate-pulse"></i> 即時</span>
             </button>
 
             <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 px-2 mt-8">捷徑</p>
@@ -73,11 +69,8 @@
         <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-8 z-10 shrink-0">
             <h2 id="page-title" class="text-2xl font-bold text-gray-800">文章管理 (知識庫)</h2>
             <div class="flex items-center gap-4">
-                <span class="text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full border border-gray-200"><i class="fa-solid fa-circle text-green-500 text-[10px] mr-1"></i> API 連線正常</span>
+                <span class="text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full border border-gray-200"><i class="fa-solid fa-circle text-green-500 text-[10px] mr-1"></i> 連線正常</span>
                 <button onclick="fetchAllData()" class="text-gray-500 hover:text-red-800 transition" title="重新整理資料"><i class="fa-solid fa-rotate-right"></i></button>
-                <div class="w-10 h-10 bg-red-800 rounded-full flex items-center justify-center text-white font-bold shadow-md">
-                    Ad
-                </div>
             </div>
         </header>
 
@@ -91,8 +84,8 @@
                     <p class="text-lg font-bold text-gray-700 tracking-widest" id="loading-text">資料處理中，請稍候...</p>
                 </div>
 
+                <!-- 1. 文章管理 -->
                 <div id="tab-article" class="tab-content block">
-                    <!-- 文章列表畫面 -->
                     <div id="article-list-view" class="space-y-6">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-lg font-bold text-gray-800">已發布專欄文章</h3>
@@ -117,47 +110,40 @@
                         </div>
                     </div>
 
-                    <!-- 文章編輯表單畫面 (預設隱藏) -->
                     <div id="article-form-view" class="hidden space-y-6">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-lg font-bold text-gray-800" id="article-form-title">發布新文章</h3>
-                            <button onclick="closeArticleForm()" class="text-gray-500 hover:text-gray-800 font-bold px-4 py-2 border border-gray-200 rounded-lg bg-white shadow-sm transition">
-                                返回列表
-                            </button>
+                            <button onclick="closeArticleForm()" class="text-gray-500 hover:text-gray-800 font-bold px-4 py-2 border border-gray-200 rounded-lg bg-white shadow-sm transition">返回列表</button>
                         </div>
                         <form id="form-article" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
-                            <!-- 隱藏欄位，用於判斷是新增還是更新 -->
                             <input type="hidden" name="rowIndex" id="article-rowIndex" value="">
-                            
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                                 <div>
                                     <label class="block text-sm font-bold text-gray-700 mb-2">文章標題 <span class="text-red-500">*</span></label>
-                                    <input type="text" name="title" id="art-input-title" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none" placeholder="請輸入標題">
+                                    <input type="text" name="title" id="art-input-title" required class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-bold text-gray-700 mb-2">文章分類 <span class="text-red-500">*</span></label>
-                                    <select name="category" id="art-input-category" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none bg-white">
-                                        <option value="theology">神學與教理</option>
-                                        <option value="bible">聖經專欄</option>
-                                        <option value="ethics">倫理與生活</option>
+                                    <select name="category" id="art-input-category" required class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none bg-white">
+                                        <!-- JS 動態載入自訂分類 -->
                                     </select>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-bold text-gray-700 mb-2">作者 <span class="text-red-500">*</span></label>
-                                    <input type="text" name="author" id="art-input-author" required value="編輯部" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none">
+                                    <input type="text" name="author" id="art-input-author" required value="編輯部" class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-bold text-gray-700 mb-2">發布日期 <span class="text-red-500">*</span></label>
-                                    <input type="date" name="date" id="art-input-date" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none">
+                                    <input type="date" name="date" id="art-input-date" required class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none">
                                 </div>
                             </div>
                             <div class="mb-6">
-                                <label class="block text-sm font-bold text-gray-700 mb-2">前台卡片簡介 (約 50 字) <span class="text-red-500">*</span></label>
-                                <textarea name="desc" id="art-input-desc" rows="2" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none resize-none" placeholder="這段文字會顯示在知識庫首頁的卡片上..."></textarea>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">卡片簡介 (約 50 字) <span class="text-red-500">*</span></label>
+                                <textarea name="desc" id="art-input-desc" rows="2" required class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none resize-none"></textarea>
                             </div>
                             <div class="mb-6">
                                 <label class="block text-sm font-bold text-gray-700 mb-2">封面縮圖網址 (選填)</label>
-                                <input type="url" name="thumbnail" id="art-input-thumbnail" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-800 outline-none" placeholder="請貼上圖片的 URL">
+                                <input type="url" name="thumbnail" id="art-input-thumbnail" class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none">
                             </div>
                             <div class="mb-8">
                                 <label class="block text-sm font-bold text-gray-700 mb-2">文章完整內容 <span class="text-red-500">*</span></label>
@@ -173,14 +159,46 @@
                     </div>
                 </div>
 
+                <!-- 2. 動態分類管理 -->
+                <div id="tab-category" class="tab-content hidden">
+                    <div class="space-y-6">
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-6">
+                            <p class="text-sm text-blue-800 font-bold">在此新增的分類，會自動顯示在「發布文章」的選單，以及前台「護教知識庫」的分類標籤中。</p>
+                        </div>
+                        
+                        <form id="form-category" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex items-end gap-4">
+                            <div class="flex-1">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">新增分類名稱 <span class="text-red-500">*</span></label>
+                                <input type="text" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none" placeholder="例如：靈修分享、教宗通諭...">
+                            </div>
+                            <input type="hidden" name="action" value="addCategory">
+                            <button type="submit" class="bg-gray-800 text-white px-6 py-2 rounded-lg font-bold shadow-md hover:bg-black transition">
+                                新增
+                            </button>
+                        </form>
+
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                            <table class="w-full text-left text-sm text-gray-600">
+                                <thead class="bg-gray-50 text-gray-700 border-b border-gray-200">
+                                    <tr>
+                                        <th class="px-6 py-4 font-bold">自訂分類名稱</th>
+                                        <th class="px-6 py-4 font-bold text-right">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="category-table-body" class="divide-y divide-gray-100">
+                                    <tr><td colspan="2" class="px-6 py-8 text-center text-gray-400">載入中...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. 公告管理 -->
                 <div id="tab-news" class="tab-content hidden">
-                    <!-- 公告列表畫面 -->
                     <div id="news-list-view" class="space-y-6">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-lg font-bold text-gray-800">已發布行政公告</h3>
-                            <button onclick="openNewsForm()" class="bg-gray-800 text-white px-5 py-2 rounded-lg font-bold shadow-md hover:bg-gray-900 transition flex items-center gap-2">
-                                <i class="fa-solid fa-plus"></i> 新增公告
-                            </button>
+                            <button onclick="openNewsForm()" class="bg-gray-800 text-white px-5 py-2 rounded-lg font-bold shadow-md transition"><i class="fa-solid fa-plus"></i> 新增公告</button>
                         </div>
                         <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
                             <table class="w-full text-left text-sm text-gray-600">
@@ -188,173 +206,87 @@
                                     <tr>
                                         <th class="px-6 py-4 font-bold">發布日期</th>
                                         <th class="px-6 py-4 font-bold">分類</th>
-                                        <th class="px-6 py-4 font-bold w-1/2">公告標題</th>
+                                        <th class="px-6 py-4 font-bold w-1/2">標題</th>
                                         <th class="px-6 py-4 font-bold text-right">操作</th>
                                     </tr>
                                 </thead>
-                                <tbody id="news-table-body" class="divide-y divide-gray-100">
-                                    <tr><td colspan="4" class="px-6 py-8 text-center text-gray-400">載入中...</td></tr>
-                                </tbody>
+                                <tbody id="news-table-body" class="divide-y divide-gray-100"></tbody>
                             </table>
                         </div>
                     </div>
-
-                    <!-- 公告編輯表單畫面 -->
+                    <!-- 公告表單 -->
                     <div id="news-form-view" class="hidden space-y-6">
                         <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-lg font-bold text-gray-800" id="news-form-title">發布行政公告</h3>
-                            <button onclick="closeNewsForm()" class="text-gray-500 hover:text-gray-800 font-bold px-4 py-2 border border-gray-200 rounded-lg bg-white shadow-sm transition">
-                                返回列表
-                            </button>
+                            <h3 class="text-lg font-bold text-gray-800" id="news-form-title">發布公告</h3>
+                            <button onclick="closeNewsForm()" class="text-gray-500 border border-gray-200 px-4 py-2 rounded-lg bg-white">返回列表</button>
                         </div>
                         <form id="form-news" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
-                            <!-- 隱藏欄位供更新判定 -->
                             <input type="hidden" name="rowIndex" id="news-rowIndex" value="">
-                            
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div><label class="block text-sm font-bold mb-2">標題 <span class="text-red-500">*</span></label><input type="text" name="title" id="news-input-title" required class="w-full px-4 py-2 border rounded-lg"></div>
                                 <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">公告標題 <span class="text-red-500">*</span></label>
-                                    <input type="text" name="title" id="news-input-title" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-800 outline-none">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">分類標籤 <span class="text-red-500">*</span></label>
-                                    <select name="category" id="news-input-category" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-800 outline-none bg-white">
-                                        <option value="活動通知">活動通知</option>
-                                        <option value="行政事務">行政事務</option>
-                                        <option value="系統公告">系統公告</option>
+                                    <label class="block text-sm font-bold mb-2">分類 <span class="text-red-500">*</span></label>
+                                    <select name="category" id="news-input-category" required class="w-full px-4 py-2 border rounded-lg bg-white">
+                                        <option value="活動通知">活動通知</option><option value="行政事務">行政事務</option><option value="系統公告">系統公告</option>
                                     </select>
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">發布日期 <span class="text-red-500">*</span></label>
-                                    <input type="date" name="date" id="news-input-date" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-800 outline-none">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">外部連結 (選填)</label>
-                                    <input type="url" name="link" id="news-input-link" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-800 outline-none" placeholder="網址">
-                                </div>
+                                <div><label class="block text-sm font-bold mb-2">日期 <span class="text-red-500">*</span></label><input type="date" name="date" id="news-input-date" required class="w-full px-4 py-2 border rounded-lg"></div>
+                                <div><label class="block text-sm font-bold mb-2">外部連結 (選填)</label><input type="url" name="link" id="news-input-link" class="w-full px-4 py-2 border rounded-lg"></div>
                             </div>
-                            <div class="mb-8">
-                                <label class="block text-sm font-bold text-gray-700 mb-2">公告內文 <span class="text-red-500">*</span></label>
-                                <textarea name="content" id="news-input-content" rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-800 outline-none resize-none"></textarea>
-                            </div>
-                            <div class="flex justify-end border-t border-gray-100 pt-6">
-                                <button type="submit" class="bg-gray-800 text-white px-8 py-3 rounded-xl font-bold shadow-md hover:bg-gray-900 transition flex items-center gap-2">
-                                    <i class="fa-solid fa-floppy-disk"></i> 儲存公告
-                                </button>
-                            </div>
+                            <div class="mb-8"><label class="block text-sm font-bold mb-2">公告內文 <span class="text-red-500">*</span></label><textarea name="content" id="news-input-content" rows="4" required class="w-full px-4 py-3 border rounded-lg resize-none"></textarea></div>
+                            <div class="flex justify-end"><button type="submit" class="bg-gray-800 text-white px-8 py-3 rounded-xl font-bold">儲存公告</button></div>
                         </form>
                     </div>
                 </div>
 
+                <!-- 4. 友站資源 -->
                 <div id="tab-link" class="tab-content hidden space-y-6">
                     <form id="form-link" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">網站名稱 <span class="text-red-500">*</span></label>
-                                <input type="text" name="title" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" placeholder="例如：梵蒂岡新聞網">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">分類群組 <span class="text-red-500">*</span></label>
-                                <input type="text" name="category" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" placeholder="例如：普世教會">
-                            </div>
+                            <div><label class="block text-sm font-bold mb-2">網站名稱 <span class="text-red-500">*</span></label><input type="text" name="title" required class="w-full px-4 py-2 border rounded-lg"></div>
+                            <div><label class="block text-sm font-bold mb-2">分類群組 <span class="text-red-500">*</span></label><input type="text" name="category" required class="w-full px-4 py-2 border rounded-lg"></div>
                         </div>
-                        <div class="mb-6">
-                            <label class="block text-sm font-bold text-gray-700 mb-2">目標網址 URL <span class="text-red-500">*</span></label>
-                            <input type="url" name="url" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none" placeholder="https://...">
-                        </div>
-                        <div class="mb-8">
-                            <label class="block text-sm font-bold text-gray-700 mb-2">網站簡介</label>
-                            <textarea name="desc" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 outline-none resize-none" placeholder="請簡述該網站的特色..."></textarea>
-                        </div>
+                        <div class="mb-6"><label class="block text-sm font-bold mb-2">目標 URL <span class="text-red-500">*</span></label><input type="url" name="url" required class="w-full px-4 py-2 border rounded-lg"></div>
+                        <div class="mb-8"><label class="block text-sm font-bold mb-2">簡介</label><textarea name="desc" rows="2" class="w-full px-4 py-2 border rounded-lg resize-none"></textarea></div>
                         <input type="hidden" name="action" value="addLink">
-                        <div class="flex justify-end border-t border-gray-100 pt-6">
-                            <button type="submit" class="bg-blue-700 text-white px-8 py-3 rounded-xl font-bold shadow-md hover:bg-blue-800 transition flex items-center gap-2">
-                                <i class="fa-solid fa-plus"></i> 新增資源
-                            </button>
-                        </div>
+                        <div class="flex justify-end"><button type="submit" class="bg-blue-700 text-white px-8 py-3 rounded-xl font-bold">新增資源</button></div>
                     </form>
                 </div>
 
+                <!-- 5. 首頁設定 -->
                 <div id="tab-home" class="tab-content hidden space-y-6">
                     <form id="form-home" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
-                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg mb-8">
-                            <h4 class="font-bold text-yellow-800 mb-1">即時同步說明</h4>
-                            <p class="text-sm text-yellow-700">在此修改的數值，儲存後將立刻同步更新至前台首頁。</p>
-                        </div>
-
-                        <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2"><i class="fa-solid fa-bullhorn text-gray-400 mr-2"></i> 首頁置頂公告設定</h3>
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg mb-8"><p class="text-sm text-yellow-700 font-bold">在此修改的數值，儲存後將立刻同步更新至前台首頁。</p></div>
+                        <h3 class="text-lg font-bold mb-4 border-b pb-2"><i class="fa-solid fa-bullhorn text-gray-400 mr-2"></i> 首頁置頂公告</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                            <div class="md:col-span-2">
-                                <label class="block text-sm font-bold text-gray-700 mb-2">公告文字</label>
-                                <input type="text" name="annText" id="input-annText" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-600 outline-none" placeholder="例如：2026 線上講座報名中...">
-                            </div>
-                            <div class="md:col-span-2">
-                                <label class="block text-sm font-bold text-gray-700 mb-2">「查看詳情」目標連結</label>
-                                <input type="text" name="annLink" id="input-annLink" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-600 outline-none" placeholder="例如：news.html 或外部網址">
-                            </div>
+                            <div class="md:col-span-2"><label class="block text-sm font-bold mb-2">公告文字</label><input type="text" name="annText" id="input-annText" class="w-full px-4 py-2 border rounded-lg"></div>
+                            <div class="md:col-span-2"><label class="block text-sm font-bold mb-2">「查看詳情」連結</label><input type="text" name="annLink" id="input-annLink" class="w-full px-4 py-2 border rounded-lg"></div>
                         </div>
-
-                        <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2"><i class="fa-solid fa-seedling text-gray-400 mr-2"></i> 募資進度設定</h3>
+                        <h3 class="text-lg font-bold mb-4 border-b pb-2"><i class="fa-solid fa-seedling text-gray-400 mr-2"></i> 募資進度</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">目前已募得金額 (填入純數字)</label>
-                                <input type="number" name="fundRaised" id="input-fundRaised" class="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-600 outline-none text-red-700 font-bold">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">年度目標金額 (填入純數字)</label>
-                                <input type="number" name="fundTarget" id="input-fundTarget" class="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-600 outline-none text-gray-600 font-bold">
-                            </div>
+                            <div><label class="block text-sm font-bold mb-2">已募得金額</label><input type="number" name="fundRaised" id="input-fundRaised" class="w-full px-4 py-3 text-lg border rounded-lg text-red-700 font-bold"></div>
+                            <div><label class="block text-sm font-bold mb-2">年度目標</label><input type="number" name="fundTarget" id="input-fundTarget" class="w-full px-4 py-3 text-lg border rounded-lg text-gray-600 font-bold"></div>
                         </div>
-
                         <input type="hidden" name="action" value="updateHomeSettings">
-                        <div class="flex justify-end border-t border-gray-100 pt-6">
-                            <button type="submit" class="bg-gray-800 text-white px-8 py-3 rounded-xl font-bold shadow-md hover:bg-black transition flex items-center gap-2">
-                                <i class="fa-solid fa-floppy-disk"></i> 儲存設定
-                            </button>
-                        </div>
+                        <div class="flex justify-end"><button type="submit" class="bg-gray-800 text-white px-8 py-3 rounded-xl font-bold">儲存設定</button></div>
                     </form>
                 </div>
 
+                <!-- 6. 系統收件匣 -->
                 <div id="tab-inbox" class="tab-content hidden space-y-6">
-                    <div class="flex justify-between items-end mb-4">
-                        <div>
-                            <h3 class="text-2xl font-bold text-gray-800">表單收件預覽</h3>
-                            <p class="text-sm text-gray-500 mt-1">點擊卡片可檢視完整內容並更改處理狀態。</p>
-                        </div>
-                    </div>
-
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        
-                        <!-- 問答箱 -->
-                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-[600px]">
-                            <div class="bg-blue-50 border-b border-blue-100 px-4 py-3 font-bold text-blue-800 flex justify-between items-center shrink-0">
-                                <span><i class="fa-solid fa-clipboard-question mr-1"></i> 真理問答箱</span>
-                            </div>
-                            <div class="p-4 overflow-y-auto flex-1 space-y-4 bg-gray-50" id="inbox-qa">
-                                <!-- JS 動態塞入 -->
-                            </div>
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 flex flex-col h-[600px]">
+                            <div class="bg-blue-50 border-b border-blue-100 px-4 py-3 font-bold text-blue-800 shrink-0">真理問答箱</div>
+                            <div class="p-4 overflow-y-auto flex-1 space-y-4 bg-gray-50" id="inbox-qa"></div>
                         </div>
-
-                        <!-- 演講邀約 -->
-                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-[600px]">
-                            <div class="bg-purple-50 border-b border-purple-100 px-4 py-3 font-bold text-purple-800 flex justify-between items-center shrink-0">
-                                <span><i class="fa-solid fa-microphone-lines mr-1"></i> 演講邀約</span>
-                            </div>
-                            <div class="p-4 overflow-y-auto flex-1 space-y-4 bg-gray-50" id="inbox-invite">
-                                <!-- JS 動態塞入 -->
-                            </div>
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 flex flex-col h-[600px]">
+                            <div class="bg-purple-50 border-b border-purple-100 px-4 py-3 font-bold text-purple-800 shrink-0">演講邀約</div>
+                            <div class="p-4 overflow-y-auto flex-1 space-y-4 bg-gray-50" id="inbox-invite"></div>
                         </div>
-
-                        <!-- 聯絡與見證 -->
-                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-[600px]">
-                            <div class="bg-orange-50 border-b border-orange-100 px-4 py-3 font-bold text-orange-800 flex justify-between items-center shrink-0">
-                                <span><i class="fa-solid fa-envelope-open-text mr-1"></i> 聯絡與見證</span>
-                            </div>
-                            <div class="p-4 overflow-y-auto flex-1 space-y-4 bg-gray-50" id="inbox-contact">
-                                <!-- JS 動態塞入 -->
-                            </div>
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 flex flex-col h-[600px]">
+                            <div class="bg-orange-50 border-b border-orange-100 px-4 py-3 font-bold text-orange-800 shrink-0">聯絡與見證</div>
+                            <div class="p-4 overflow-y-auto flex-1 space-y-4 bg-gray-50" id="inbox-contact"></div>
                         </div>
-
                     </div>
                 </div>
 
@@ -362,54 +294,40 @@
         </div>
     </main>
 
+    <!-- Modal 互動視窗 -->
     <div id="inbox-modal" class="hidden fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
             <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50 shrink-0">
-                <h3 class="text-xl font-bold text-gray-800" id="modal-title">表單詳細內容</h3>
-                <button onclick="closeModal('inbox-modal')" class="text-gray-400 hover:text-gray-600 transition text-2xl leading-none">&times;</button>
+                <h3 class="text-xl font-bold text-gray-800" id="modal-title">詳細內容</h3>
+                <button onclick="closeModal('inbox-modal')" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
             </div>
-            
-            <div class="p-6 overflow-y-auto flex-1 bg-white space-y-6" id="modal-content">
-                <!-- 動態注入的唯讀表單內容 -->
-            </div>
-
+            <div class="p-6 overflow-y-auto flex-1 bg-white space-y-6" id="modal-content"></div>
             <div class="px-6 py-4 border-t border-gray-100 bg-gray-50 shrink-0">
                 <form id="modal-form" class="space-y-4">
-                    <!-- 隱藏變數紀錄目標 -->
-                    <input type="hidden" id="modal-sheet-name">
-                    <input type="hidden" id="modal-row-index">
-                    
+                    <input type="hidden" id="modal-sheet-name"><input type="hidden" id="modal-row-index">
                     <div class="flex flex-wrap items-center gap-4 bg-white p-4 rounded-xl border border-gray-200">
                         <div class="flex-1 min-w-[200px]">
-                            <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wider">處理狀態設定</label>
-                            <select id="modal-input-status" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-400 outline-none font-bold">
-                                <option value="未處理">未處理</option>
-                                <option value="處理中">處理中</option>
-                                <option value="已結案">已結案</option>
-                                <option value="婉拒/無效">婉拒/無效</option>
+                            <label class="block text-xs font-bold text-gray-500 mb-1">處理狀態</label>
+                            <select id="modal-input-status" class="w-full px-3 py-2 border rounded-lg font-bold">
+                                <option value="未處理">未處理</option><option value="處理中">處理中</option><option value="已結案">已結案</option><option value="婉拒/無效">婉拒/無效</option>
                             </select>
                         </div>
-
-                        <!-- 專供「聯絡與見證」使用的控制項 -->
                         <div id="modal-contact-controls" class="hidden flex-1 flex gap-4 min-w-[300px]">
                             <div class="flex-1">
-                                <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wider">身份標籤 (首頁用)</label>
-                                <input type="text" id="modal-input-tag" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-400 outline-none" placeholder="例如：青年教友">
+                                <label class="block text-xs font-bold text-gray-500 mb-1">身份標籤</label>
+                                <input type="text" id="modal-input-tag" class="w-full px-3 py-2 border rounded-lg">
                             </div>
                             <div class="flex flex-col justify-end">
-                                <label class="flex items-center gap-2 cursor-pointer h-10 px-3 bg-red-50 border border-red-100 rounded-lg hover:bg-red-100 transition">
-                                    <input type="checkbox" id="modal-input-visible" class="w-4 h-4 text-red-600 rounded border-gray-300 focus:ring-red-500">
-                                    <span class="text-sm font-bold text-red-800 whitespace-nowrap">顯示於首頁見證</span>
+                                <label class="flex items-center gap-2 cursor-pointer h-10 px-3 bg-red-50 border border-red-100 rounded-lg hover:bg-red-100">
+                                    <input type="checkbox" id="modal-input-visible" class="w-4 h-4 text-red-600 rounded">
+                                    <span class="text-sm font-bold text-red-800">顯示於首頁</span>
                                 </label>
                             </div>
                         </div>
                     </div>
-
                     <div class="flex justify-end gap-3 pt-2">
-                        <button type="button" onclick="closeModal('inbox-modal')" class="px-5 py-2 rounded-lg font-bold text-gray-600 hover:bg-gray-200 transition">取消</button>
-                        <button type="button" onclick="submitModalUpdate()" class="bg-gray-800 text-white px-6 py-2 rounded-lg font-bold shadow-md hover:bg-black transition flex items-center gap-2">
-                            <i class="fa-solid fa-check"></i> 儲存變更
-                        </button>
+                        <button type="button" onclick="closeModal('inbox-modal')" class="px-5 py-2 rounded-lg font-bold text-gray-600 hover:bg-gray-200">取消</button>
+                        <button type="button" onclick="submitModalUpdate()" class="bg-gray-800 text-white px-6 py-2 rounded-lg font-bold shadow-md hover:bg-black">儲存變更</button>
                     </div>
                 </form>
             </div>
@@ -418,553 +336,289 @@
 
     <script>
         // ==========================================
-        // 1. 系統設定與全域變數
+        // 1. 設定與工具
         // ==========================================
-        // ⚠️ 務必填入您最新部署的 GAS API 網址！
-        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz6Iqnjt8r9poHA_l450uly_XkdX6d2iU7Qcc56fBObFbMoFrtXlSvFtznBUiRgO-lN/exec"; 
-
-        // 全域資料庫快取 (供編輯使用)
-        let globalData = { articles: [], news: [], inbox: { qa:[], invite:[], contact:[] } };
-
-        // 幫日期輸入框預設今天
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzbuprWzNPRRsz1Sxp4WtNJzrT-fgsQDc04vzF0RrEFK1WxpmUK4-zGdOpi9xdk9I_m/exec"; 
+        let globalData = { articles: [], news: [], categories: [], inbox: { qa:[], invite:[], contact:[] } };
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('art-input-date').value = today;
         document.getElementById('news-input-date').value = today;
 
-        // ==========================================
-        // 2. UI 互動與 Toast 提示系統 (不使用 Alert)
-        // ==========================================
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            const colorClass = type === 'success' ? 'bg-green-600' : 'bg-red-600';
-            const iconClass = type === 'success' ? 'fa-check-circle' : 'fa-triangle-exclamation';
-            
-            toast.className = `${colorClass} text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 transform transition-all duration-300 translate-x-full opacity-0 pointer-events-auto`;
-            toast.innerHTML = `<i class="fa-solid ${iconClass} text-xl"></i><span class="font-bold text-sm tracking-wide">${message}</span>`;
-            
+            const bg = type === 'success' ? 'bg-green-600' : 'bg-red-600';
+            const icon = type === 'success' ? 'fa-check-circle' : 'fa-triangle-exclamation';
+            toast.className = `${bg} text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 transition-all duration-300 translate-x-full opacity-0`;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-xl"></i><span class="font-bold text-sm tracking-wide">${message}</span>`;
             container.appendChild(toast);
-            
-            // 動畫滑入
-            setTimeout(() => { toast.classList.remove('translate-x-full', 'opacity-0'); }, 10);
-            
-            // 3秒後自動消失
-            setTimeout(() => {
-                toast.classList.add('translate-x-full', 'opacity-0');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            setTimeout(() => toast.classList.remove('translate-x-full', 'opacity-0'), 10);
+            setTimeout(() => { toast.classList.add('translate-x-full', 'opacity-0'); setTimeout(() => toast.remove(), 300); }, 3000);
         }
 
-        function switchTab(tabId, titleText) {
+        function switchTab(tabId, title) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            const buttons = ['btn-tab-article', 'btn-tab-news', 'btn-tab-link', 'btn-tab-home', 'btn-tab-inbox'];
-            buttons.forEach(id => {
-                const btn = document.getElementById(id);
-                if(btn) { btn.classList.remove('nav-active'); btn.classList.add('nav-inactive'); }
-            });
+            document.querySelectorAll('[id^="btn-tab-"]').forEach(btn => { btn.classList.remove('nav-active'); btn.classList.add('nav-inactive'); });
             document.getElementById(tabId).classList.remove('hidden');
-            const targetBtn = document.getElementById('btn-' + tabId);
-            if(targetBtn) { targetBtn.classList.remove('nav-inactive'); targetBtn.classList.add('nav-active'); }
-            document.getElementById('page-title').textContent = titleText;
+            const btn = document.getElementById('btn-' + tabId);
+            if(btn) { btn.classList.remove('nav-inactive'); btn.classList.add('nav-active'); }
+            document.getElementById('page-title').textContent = title;
         }
 
-        // 開關 Modal
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
 
-        // ==========================================
-        // 3. 初始化 Quill 視覺化編輯器
-        // ==========================================
+        // Quill 編輯器
         var quill = new Quill('#quill-editor', {
-            theme: 'snow',
-            placeholder: '在此撰寫您的專欄，支援粗體、標題、清單與直接貼上圖片...',
-            modules: {
-                toolbar: [
-                    [{ 'header': [2, 3, false] }], 
-                    ['bold', 'italic', 'underline', 'strike'], 
-                    [{ 'color': [] }, { 'background': [] }],   
-                    [{ 'list': 'ordered'}, { 'list': 'bullet' }], 
-                    ['blockquote', 'link', 'image', 'video'], 
-                    ['clean'] 
-                ]
-            }
+            theme: 'snow', placeholder: '撰寫專欄內容...',
+            modules: { toolbar: [ [{ 'header': [2, 3, false] }], ['bold', 'italic', 'underline', 'strike'], [{ 'color': [] }, { 'background': [] }], [{ 'list': 'ordered'}, { 'list': 'bullet' }], ['blockquote', 'link', 'image'], ['clean'] ] }
         });
 
         // ==========================================
-        // 4. 資料載入 (文章、公告、收件匣)
+        // 2. 獲取資料
         // ==========================================
         async function fetchAllData() {
             const overlay = document.getElementById('loading-overlay');
-            document.getElementById('loading-text').textContent = '全面同步資料中...';
+            document.getElementById('loading-text').textContent = '資料同步中...';
             overlay.classList.remove('hidden');
-
             try {
-                // 平行發出三個請求，加速讀取
-                const [knowRes, newsRes, inboxRes] = await Promise.all([
+                const [knowRes, catRes, newsRes, inboxRes] = await Promise.all([
                     fetch(`${GAS_API_URL}?action=getKnowledgeData`),
+                    fetch(`${GAS_API_URL}?action=getArticleCategories`),
                     fetch(`${GAS_API_URL}?action=getNewsData`),
                     fetch(`${GAS_API_URL}?action=getInboxData`)
                 ]);
-                
                 const knowData = await knowRes.json();
-                const newsData = await newsRes.json();
-                const inboxData = await inboxRes.json();
-
-                if(knowData.error || newsData.error || inboxData.error) throw new Error("API 權限異常");
-
-                // 過濾出專欄文章 (過濾掉 YouTube, Podcast)
+                const catData = await catRes.json();
+                globalData.news = await newsRes.json();
+                globalData.inbox = await inboxRes.json();
+                
+                // 處理舊資料英文標籤相容性
+                knowData.forEach(item => {
+                    if(item.category === 'bible') item.category = '聖經專欄';
+                    if(item.category === 'theology') item.category = '神學與教理';
+                    if(item.category === 'ethics') item.category = '倫理與生活';
+                });
                 globalData.articles = knowData.filter(item => item.type === 'article').reverse();
-                globalData.news = newsData;
-                globalData.inbox = inboxData;
+                globalData.categories = catData;
 
+                renderCategorySelect();
+                renderCategoryList();
                 renderArticleList();
                 renderNewsList();
                 renderInboxLists();
-                
                 showToast('資料已成功同步。');
-            } catch (error) {
-                showToast('讀取資料失敗：' + error.message, 'error');
-            } finally {
-                overlay.classList.add('hidden');
-            }
+            } catch (e) { showToast('讀取失敗：' + e.message, 'error'); } 
+            finally { overlay.classList.add('hidden'); }
         }
-
-        // 初始化載入
         window.onload = fetchAllData;
 
         // ==========================================
-        // 5. 渲染列表與表單切換 (文章與公告)
+        // 3. 渲染邏輯
         // ==========================================
-        /* --- 文章管理 --- */
-        function renderArticleList() {
-            const tbody = document.getElementById('article-table-body');
-            tbody.innerHTML = '';
-            if(globalData.articles.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" class="px-6 py-8 text-center text-gray-400">目前沒有文章資料。</td></tr>';
-                return;
-            }
-            globalData.articles.forEach(item => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-gray-50 transition border-b border-gray-50";
-                tr.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap">${item.date}</td>
-                    <td class="px-6 py-4 whitespace-nowrap"><span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">${item.category}</span></td>
-                    <td class="px-6 py-4 font-bold text-gray-800">${item.title}</td>
-                    <td class="px-6 py-4 text-right">
-                        <button onclick="editArticle(${item.rowIndex})" class="text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded font-bold text-xs transition">編輯</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
+        
+        // 渲染分類下拉選單
+        function renderCategorySelect() {
+            const sel = document.getElementById('art-input-category');
+            sel.innerHTML = '';
+            globalData.categories.forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat.name; opt.textContent = cat.name;
+                sel.appendChild(opt);
             });
         }
 
+        // 渲染分類管理列表
+        function renderCategoryList() {
+            const tbody = document.getElementById('category-table-body');
+            tbody.innerHTML = '';
+            globalData.categories.forEach(cat => {
+                tbody.innerHTML += `
+                    <tr class="border-b border-gray-50">
+                        <td class="px-6 py-4 font-bold text-gray-800">${cat.name}</td>
+                        <td class="px-6 py-4 text-right">
+                            <button type="button" onclick="deleteRow('文章分類設定', ${cat.rowIndex})" class="text-red-500 hover:bg-red-50 px-3 py-1 rounded transition">刪除</button>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        // 文章與公告列表
+        function renderArticleList() {
+            const tbody = document.getElementById('article-table-body');
+            tbody.innerHTML = globalData.articles.map(item => `
+                <tr class="hover:bg-gray-50 border-b border-gray-50">
+                    <td class="px-6 py-4">${item.date}</td>
+                    <td class="px-6 py-4"><span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">${item.category}</span></td>
+                    <td class="px-6 py-4 font-bold text-gray-800">${item.title}</td>
+                    <td class="px-6 py-4 text-right"><button onclick="editArticle(${item.rowIndex})" class="text-blue-600 hover:bg-blue-50 px-3 py-1 rounded">編輯</button></td>
+                </tr>`).join('') || '<tr><td colspan="4" class="p-6 text-center">無資料</td></tr>';
+        }
+
+        function renderNewsList() {
+            const tbody = document.getElementById('news-table-body');
+            tbody.innerHTML = globalData.news.map(item => `
+                <tr class="hover:bg-gray-50 border-b border-gray-50">
+                    <td class="px-6 py-4">${item.date}</td>
+                    <td class="px-6 py-4"><span class="bg-gray-100 px-2 py-1 rounded text-xs">${item.category}</span></td>
+                    <td class="px-6 py-4 font-bold">${item.title}</td>
+                    <td class="px-6 py-4 text-right"><button onclick="editNews(${item.rowIndex})" class="text-blue-600 hover:bg-blue-50 px-3 py-1 rounded">編輯</button></td>
+                </tr>`).join('') || '<tr><td colspan="4" class="p-6 text-center">無資料</td></tr>';
+        }
+
+        // 表單開關與填寫
         function openArticleForm(isEdit = false) {
-            document.getElementById('article-list-view').classList.add('hidden');
-            document.getElementById('article-form-view').classList.remove('hidden');
-            if(!isEdit) {
-                document.getElementById('form-article').reset();
-                quill.root.innerHTML = '';
-                document.getElementById('article-rowIndex').value = '';
-                document.getElementById('art-input-date').value = today;
-                document.getElementById('article-form-title').innerHTML = '<i class="fa-solid fa-pen text-red-600 mr-2"></i> 發布新文章';
-            }
+            document.getElementById('article-list-view').classList.add('hidden'); document.getElementById('article-form-view').classList.remove('hidden');
+            if(!isEdit) { document.getElementById('form-article').reset(); quill.root.innerHTML = ''; document.getElementById('article-rowIndex').value = ''; }
         }
-
-        function closeArticleForm() {
-            document.getElementById('article-list-view').classList.remove('hidden');
-            document.getElementById('article-form-view').classList.add('hidden');
-        }
-
+        function closeArticleForm() { document.getElementById('article-list-view').classList.remove('hidden'); document.getElementById('article-form-view').classList.add('hidden'); }
+        
         function editArticle(rowIndex) {
             const article = globalData.articles.find(a => a.rowIndex === rowIndex);
-            if(!article) return;
-            
             document.getElementById('article-rowIndex').value = article.rowIndex;
             document.getElementById('art-input-title').value = article.title;
             document.getElementById('art-input-category').value = article.category;
             document.getElementById('art-input-author').value = article.authorOrTime;
-            
-            // 日期格式轉換供 input[type=date] 使用 (若格式無法解析則留空)
-            try {
-                let dStr = article.date.replace(/年|月/g, '-').replace(/日/g, '');
-                let d = new Date(dStr);
-                if(!isNaN(d)) document.getElementById('art-input-date').value = d.toISOString().split('T')[0];
-            } catch(e){}
-
+            try { let d = new Date(article.date.replace(/年|月/g, '-').replace(/日/g, '')); if(!isNaN(d)) document.getElementById('art-input-date').value = d.toISOString().split('T')[0]; } catch(e){}
             document.getElementById('art-input-desc').value = article.desc;
             document.getElementById('art-input-thumbnail').value = article.thumbnail;
             quill.root.innerHTML = article.content;
-            
-            document.getElementById('article-form-title').innerHTML = '<i class="fa-solid fa-pen-to-square text-blue-600 mr-2"></i> 編輯文章';
+            document.getElementById('article-form-title').innerHTML = '<i class="fa-solid fa-pen text-blue-600 mr-2"></i> 編輯文章';
             openArticleForm(true);
         }
 
-        /* --- 公告管理 --- */
-        function renderNewsList() {
-            const tbody = document.getElementById('news-table-body');
-            tbody.innerHTML = '';
-            if(globalData.news.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" class="px-6 py-8 text-center text-gray-400">目前沒有公告資料。</td></tr>';
-                return;
-            }
-            globalData.news.forEach(item => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-gray-50 transition border-b border-gray-50";
-                tr.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap">${item.date}</td>
-                    <td class="px-6 py-4 whitespace-nowrap"><span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">${item.category}</span></td>
-                    <td class="px-6 py-4 font-bold text-gray-800">${item.title}</td>
-                    <td class="px-6 py-4 text-right">
-                        <button onclick="editNews(${item.rowIndex})" class="text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded font-bold text-xs transition">編輯</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
         function openNewsForm(isEdit = false) {
-            document.getElementById('news-list-view').classList.add('hidden');
-            document.getElementById('news-form-view').classList.remove('hidden');
-            if(!isEdit) {
-                document.getElementById('form-news').reset();
-                document.getElementById('news-rowIndex').value = '';
-                document.getElementById('news-input-date').value = today;
-                document.getElementById('news-form-title').innerHTML = '<i class="fa-solid fa-bullhorn text-gray-600 mr-2"></i> 發布行政公告';
-            }
+            document.getElementById('news-list-view').classList.add('hidden'); document.getElementById('news-form-view').classList.remove('hidden');
+            if(!isEdit) { document.getElementById('form-news').reset(); document.getElementById('news-rowIndex').value = ''; }
         }
-
-        function closeNewsForm() {
-            document.getElementById('news-list-view').classList.remove('hidden');
-            document.getElementById('news-form-view').classList.add('hidden');
-        }
-
+        function closeNewsForm() { document.getElementById('news-list-view').classList.remove('hidden'); document.getElementById('news-form-view').classList.add('hidden'); }
+        
         function editNews(rowIndex) {
-            const newsItem = globalData.news.find(n => n.rowIndex === rowIndex);
-            if(!newsItem) return;
-            
-            document.getElementById('news-rowIndex').value = newsItem.rowIndex;
-            document.getElementById('news-input-title').value = newsItem.title;
-            document.getElementById('news-input-category').value = newsItem.category;
-            document.getElementById('news-input-link').value = newsItem.link === '#' ? '' : newsItem.link;
-            document.getElementById('news-input-content').value = newsItem.content;
-            
-            try {
-                let d = new Date(newsItem.date);
-                if(!isNaN(d)) document.getElementById('news-input-date').value = d.toISOString().split('T')[0];
-            } catch(e){}
-            
-            document.getElementById('news-form-title').innerHTML = '<i class="fa-solid fa-pen-to-square text-blue-600 mr-2"></i> 編輯公告';
+            const item = globalData.news.find(n => n.rowIndex === rowIndex);
+            document.getElementById('news-rowIndex').value = item.rowIndex;
+            document.getElementById('news-input-title').value = item.title; document.getElementById('news-input-category').value = item.category;
+            document.getElementById('news-input-link').value = item.link === '#' ? '' : item.link; document.getElementById('news-input-content').value = item.content;
+            try { let d = new Date(item.date); if(!isNaN(d)) document.getElementById('news-input-date').value = d.toISOString().split('T')[0]; } catch(e){}
+            document.getElementById('news-form-title').innerHTML = '<i class="fa-solid fa-pen text-blue-600 mr-2"></i> 編輯公告';
             openNewsForm(true);
         }
 
         // ==========================================
-        // 6. 收件匣渲染與管理 (Dashboard & Modal)
+        // 4. 收件匣管理
         // ==========================================
         function renderInboxLists() {
-            // QA 列表
-            const qaContainer = document.getElementById('inbox-qa');
-            qaContainer.innerHTML = '';
-            globalData.inbox.qa.forEach((item, index) => {
-                const isUnread = item.status === '未處理';
-                const color = isUnread ? 'border-l-blue-500 bg-white' : 'border-l-gray-300 bg-gray-50 opacity-70';
-                qaContainer.innerHTML += `
-                    <div onclick="openInboxModal('qa', ${index})" class="p-3 rounded-lg shadow-sm border border-gray-100 border-l-4 ${color} cursor-pointer hover:shadow-md transition">
-                        <div class="flex justify-between items-start mb-1">
-                            <span class="text-xs text-gray-400 font-mono">${formatDate(item.date)}</span>
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${isUnread ? 'bg-red-100 text-red-600' : 'bg-gray-200 text-gray-500'}">${item.status}</span>
-                        </div>
-                        <div class="font-bold text-sm text-gray-800">${item.name} <span class="bg-gray-200 text-gray-600 px-2 py-0.5 rounded text-[10px] ml-1">${item.category}</span></div>
-                        <p class="text-sm text-gray-600 mt-2 line-clamp-2">${item.content}</p>
-                    </div>
-                `;
-            });
-
-            // Invite 列表
-            const inviteContainer = document.getElementById('inbox-invite');
-            inviteContainer.innerHTML = '';
-            globalData.inbox.invite.forEach((item, index) => {
-                const isUnread = item.status === '未處理';
-                const color = isUnread ? 'border-l-purple-500 bg-white' : 'border-l-gray-300 bg-gray-50 opacity-70';
-                inviteContainer.innerHTML += `
-                    <div onclick="openInboxModal('invite', ${index})" class="p-3 rounded-lg shadow-sm border border-gray-100 border-l-4 ${color} cursor-pointer hover:shadow-md transition">
-                        <div class="flex justify-between items-start mb-1">
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${isUnread ? 'bg-red-100 text-red-600' : 'bg-gray-200 text-gray-500'}">${item.status}</span>
-                        </div>
-                        <div class="font-bold text-sm text-gray-800">${item.org}</div>
-                        <p class="text-xs text-purple-700 mt-1 font-bold"><i class="fa-regular fa-calendar mr-1"></i>活動: ${item.eventDate}</p>
-                        <p class="text-xs text-gray-500 mt-1">聯絡人: ${item.name}</p>
-                    </div>
-                `;
-            });
-
-            // Contact 列表
-            const contactContainer = document.getElementById('inbox-contact');
-            contactContainer.innerHTML = '';
-            globalData.inbox.contact.forEach((item, index) => {
-                const isUnread = item.status === '未處理';
-                const isVisible = item.isVisible === 'V' || item.isVisible === 'v';
-                const color = isUnread ? 'border-l-orange-500 bg-white' : 'border-l-gray-300 bg-gray-50 opacity-70';
-                const starIcon = isVisible ? '<i class="fa-solid fa-star text-yellow-500 text-xs ml-1" title="顯示於首頁"></i>' : '';
-                
-                contactContainer.innerHTML += `
-                    <div onclick="openInboxModal('contact', ${index})" class="p-3 rounded-lg shadow-sm border border-gray-100 border-l-4 ${color} cursor-pointer hover:shadow-md transition relative">
-                        <div class="flex justify-between items-start mb-1">
-                            <span class="text-xs text-gray-400 font-mono">${formatDate(item.date)}</span>
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${isUnread ? 'bg-red-100 text-red-600' : 'bg-gray-200 text-gray-500'}">${item.status}</span>
-                        </div>
-                        <div class="font-bold text-sm text-gray-800">${item.name} ${starIcon}</div>
-                        <p class="text-xs text-orange-700 mt-1 font-bold"><i class="fa-solid fa-tag mr-1"></i>${item.category}</p>
-                        <p class="text-sm text-gray-600 mt-2 line-clamp-2">${item.content}</p>
-                    </div>
-                `;
-            });
+            const buildHTML = (item, idx, type, color, icon) => {
+                const unread = item.status === '未處理';
+                return `<div onclick="openInboxModal('${type}', ${idx})" class="p-3 rounded-lg border-l-4 cursor-pointer hover:shadow-md transition bg-white ${unread ? 'border-l-'+color+'-500' : 'border-l-gray-300 opacity-70'}">
+                    <div class="flex justify-between mb-1"><span class="text-xs text-gray-400">${item.date.substring(0,10)}</span><span class="text-[10px] px-2 rounded ${unread?'bg-red-100 text-red-600':'bg-gray-200'}">${item.status}</span></div>
+                    <div class="font-bold text-sm">${item.name || item.org} ${item.isVisible==='V'?'<i class="fa-solid fa-star text-yellow-500"></i>':''}</div>
+                    <p class="text-xs text-gray-500 mt-1 line-clamp-2">${item.content || item.topic || ''}</p>
+                </div>`;
+            };
+            document.getElementById('inbox-qa').innerHTML = globalData.inbox.qa.map((i, idx) => buildHTML(i, idx, 'qa', 'blue')).join('');
+            document.getElementById('inbox-invite').innerHTML = globalData.inbox.invite.map((i, idx) => buildHTML(i, idx, 'invite', 'purple')).join('');
+            document.getElementById('inbox-contact').innerHTML = globalData.inbox.contact.map((i, idx) => buildHTML(i, idx, 'contact', 'orange')).join('');
         }
 
-        // 開啟收件匣 Modal 並動態注入內容
-        function openInboxModal(type, dataIndex) {
-            const item = globalData.inbox[type][dataIndex];
-            const contentDiv = document.getElementById('modal-content');
-            const contactControls = document.getElementById('modal-contact-controls');
-            
-            // 基礎資料綁定 (供儲存使用)
-            let sheetMap = { 'qa': '問答箱紀錄', 'invite': '演講邀約紀錄', 'contact': '聯絡表單紀錄' };
-            document.getElementById('modal-sheet-name').value = sheetMap[type];
+        function openInboxModal(type, idx) {
+            const item = globalData.inbox[type][idx];
+            const sheets = { 'qa': '問答箱紀錄', 'invite': '演講邀約紀錄', 'contact': '聯絡表單紀錄' };
+            document.getElementById('modal-sheet-name').value = sheets[type];
             document.getElementById('modal-row-index').value = item.rowIndex;
             document.getElementById('modal-input-status').value = item.status || '未處理';
-
-            contactControls.classList.add('hidden'); // 預設隱藏見證專屬控制
             
-            // 根據類型渲染不同 HTML
-            if (type === 'qa') {
-                document.getElementById('modal-title').innerHTML = '<i class="fa-solid fa-clipboard-question text-blue-600 mr-2"></i> 提問明細';
-                contentDiv.innerHTML = `
-                    <div class="grid grid-cols-2 gap-4 text-sm bg-blue-50/50 p-4 rounded-xl border border-blue-100">
-                        <div><span class="text-gray-500">提問時間：</span> <span class="font-bold text-gray-800">${item.date}</span></div>
-                        <div><span class="text-gray-500">問題分類：</span> <span class="font-bold text-gray-800 bg-blue-100 px-2 py-1 rounded text-blue-800">${item.category}</span></div>
-                        <div><span class="text-gray-500">稱呼：</span> <span class="font-bold text-gray-800">${item.name}</span></div>
-                        <div><span class="text-gray-500">Email：</span> <span class="font-bold text-gray-800">${item.email || '未提供'}</span></div>
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-bold text-gray-500 mb-2">問題內容</h4>
-                        <div class="bg-gray-50 p-4 rounded-xl text-gray-800 text-base leading-relaxed border border-gray-200 whitespace-pre-wrap">${item.content}</div>
-                    </div>
-                `;
-            } else if (type === 'invite') {
-                document.getElementById('modal-title').innerHTML = '<i class="fa-solid fa-microphone-lines text-purple-600 mr-2"></i> 演講邀約明細';
-                contentDiv.innerHTML = `
-                    <div class="grid grid-cols-2 gap-y-4 gap-x-6 text-sm bg-purple-50/50 p-5 rounded-xl border border-purple-100">
-                        <div class="col-span-2"><span class="text-gray-500">邀請單位：</span> <span class="font-bold text-xl text-purple-900">${item.org}</span></div>
-                        <div><span class="text-gray-500">活動時間：</span> <span class="font-bold text-gray-800">${item.eventDate}</span></div>
-                        <div><span class="text-gray-500">預計人數：</span> <span class="font-bold text-gray-800">${item.attendees}</span></div>
-                        <div class="col-span-2"><span class="text-gray-500">活動地點：</span> <span class="font-bold text-gray-800">${item.location}</span></div>
-                        <div class="col-span-2 border-t border-purple-100 my-2"></div>
-                        <div><span class="text-gray-500">聯絡人：</span> <span class="font-bold text-gray-800">${item.name}</span></div>
-                        <div><span class="text-gray-500">電話：</span> <span class="font-bold text-gray-800">${item.phone}</span></div>
-                        <div class="col-span-2"><span class="text-gray-500">Email：</span> <span class="font-bold text-gray-800">${item.email}</span></div>
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-bold text-gray-500 mb-2">講題與主旨</h4>
-                        <div class="bg-gray-50 p-4 rounded-xl text-gray-800 text-base leading-relaxed border border-gray-200 whitespace-pre-wrap">${item.topic}</div>
-                    </div>
-                    ${item.notes ? `<div><h4 class="text-sm font-bold text-gray-500 mb-2">其他備註</h4><div class="text-gray-600 text-sm whitespace-pre-wrap">${item.notes}</div></div>` : ''}
-                `;
-            } else if (type === 'contact') {
-                document.getElementById('modal-title').innerHTML = '<i class="fa-solid fa-envelope-open-text text-orange-600 mr-2"></i> 聯絡與見證內容';
-                contentDiv.innerHTML = `
-                    <div class="grid grid-cols-2 gap-4 text-sm bg-orange-50/50 p-4 rounded-xl border border-orange-100">
-                        <div><span class="text-gray-500">來信時間：</span> <span class="font-bold text-gray-800">${item.date}</span></div>
-                        <div><span class="text-gray-500">分類：</span> <span class="font-bold text-gray-800 bg-orange-100 px-2 py-1 rounded text-orange-800">${item.category}</span></div>
-                        <div><span class="text-gray-500">姓名：</span> <span class="font-bold text-gray-800">${item.name}</span></div>
-                        <div><span class="text-gray-500">Email：</span> <span class="font-bold text-gray-800">${item.email || '未提供'}</span></div>
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-bold text-gray-500 mb-2">留言內容</h4>
-                        <div class="bg-gray-50 p-4 rounded-xl text-gray-800 text-base leading-relaxed border border-gray-200 whitespace-pre-wrap">${item.content}</div>
-                    </div>
-                `;
-                // 開啟見證特有控制項
-                contactControls.classList.remove('hidden');
+            const ctrl = document.getElementById('modal-contact-controls');
+            if(type === 'contact') {
+                ctrl.classList.remove('hidden');
                 document.getElementById('modal-input-visible').checked = (item.isVisible === 'V' || item.isVisible === 'v');
                 document.getElementById('modal-input-tag').value = item.tag || '';
+                document.getElementById('modal-content').innerHTML = `<div><b>姓名:</b> ${item.name}</div><div><b>分類:</b> ${item.category}</div><div><b>Email:</b> ${item.email}</div><div class="bg-gray-50 p-4 whitespace-pre-wrap">${item.content}</div>`;
+            } else if(type === 'qa') {
+                ctrl.classList.add('hidden');
+                document.getElementById('modal-content').innerHTML = `<div><b>稱呼:</b> ${item.name}</div><div><b>分類:</b> ${item.category}</div><div class="bg-gray-50 p-4 whitespace-pre-wrap">${item.content}</div>`;
+            } else {
+                ctrl.classList.add('hidden');
+                document.getElementById('modal-content').innerHTML = `<div><b>單位:</b> ${item.org}</div><div><b>日期:</b> ${item.eventDate}</div><div><b>聯絡人:</b> ${item.name} (${item.phone})</div><div class="bg-gray-50 p-4 whitespace-pre-wrap">${item.topic}</div>`;
             }
-
             openModal('inbox-modal');
         }
 
-        // 提交 Modal 狀態更新
         async function submitModalUpdate() {
-            const sheetName = document.getElementById('modal-sheet-name').value;
-            const rowIndex = document.getElementById('modal-row-index').value;
-            const status = document.getElementById('modal-input-status').value;
-            
-            let updates = {};
-            if (sheetName === '問答箱紀錄') updates['6'] = status;
-            if (sheetName === '演講邀約紀錄') updates['11'] = status;
-            if (sheetName === '聯絡表單紀錄') {
-                updates['6'] = status;
+            const sheet = document.getElementById('modal-sheet-name').value;
+            let updates = { 
+                [sheet==='演講邀約紀錄'?'11':'6']: document.getElementById('modal-input-status').value 
+            };
+            if (sheet === '聯絡表單紀錄') {
                 updates['7'] = document.getElementById('modal-input-visible').checked ? 'V' : '';
                 updates['8'] = document.getElementById('modal-input-tag').value;
             }
-
-            await executeUpdate(sheetName, rowIndex, updates, () => {
-                closeModal('inbox-modal');
-                fetchAllData(); // 重新整理畫面
-            });
+            await executeAction('updateRow', { sheetName: sheet, rowIndex: document.getElementById('modal-row-index').value, updates: JSON.stringify(updates) });
+            closeModal('inbox-modal'); fetchAllData();
         }
 
         // ==========================================
-        // 7. 共用 API 呼叫核心
+        // 5. 核心 API 互動 (刪除/更新/新增)
         // ==========================================
-        
-        // 執行 UpdateRow (指定行號更新)
-        async function executeUpdate(sheetName, rowIndex, updatesObj, onSuccess) {
-            const overlay = document.getElementById('loading-overlay');
-            document.getElementById('loading-text').textContent = '資料儲存中...';
-            overlay.classList.remove('hidden'); 
-
-            const data = new URLSearchParams();
-            data.append('action', 'updateRow');
-            data.append('sheetName', sheetName);
-            data.append('rowIndex', rowIndex);
-            data.append('updates', JSON.stringify(updatesObj));
-
+        async function executeAction(actionName, paramsObj) {
+            document.getElementById('loading-overlay').classList.remove('hidden');
+            const data = new URLSearchParams(); data.append('action', actionName);
+            for(let key in paramsObj) data.append(key, paramsObj[key]);
             try {
-                const response = await fetch(GAS_API_URL, { method: 'POST', body: data });
-                const result = await response.json();
-                if (result.status === 'success') {
-                    showToast('資料已成功更新。');
-                    if(onSuccess) onSuccess();
-                } else throw new Error(result.message);
-            } catch (error) {
-                showToast('更新失敗：' + error.message, 'error');
-            } finally {
-                overlay.classList.add('hidden');
+                const res = await fetch(GAS_API_URL, { method: 'POST', body: data });
+                const json = await res.json();
+                if(json.status !== 'success') throw new Error(json.message);
+                showToast('操作成功！'); return true;
+            } catch(e) { showToast('錯誤: ' + e.message, 'error'); return false; }
+            finally { document.getElementById('loading-overlay').classList.add('hidden'); }
+        }
+
+        async function deleteRow(sheetName, rowIndex) {
+            if(confirm('確定要刪除這筆資料嗎？')) {
+                if(await executeAction('deleteRow', { sheetName, rowIndex })) fetchAllData();
             }
         }
 
-        // 處理一般表單 Submit (判定新增或編輯)
-        async function submitFormData(formElement, isArticle = false, isNews = false) {
-            const overlay = document.getElementById('loading-overlay');
-            document.getElementById('loading-text').textContent = '資料傳送中...';
-            overlay.classList.remove('hidden'); 
-
-            // 處理 Quill 內容
-            if (isArticle) {
-                const htmlContent = document.querySelector('#quill-editor .ql-editor').innerHTML;
-                document.getElementById('article-html-content').value = htmlContent;
-                if (quill.getText().trim().length === 0) {
-                    showToast('文章內容不能為空！', 'error');
-                    overlay.classList.add('hidden');
-                    return;
-                }
-            }
-
-            const formData = new FormData(formElement);
+        async function submitForm(e, isArticle = false, isNews = false) {
+            e.preventDefault();
+            if(isArticle) document.getElementById('article-html-content').value = document.querySelector('#quill-editor .ql-editor').innerHTML;
             
-            // 判定是否為編輯模式 (檢查隱藏的 rowIndex)
+            const formData = new FormData(e.target);
             const rowIndex = formData.get('rowIndex');
-            if (rowIndex) {
-                overlay.classList.add('hidden'); // 先關掉原本遮罩，交由 executeUpdate 處理
+            const action = e.target.querySelector('[name="action"]')?.value;
+
+            // 判斷是「更新」還是「新增」
+            if(rowIndex) {
                 let updates = {};
-                let sheetName = '';
+                let formattedDate = formData.get('date') ? new Date(formData.get('date')).toLocaleDateString('zh-TW', {year:'numeric',month:'long',day:'numeric'}) : '';
+                if(isArticle) updates = { 1: formData.get('category'), 2: formData.get('title'), 3: formattedDate, 4: formData.get('desc'), 6: formData.get('author'), 7: formData.get('thumbnail'), 9: document.getElementById('article-html-content').value };
+                if(isNews) updates = { 1: formattedDate, 2: formData.get('category'), 3: formData.get('title'), 4: formData.get('content'), 5: formData.get('link') || '#' };
                 
-                // 日期格式轉換處理
-                let rawDate = formData.get('date');
-                let formattedDate = rawDate;
-                if(rawDate) {
-                    let d = new Date(rawDate);
-                    if(!isNaN(d)) formattedDate = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
+                if(await executeAction('updateRow', { sheetName: isArticle ? '知識庫資料' : '行政公告', rowIndex, updates: JSON.stringify(updates) })) {
+                    if(isArticle) closeArticleForm(); if(isNews) closeNewsForm(); fetchAllData();
                 }
-
-                if (isArticle) {
-                    sheetName = '知識庫資料';
-                    updates = {
-                        1: formData.get('category'), 2: formData.get('title'), 3: formattedDate,
-                        4: formData.get('desc'), 6: formData.get('author'), 7: formData.get('thumbnail'),
-                        9: document.getElementById('article-html-content').value
-                    };
-                } else if (isNews) {
-                    sheetName = '行政公告';
-                    updates = {
-                        1: formattedDate, 2: formData.get('category'), 3: formData.get('title'),
-                        4: formData.get('content'), 5: formData.get('link') || '#'
-                    };
-                }
+            } else {
+                let params = {}; for(let p of formData) params[p[0]] = p[1];
+                if(params.date) params.date = new Date(params.date).toLocaleDateString('zh-TW', {year:'numeric',month:'long',day:'numeric'});
                 
-                await executeUpdate(sheetName, rowIndex, updates, () => {
-                    if(isArticle) closeArticleForm();
-                    if(isNews) closeNewsForm();
-                    fetchAllData();
-                });
-                return; // 結束，不走新增流程
-            }
-
-            // 以下為「新增」流程
-            const data = new URLSearchParams();
-            for (const pair of formData) {
-                // 新增模式的日期處理
-                if(pair[0] === 'date' && pair[1]) {
-                    const d = new Date(pair[1]);
-                    data.append('date', `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`);
-                } else {
-                    data.append(pair[0], pair[1]);
+                if(await executeAction(action || (isArticle ? 'addArticle' : (isNews ? 'addNews' : '')), params)) {
+                    e.target.reset(); if(isArticle) { quill.setContents([]); closeArticleForm(); } if(isNews) closeNewsForm(); fetchAllData();
                 }
-            }
-
-            try {
-                const response = await fetch(GAS_API_URL, { method: 'POST', body: data });
-                const result = await response.json();
-                
-                if (result.status === 'success') {
-                    showToast('資料已成功寫入資料庫。');
-                    if (isArticle) quill.setContents([]); 
-                    if (formElement.id !== 'form-home') {
-                        formElement.reset(); 
-                        if(document.getElementById('art-input-date')) document.getElementById('art-input-date').value = today;
-                        if(document.getElementById('news-input-date')) document.getElementById('news-input-date').value = today;
-                    }
-                    if(isArticle) closeArticleForm();
-                    if(isNews) closeNewsForm();
-                    fetchAllData(); // 重新整理列表
-                } else throw new Error(result.message);
-            } catch (error) {
-                showToast('操作失敗：' + error.message, 'error');
-            } finally {
-                overlay.classList.add('hidden');
             }
         }
 
-        // 綁定各表單事件
-        document.getElementById('form-article').addEventListener('submit', (e) => { e.preventDefault(); submitFormData(e.target, true, false); });
-        document.getElementById('form-news').addEventListener('submit', (e) => { e.preventDefault(); submitFormData(e.target, false, true); });
-        document.getElementById('form-link').addEventListener('submit', (e) => { e.preventDefault(); submitFormData(e.target); });
-        document.getElementById('form-home').addEventListener('submit', (e) => { e.preventDefault(); submitFormData(e.target); });
+        document.getElementById('form-article').addEventListener('submit', e => submitForm(e, true, false));
+        document.getElementById('form-news').addEventListener('submit', e => submitForm(e, false, true));
+        document.getElementById('form-category').addEventListener('submit', e => submitForm(e));
+        document.getElementById('form-link').addEventListener('submit', e => submitForm(e));
+        document.getElementById('form-home').addEventListener('submit', e => submitForm(e));
 
-        // 首頁與募資設定獨立讀取
         async function loadHomeSettings() {
             try {
-                const response = await fetch(`${GAS_API_URL}?action=getHomeData`);
-                const data = await response.json();
-                if(!data.error) {
-                    document.getElementById('input-annText').value = data.announcement.text || '';
-                    document.getElementById('input-annLink').value = data.announcement.link !== '#' ? data.announcement.link : '';
-                    document.getElementById('input-fundRaised').value = data.funding.raised || 0;
-                    document.getElementById('input-fundTarget').value = data.funding.target || 0;
-                }
-            } catch(e) { console.error(e); }
+                const res = await fetch(`${GAS_API_URL}?action=getHomeData`); const data = await res.json();
+                document.getElementById('input-annText').value = data.announcement?.text || ''; document.getElementById('input-annLink').value = data.announcement?.link !== '#'? data.announcement.link : '';
+                document.getElementById('input-fundRaised').value = data.funding?.raised || 0; document.getElementById('input-fundTarget').value = data.funding?.target || 0;
+            } catch(e) {}
         }
-
-        function loadInboxData() { /* 已由 fetchAllData 取代 */ }
-        
-        // 小工具
-        function formatDate(dateStr) {
-            try {
-                const d = new Date(dateStr);
-                if(isNaN(d)) return dateStr;
-                return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-            } catch(e) { return dateStr; }
-        }
-
     </script>
 </body>
 </html>
