@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -99,7 +100,7 @@
             <!-- 載入中畫面 -->
             <div id="loading-spinner" class="py-20 text-center">
                 <i class="fa-solid fa-spinner fa-spin text-5xl text-veritas-gold mb-4"></i>
-                <p class="text-gray-500 font-bold">正在讀取文章內容...</p>
+                <p class="text-gray-500 font-bold mt-4">正在讀取文章內容...</p>
             </div>
 
             <!-- 錯誤畫面 -->
@@ -125,11 +126,8 @@
                     </h1>
 
                     <div class="flex items-center justify-between flex-wrap gap-4 mt-8">
-                        <!-- 作者資訊 -->
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-veritas-red text-white flex items-center justify-center font-bold">
-                                V
-                            </div>
+                            <div class="w-10 h-10 rounded-full bg-veritas-red text-white flex items-center justify-center font-bold">V</div>
                             <div>
                                 <p class="text-sm text-gray-500">作者</p>
                                 <p id="article-author" class="font-bold text-gray-800">Veritas 護教中心</p>
@@ -152,28 +150,20 @@
                     </div>
                 </header>
 
-                <!-- 文章封面圖 -->
                 <div id="article-thumbnail-container" class="mb-10 hidden">
                     <img id="article-thumbnail" src="" alt="文章封面" class="w-full rounded-xl shadow-md object-cover max-h-[500px]">
                 </div>
 
-                <!-- 文章內文 (Rich Text HTML) -->
-                <div id="article-content" class="article-content">
-                    <!-- 動態插入 -->
-                </div>
+                <div id="article-content" class="article-content"></div>
 
-                <!-- 延伸閱讀 / 標籤區 -->
                 <div class="mt-16 pt-8 border-t border-gray-100">
                     <p class="text-sm text-gray-500 mb-4 font-bold"><i class="fa-solid fa-tags mr-1"></i> 分類標籤</p>
-                    <div id="article-tags" class="flex gap-2">
-                        <!-- 動態插入 -->
-                    </div>
+                    <div id="article-tags" class="flex gap-2"></div>
                 </div>
-
             </article>
 
             <!-- 粉絲專頁與留言討論區 -->
-            <section id="discussion-section" class="hidden mt-12 bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-gray-100">
+            <section id="discussion-section" class="hidden mt-12 bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-gray-100 w-full overflow-hidden">
                 <div class="flex items-center gap-3 mb-6">
                     <i class="fa-brands fa-facebook text-3xl text-[#1877F2]"></i>
                     <h3 class="text-2xl font-bold text-gray-800">教友討論區</h3>
@@ -181,15 +171,18 @@
                 <p class="text-gray-500 mb-8">歡迎以實名制在下方留言，分享您的看見與感動。為維護交流品質，請遵守版規，禁止惡意攻擊或散播不實資訊。</p>
                 
                 <!-- FB 留言板容器 -->
-                <div id="fb-comments-container" class="w-full bg-gray-50 rounded-lg p-2 min-h-[200px]">
-                    <!-- 將由 JavaScript 動態生成並呼叫 FB 渲染 -->
+                <div id="fb-comments-container" class="w-full min-h-[200px]">
+                    <div class="text-center py-10">
+                        <i class="fa-solid fa-spinner fa-spin text-3xl text-gray-300 mb-2"></i>
+                        <p class="text-gray-400">載入 Facebook 留言板中...</p>
+                    </div>
                 </div>
             </section>
 
         </div>
     </main>
 
-    <!-- 頁尾 Footer (簡化版) -->
+    <!-- 頁尾 Footer -->
     <footer class="bg-veritas-dark text-gray-300 py-8 border-t-4 border-veritas-red mt-12">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <p>&copy; 2026 天主教 Veritas 護教中心 版權所有.</p>
@@ -205,7 +198,7 @@
         });
 
         // ==========================================
-        // 核心邏輯：從 API 獲取文章資料
+        // 核心邏輯：修改為您的 GAS API 網址
         // ==========================================
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz6Iqnjt8r9poHA_l450uly_XkdX6d2iU7Qcc56fBObFbMoFrtXlSvFtznBUiRgO-lN/exec"; 
 
@@ -214,7 +207,6 @@
         });
 
         async function fetchArticleData() {
-            // 從網址抓取 ID 參數 (例如: article.html?id=為什麼信天主)
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get('id');
 
@@ -224,12 +216,10 @@
             }
 
             try {
-                // 向 API 請求知識庫所有資料
                 const response = await fetch(`${GAS_API_URL}?action=getKnowledgeData`);
                 if (!response.ok) throw new Error('API 網路連線錯誤');
                 const data = await response.json();
 
-                // 在資料庫中尋找對應標題(或ID)的文章
                 const article = data.find(item => item.title === articleId || item.id === articleId);
 
                 if (!article) {
@@ -237,7 +227,6 @@
                     return;
                 }
 
-                // 成功找到文章，開始渲染畫面
                 renderArticle(article);
 
             } catch (error) {
@@ -247,26 +236,23 @@
         }
 
         function renderArticle(article) {
-            // 隱藏載入中，顯示文章容器
             document.getElementById('loading-spinner').classList.add('hidden');
             document.getElementById('article-container').classList.remove('hidden');
-            document.getElementById('discussion-section').classList.remove('hidden');
+            
+            // 必須先移除 hidden，否則 FB 套件抓不到寬度會渲染失敗
+            const discussionSection = document.getElementById('discussion-section');
+            discussionSection.classList.remove('hidden');
 
-            // 1. 填入基礎文字資訊
             document.getElementById('article-title').textContent = article.title;
             document.getElementById('article-date').innerHTML = `<i class="fa-regular fa-calendar mr-1"></i> ${article.date}`;
             document.getElementById('article-author').textContent = article.authorOrTime || 'Veritas 護教中心';
             
-            // 2. 處理分類標籤顏色
             const categorySpan = document.getElementById('article-category');
             categorySpan.textContent = article.category;
             const bgColor = getCategoryColor(article.category);
             categorySpan.className = `px-3 py-1 rounded-full text-xs font-bold text-white ${bgColor}`;
-            
-            // 底部標籤
             document.getElementById('article-tags').innerHTML = `<span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-lg text-sm">${article.category}</span>`;
 
-            // 3. 處理封面圖片
             if (article.thumbnail) {
                 const thumbContainer = document.getElementById('article-thumbnail-container');
                 const thumbImg = document.getElementById('article-thumbnail');
@@ -274,18 +260,15 @@
                 thumbContainer.classList.remove('hidden');
             }
 
-            // 4. 處理內文 (支援 HTML)
-            // 將 \n 轉換為 <br> 以相容沒有使用編輯器的舊文章，若有 HTML 標籤則直接渲染
             let contentHTML = article.content;
             if (contentHTML && !contentHTML.includes('<p>') && !contentHTML.includes('<br>')) {
                 contentHTML = contentHTML.replace(/\n/g, '<br>');
             }
             document.getElementById('article-content').innerHTML = contentHTML || '<p class="text-gray-400 italic">本文暫無詳細內容。</p>';
 
-            // 修改網頁 Title 增加 SEO
             document.title = `${article.title} | Veritas 護教中心`;
 
-            // 5. 設定並渲染 Facebook 留言板
+            // 啟動 Facebook 留言板渲染
             setupFacebookComments();
         }
 
@@ -296,25 +279,15 @@
             document.getElementById('error-text').textContent = msg;
         }
 
-        // ==========================================
-        // 分類顏色產生器 (確保與 knowledge.html 一致)
-        // ==========================================
         function getCategoryColor(categoryName) {
-            const colors = [
-                'bg-red-600', 'bg-blue-600', 'bg-green-600', 'bg-yellow-600', 
-                'bg-purple-600', 'bg-indigo-600', 'bg-pink-600', 'bg-teal-600'
-            ];
+            const colors = ['bg-red-600', 'bg-blue-600', 'bg-green-600', 'bg-yellow-600', 'bg-purple-600', 'bg-indigo-600', 'bg-pink-600', 'bg-teal-600'];
             let hash = 0;
             for (let i = 0; i < categoryName.length; i++) {
                 hash = categoryName.charCodeAt(i) + ((hash << 5) - hash);
             }
-            const index = Math.abs(hash) % colors.length;
-            return colors[index];
+            return colors[Math.abs(hash) % colors.length];
         }
 
-        // ==========================================
-        // 社群分享功能
-        // ==========================================
         function shareToFacebook() {
             const url = encodeURIComponent(window.location.href);
             window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
@@ -327,52 +300,50 @@
         }
 
         function copyLink() {
-            navigator.clipboard.writeText(window.location.href).then(() => {
-                alert('文章連結已複製！');
-            }).catch(err => {
-                // 備用複製方法
-                const input = document.createElement('input');
-                input.value = window.location.href;
-                document.body.appendChild(input);
-                input.select();
-                document.execCommand('copy');
-                document.body.removeChild(input);
-                alert('文章連結已複製！');
-            });
+            navigator.clipboard.writeText(window.location.href).then(() => alert('文章連結已複製！')).catch(() => alert('複製失敗'));
         }
 
         // ==========================================
-        // Facebook 留言板處理 (解決動態載入不顯示的問題)
+        // Facebook 留言板防呆與輪詢渲染引擎
         // ==========================================
         function setupFacebookComments() {
-            let currentUrl = window.location.href;
-            
-            // 本地測試防呆：如果是 file:/// 或 localhost，給予一個預設的真實網址以利測試
-            if (currentUrl.startsWith('file://') || currentUrl.includes('localhost') || currentUrl.includes('127.0.0.1')) {
-                currentUrl = 'https://www.catholic.org.tw/'; 
-                console.log("偵測到本地端測試，FB 留言板使用預設網址:", currentUrl);
-            }
-
+            const currentUrl = window.location.href;
             const fbContainer = document.getElementById('fb-comments-container');
             
-            // 插入留言板的 HTML 標籤
+            // 插入 FB 原生 HTML 標籤
             fbContainer.innerHTML = `<div class="fb-comments" data-href="${currentUrl}" data-width="100%" data-numposts="5"></div>`;
             
-            // 【關鍵修復】：動態插入 HTML 後，必須呼叫 Facebook 的 API 重新掃描並渲染這個區域
+            // 開始輪詢嘗試解析
+            triggerFbParse(fbContainer, 5);
+        }
+
+        function triggerFbParse(element, retriesLeft) {
+            // 如果 FB 物件存在，代表 SDK 已載入完成，立刻執行解析
             if (typeof FB !== 'undefined') {
-                FB.XFBML.parse(fbContainer);
+                FB.XFBML.parse(element.parentNode, function() {
+                    console.log("FB 留言板渲染完成！");
+                });
+            } else if (retriesLeft > 0) {
+                // 如果還沒載入完，等待 1 秒後重試
+                console.log(`等待 FB SDK 載入中... 剩餘嘗試次數: ${retriesLeft}`);
+                setTimeout(() => triggerFbParse(element, retriesLeft - 1), 1000);
             } else {
-                // 如果 FB SDK 還沒載入完，等待 1 秒後重試一次
-                setTimeout(() => {
-                    if (typeof FB !== 'undefined') {
-                        FB.XFBML.parse(fbContainer);
-                    } else {
-                        console.warn("無法載入 Facebook SDK");
-                    }
-                }, 1000);
+                // 如果嘗試 5 次都失敗，顯示防呆提示框
+                console.warn("無法載入 Facebook SDK");
+                element.innerHTML = `
+                    <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl p-8 text-center">
+                        <i class="fa-brands fa-facebook text-4xl text-gray-300 mb-3"></i>
+                        <h4 class="text-lg font-bold text-gray-600 mb-2">Facebook 留言板無法顯示</h4>
+                        <p class="text-sm text-gray-500 max-w-md mx-auto">
+                            如果沒有看到留言板，可能是因為您的瀏覽器啟用了<strong>「無痕模式」</strong>、<strong>「嚴格防追蹤設定」</strong>或是安裝了<strong>「廣告攔截器 (AdBlock/uBlock)」</strong>，導致臉書的套件被隱藏。
+                        </p>
+                    </div>
+                `;
             }
         }
     </script>
 </body>
 </html>
 
+
+```
