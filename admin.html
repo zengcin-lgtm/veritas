@@ -108,6 +108,9 @@
                                 </tbody>
                             </table>
                         </div>
+                        
+                        <!-- 文章列表的分頁按鈕容器 -->
+                        <div id="article-pagination-container" class="mt-4 flex justify-end gap-2"></div>
                     </div>
 
                     <div id="article-form-view" class="hidden space-y-6">
@@ -344,6 +347,10 @@
         document.getElementById('art-input-date').value = today;
         document.getElementById('news-input-date').value = today;
 
+        // 文章列表分頁設定
+        let currentArticlePage = 1;
+        const articlesPerPage = 10;
+
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -399,7 +406,16 @@
                     if(item.category === 'theology') item.category = '神學與教理';
                     if(item.category === 'ethics') item.category = '倫理與生活';
                 });
-                globalData.articles = knowData.filter(item => item.type === 'article').reverse();
+                
+                // 篩選出文章，並依日期「由新到舊」排序
+                globalData.articles = knowData.filter(item => item.type === 'article').sort((a, b) => {
+                    let dateA = new Date(a.date.replace(/年|月/g, '/').replace(/日/g, ''));
+                    let dateB = new Date(b.date.replace(/年|月/g, '/').replace(/日/g, ''));
+                    return dateB - dateA;
+                });
+                
+                currentArticlePage = 1; // 載入新資料時重置回第一頁
+                
                 globalData.categories = catData;
 
                 renderCategorySelect();
@@ -443,16 +459,39 @@
             });
         }
 
-        // 文章與公告列表
+        // 渲染文章列表 (結合分頁與排序)
         function renderArticleList() {
             const tbody = document.getElementById('article-table-body');
-            tbody.innerHTML = globalData.articles.map(item => `
+            
+            // 計算當前頁面要顯示的資料範圍
+            const startIndex = (currentArticlePage - 1) * articlesPerPage;
+            const endIndex = startIndex + articlesPerPage;
+            const pageData = globalData.articles.slice(startIndex, endIndex);
+
+            tbody.innerHTML = pageData.map(item => `
                 <tr class="hover:bg-gray-50 border-b border-gray-50">
                     <td class="px-6 py-4">${item.date}</td>
                     <td class="px-6 py-4"><span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">${item.category}</span></td>
                     <td class="px-6 py-4 font-bold text-gray-800">${item.title}</td>
                     <td class="px-6 py-4 text-right"><button onclick="editArticle(${item.rowIndex})" class="text-blue-600 hover:bg-blue-50 px-3 py-1 rounded">編輯</button></td>
                 </tr>`).join('') || '<tr><td colspan="4" class="p-6 text-center">無資料</td></tr>';
+            
+            renderArticlePagination(globalData.articles.length);
+        }
+
+        // 渲染文章分頁按鈕
+        function renderArticlePagination(total) {
+            const container = document.getElementById('article-pagination-container');
+            container.innerHTML = '';
+            const totalPages = Math.ceil(total / articlesPerPage);
+            if(totalPages <= 1) return;
+
+            let html = `<button onclick="if(currentArticlePage>1){currentArticlePage--; renderArticleList();}" class="px-3 py-1 rounded border transition ${currentArticlePage===1?'text-gray-400 bg-gray-50 cursor-not-allowed':'text-gray-700 bg-white hover:bg-gray-100'}"><i class="fa-solid fa-angle-left"></i></button>`;
+            for(let i=1; i<=totalPages; i++) {
+                html += `<button onclick="currentArticlePage=${i}; renderArticleList();" class="px-3 py-1 rounded border transition ${currentArticlePage===i?'bg-red-800 text-white font-bold':'text-gray-700 bg-white hover:bg-gray-100'}">${i}</button>`;
+            }
+            html += `<button onclick="if(currentArticlePage<${totalPages}){currentArticlePage++; renderArticleList();}" class="px-3 py-1 rounded border transition ${currentArticlePage===totalPages?'text-gray-400 bg-gray-50 cursor-not-allowed':'text-gray-700 bg-white hover:bg-gray-100'}"><i class="fa-solid fa-angle-right"></i></button>`;
+            container.innerHTML = html;
         }
 
         function renderNewsList() {
