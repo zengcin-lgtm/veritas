@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>護教專欄 | 天主教 Veritas 護教中心</title>
+    <title>知識庫文章 | 天主教 Veritas 護教中心</title>
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,163 +12,367 @@
     <script>
         tailwind.config = {
             theme: {
-                extend: { colors: { veritas: { red: '#8B0000', darkred: '#5C0000', gold: '#D4AF37', light: '#FAFAFA', dark: '#2D3748' } }, fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] } }
+                extend: {
+                    colors: {
+                        veritas: { red: '#8B0000', darkred: '#5C0000', gold: '#D4AF37', light: '#FAFAFA', dark: '#2D3748' }
+                    },
+                    fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] }
+                }
             }
         }
     </script>
     <style>
         body { font-family: 'Noto Sans TC', sans-serif; background-color: #FAFAFA; }
-        html { scroll-behavior: smooth; }
-        .article-content h2 { font-size: 1.5rem; font-weight: bold; margin-top: 2rem; margin-bottom: 1rem; color: #2D3748; border-left: 4px solid #8B0000; padding-left: 0.5rem; }
-        .article-content h3 { font-size: 1.25rem; font-weight: bold; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #4A5568; }
-        .article-content p { margin-bottom: 1.5rem; line-height: 1.8; color: #4A5568; font-size: 1.125rem; }
-        .article-content ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1.5rem; color: #4A5568; line-height: 1.8; }
-        .article-content a { color: #8B0000; text-decoration: underline; font-weight: 500; }
-        .article-content blockquote { border-left: 4px solid #D4AF37; background-color: #FFFBEB; padding: 1rem 1.5rem; margin: 1.5rem 0; font-style: italic; color: #718096; }
-        .article-content img { max-width: 100%; border-radius: 0.5rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        /* 讓由編輯器產生的 HTML 內容具有良好的預設排版 */
+        .article-content h1 { font-size: 2.25rem; font-weight: bold; margin-top: 2rem; margin-bottom: 1rem; color: #2D3748; }
+        .article-content h2 { font-size: 1.875rem; font-weight: bold; margin-top: 1.75rem; margin-bottom: 1rem; color: #2D3748; border-left: 4px solid #8B0000; padding-left: 0.75rem; }
+        .article-content h3 { font-size: 1.5rem; font-weight: bold; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #4A5568; }
+        .article-content p { font-size: 1.125rem; line-height: 1.8; margin-bottom: 1.25rem; color: #4A5568; }
+        .article-content a { color: #8B0000; text-decoration: underline; }
+        .article-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #4A5568; font-size: 1.125rem;}
+        .article-content ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #4A5568; font-size: 1.125rem;}
+        .article-content img { max-width: 100%; height: auto; border-radius: 0.5rem; margin: 1.5rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .article-content blockquote { border-left: 4px solid #D4AF37; padding-left: 1rem; margin-left: 0; margin-right: 0; font-style: italic; color: #718096; background: #FFFBEB; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0;}
     </style>
 </head>
 <body class="text-veritas-dark antialiased">
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v17.0" nonce="abc1234"></script>
 
-    <!-- Navbar -->
-    <nav class="bg-white shadow-md sticky top-0 z-50 border-b border-gray-100">
+    <!-- Facebook SDK (必須放在 body 的最上方) -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v19.0"></script>
+
+    <!-- 頂部導覽列 Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
                     <a href="index.html" class="flex items-center gap-3">
-                        <img src="images/logo.png" alt="Logo" class="w-10 h-10 object-contain">
-                        <div><h1 class="font-bold text-xl text-veritas-red tracking-wider">Veritas 護教中心</h1><p class="text-xs text-gray-500 font-medium">天主教數位弘道平台</p></div>
+                        <img src="images/logo.png" alt="Veritas 護教中心 Logo" class="w-10 h-10 object-contain drop-shadow-md" onerror="this.src='https://placehold.co/100x100/8B0000/FFF?text=V'">
+                        <div>
+                            <h1 class="font-bold text-xl text-veritas-red tracking-wider">Veritas 護教中心</h1>
+                            <p class="text-xs text-gray-500 font-medium">天主教數位弘道平台</p>
+                        </div>
                     </a>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="knowledge.html" class="text-veritas-red font-bold transition border-b-2 border-veritas-red pb-1">返回知識庫</a>
+                    <a href="about.html" class="text-gray-600 hover:text-veritas-red font-medium transition">關於我們</a>
+                    <a href="knowledge.html" class="text-veritas-red font-bold border-b-2 border-veritas-red pb-1">護教知識庫</a>
+                    <a href="media.html" class="text-gray-600 hover:text-veritas-red font-medium transition">影音策展</a>
+                    <a href="qa.html" class="text-gray-600 hover:text-veritas-red font-medium transition">真理問答箱</a>
+                    <a href="support.html" class="bg-veritas-gold text-white px-5 py-2 rounded-full font-bold hover:bg-yellow-500 transition shadow-md">
+                        <i class="fa-solid fa-heart mr-2"></i>支持我們
+                    </a>
+                </div>
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-veritas-red focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <div id="loading-screen" class="fixed inset-0 bg-veritas-light z-40 flex flex-col items-center justify-center pt-20">
-        <i class="fa-solid fa-spinner fa-spin text-5xl text-veritas-gold mb-4"></i>
-        <p class="font-bold text-gray-600">正在為您載入文章...</p>
+    <!-- 手機版下拉選單 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-xl absolute w-full z-40">
+        <div class="px-4 pt-2 pb-6 space-y-2">
+            <a href="about.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">關於我們</a>
+            <a href="knowledge.html" class="block px-3 py-3 text-base font-bold text-veritas-red bg-red-50 rounded-md">護教知識庫</a>
+            <a href="media.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">影音策展</a>
+            <a href="qa.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-veritas-red hover:bg-red-50 rounded-md">真理問答箱</a>
+            <a href="support.html" class="block px-3 py-3 text-base font-bold text-white bg-veritas-gold hover:bg-yellow-600 rounded-md"><i class="fa-solid fa-heart mr-2"></i>支持我們</a>
+        </div>
     </div>
 
-    <!-- 內容 -->
-    <main id="article-main" class="py-12 bg-veritas-light hidden">
+    <!-- 文章主體區塊 -->
+    <main class="py-12 md:py-16">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <nav class="text-sm font-medium text-gray-500 mb-8 flex items-center gap-2">
-                <a href="index.html" class="hover:text-veritas-red transition"><i class="fa-solid fa-house"></i> 首頁</a> <i class="fa-solid fa-angle-right text-xs mx-1 text-gray-300"></i>
-                <a href="knowledge.html" class="hover:text-veritas-red transition">護教知識庫</a> <i class="fa-solid fa-angle-right text-xs mx-1 text-gray-300"></i>
-                <span id="breadcrumb-title" class="text-veritas-dark truncate max-w-[200px] inline-block">載入中</span>
-            </nav>
+            
+            <!-- 返回上一頁 & 麵包屑 -->
+            <div class="mb-8 flex items-center text-sm text-gray-500">
+                <a href="knowledge.html" class="hover:text-veritas-red transition flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> 返回知識庫列表
+                </a>
+                <span class="mx-3 text-gray-300">|</span>
+                <span>專欄文章</span>
+            </div>
 
-            <header class="mb-10 border-b border-gray-200 pb-8 text-center sm:text-left">
-                <div id="art-category" class="inline-block bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-4 shadow-sm">專欄文章</div>
-                <h1 id="art-title" class="text-3xl md:text-5xl font-black text-veritas-dark mb-6 leading-tight">載入中...</h1>
+            <!-- 載入中畫面 -->
+            <div id="loading-spinner" class="py-20 text-center">
+                <i class="fa-solid fa-spinner fa-spin text-5xl text-veritas-gold mb-4"></i>
+                <p class="text-gray-500 font-bold">正在讀取文章內容...</p>
+            </div>
+
+            <!-- 錯誤畫面 -->
+            <div id="error-message" class="hidden py-20 text-center bg-red-50 rounded-2xl border border-red-100 mb-10">
+                <i class="fa-solid fa-circle-exclamation text-5xl text-veritas-red mb-4"></i>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">找不到此文章</h2>
+                <p class="text-gray-600" id="error-text">文章可能已被移除或網址有誤。</p>
+                <a href="knowledge.html" class="inline-block mt-6 px-6 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition">回到知識庫</a>
+            </div>
+
+            <!-- 文章內容容器 -->
+            <article id="article-container" class="hidden bg-white p-6 md:p-12 rounded-2xl shadow-sm border border-gray-100">
                 
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-gray-500 text-sm">
-                    <div class="flex items-center gap-4">
-                        <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600"><i class="fa-solid fa-user"></i></div><span id="art-author" class="font-bold text-gray-700">編輯部</span></div>
-                        <span class="text-gray-300">|</span> <span id="art-date">YYYY/MM/DD</span>
+                <!-- 文章頭部資訊 -->
+                <header class="mb-10 border-b border-gray-100 pb-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span id="article-category" class="px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-600">載入中...</span>
+                        <span id="article-date" class="text-sm text-gray-500 font-medium"><i class="fa-regular fa-calendar mr-1"></i> 載入中...</span>
                     </div>
-                    <div class="flex gap-2">
-                        <button onclick="shareArticle('line')" class="w-9 h-9 rounded-full bg-[#06C755] text-white hover:opacity-80 transition flex items-center justify-center shadow-md"><i class="fa-brands fa-line text-lg"></i></button>
-                        <button onclick="shareArticle('fb')" class="w-9 h-9 rounded-full bg-[#1877F2] text-white hover:opacity-80 transition flex items-center justify-center shadow-md"><i class="fa-brands fa-facebook-f text-lg"></i></button>
-                        <button onclick="shareArticle('copy')" class="w-9 h-9 rounded-full bg-gray-600 text-white hover:bg-gray-800 transition flex items-center justify-center shadow-md"><i class="fa-solid fa-link"></i></button>
+                    
+                    <h1 id="article-title" class="text-3xl md:text-5xl font-black text-veritas-dark leading-tight mb-6">
+                        載入中...
+                    </h1>
+
+                    <div class="flex items-center justify-between flex-wrap gap-4 mt-8">
+                        <!-- 作者資訊 -->
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-veritas-red text-white flex items-center justify-center font-bold">
+                                V
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">作者</p>
+                                <p id="article-author" class="font-bold text-gray-800">Veritas 護教中心</p>
+                            </div>
+                        </div>
+
+                        <!-- 社群分享按鈕 -->
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm text-gray-500 font-medium mr-2">分享至：</span>
+                            <button onclick="shareToFacebook()" class="w-9 h-9 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:opacity-80 transition shadow-sm">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </button>
+                            <button onclick="shareToLine()" class="w-9 h-9 rounded-full bg-[#00B900] text-white flex items-center justify-center hover:opacity-80 transition shadow-sm">
+                                <i class="fa-brands fa-line text-lg"></i>
+                            </button>
+                            <button onclick="copyLink()" class="w-9 h-9 rounded-full bg-gray-600 text-white flex items-center justify-center hover:opacity-80 transition shadow-sm" title="複製連結">
+                                <i class="fa-solid fa-link"></i>
+                            </button>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- 文章封面圖 -->
+                <div id="article-thumbnail-container" class="mb-10 hidden">
+                    <img id="article-thumbnail" src="" alt="文章封面" class="w-full rounded-xl shadow-md object-cover max-h-[500px]">
+                </div>
+
+                <!-- 文章內文 (Rich Text HTML) -->
+                <div id="article-content" class="article-content">
+                    <!-- 動態插入 -->
+                </div>
+
+                <!-- 延伸閱讀 / 標籤區 -->
+                <div class="mt-16 pt-8 border-t border-gray-100">
+                    <p class="text-sm text-gray-500 mb-4 font-bold"><i class="fa-solid fa-tags mr-1"></i> 分類標籤</p>
+                    <div id="article-tags" class="flex gap-2">
+                        <!-- 動態插入 -->
                     </div>
                 </div>
-            </header>
 
-            <div id="art-hero-container" class="mb-12 rounded-2xl overflow-hidden shadow-lg hidden">
-                <img id="art-hero-img" src="" alt="文章首圖" class="w-full h-auto object-cover max-h-[500px]">
-            </div>
+            </article>
 
-            <article id="art-content" class="article-content bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100"></article>
+            <!-- 粉絲專頁與留言討論區 -->
+            <section id="discussion-section" class="hidden mt-12 bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-gray-100">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fa-brands fa-facebook text-3xl text-[#1877F2]"></i>
+                    <h3 class="text-2xl font-bold text-gray-800">教友討論區</h3>
+                </div>
+                <p class="text-gray-500 mb-8">歡迎以實名制在下方留言，分享您的看見與感動。為維護交流品質，請遵守版規，禁止惡意攻擊或散播不實資訊。</p>
+                
+                <!-- FB 留言板容器 -->
+                <div id="fb-comments-container" class="w-full bg-gray-50 rounded-lg p-2 min-h-[200px]">
+                    <!-- 將由 JavaScript 動態生成並呼叫 FB 渲染 -->
+                </div>
+            </section>
 
-            <div class="mt-12 flex justify-between items-center border-t border-gray-200 pt-8">
-                <a href="knowledge.html" class="text-veritas-red font-bold hover:bg-red-50 px-6 py-2 rounded-full transition border border-veritas-red inline-flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> 返回知識庫</a>
-            </div>
-
-            <!-- FB 留言板 -->
-            <div class="mt-16 bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
-                <h3 class="text-xl font-bold text-veritas-dark mb-6 flex items-center gap-2"><i class="fa-regular fa-comments text-blue-600"></i> 教友討論區</h3>
-                <div id="fb-comments-container" class="w-full overflow-x-auto"></div>
-            </div>
         </div>
     </main>
 
+    <!-- 頁尾 Footer (簡化版) -->
+    <footer class="bg-veritas-dark text-gray-300 py-8 border-t-4 border-veritas-red mt-12">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <p>&copy; 2026 天主教 Veritas 護教中心 版權所有.</p>
+        </div>
+    </footer>
+
     <script>
-        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz6Iqnjt8r9poHA_l450uly_XkdX6d2iU7Qcc56fBObFbMoFrtXlSvFtznBUiRgO-lN/exec"; 
-
-        const colorClasses = ['bg-blue-100 text-blue-800', 'bg-green-100 text-green-800', 'bg-orange-100 text-orange-800', 'bg-teal-100 text-teal-800', 'bg-indigo-100 text-indigo-800', 'bg-pink-100 text-pink-800'];
-        function getCategoryColor(catName) {
-            let hash = 0; for(let i=0; i<catName.length; i++) hash += catName.charCodeAt(i);
-            return colorClasses[hash % colorClasses.length];
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const articleId = new URLSearchParams(window.location.search).get('id');
-            if (!articleId) { showError("找不到指定的文章。"); return; }
-            fetchArticleData(articleId);
+        // ==========================================
+        // UI 互動：手機版選單
+        // ==========================================
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
         });
 
-        async function fetchArticleData(targetTitle) {
-            try {
-                const response = await fetch(`${GAS_API_URL}?action=getKnowledgeData`);
-                const data = await response.json();
-                if (data.error) throw new Error(data.error);
+        // ==========================================
+        // 核心邏輯：從 API 獲取文章資料
+        // ==========================================
+        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzbuprWzNPRRsz1Sxp4WtNJzrT-fgsQDc04vzF0RrEFK1WxpmUK4-zGdOpi9xdk9I_m/exec"; 
 
-                // 處理舊版標籤
-                data.forEach(item => {
-                    if(item.category === 'bible') item.category = '聖經專欄';
-                    if(item.category === 'theology') item.category = '神學與教理';
-                    if(item.category === 'ethics') item.category = '倫理與生活';
-                });
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchArticleData();
+        });
 
-                const article = data.find(item => item.title === targetTitle);
-                if (article) renderArticle(article); else showError("文章已被移除或不存在。");
-            } catch (error) { showError("系統連線異常 (" + error.message + ")"); }
-        }
+        async function fetchArticleData() {
+            // 從網址抓取 ID 參數 (例如: article.html?id=為什麼信天主)
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleId = urlParams.get('id');
 
-        function renderArticle(art) {
-            document.getElementById('loading-screen').classList.add('hidden');
-            document.getElementById('article-main').classList.remove('hidden');
-            document.title = `${art.title} | Veritas 護教知識庫`;
-
-            document.getElementById('breadcrumb-title').textContent = art.title;
-            document.getElementById('art-title').textContent = art.title;
-            document.getElementById('art-date').innerHTML = `<i class="fa-regular fa-calendar mr-1"></i> ${art.date}`;
-            document.getElementById('art-author').textContent = art.authorOrTime || '編輯部';
-            document.getElementById('art-content').innerHTML = art.content || art.desc;
-
-            // 動態分類標籤與顏色
-            const catBadge = document.getElementById('art-category');
-            catBadge.textContent = art.category;
-            catBadge.className = `inline-block text-xs font-bold px-3 py-1 rounded-full mb-4 shadow-sm ${getCategoryColor(art.category)}`;
-
-            if (art.thumbnail) {
-                document.getElementById('art-hero-img').src = art.thumbnail;
-                document.getElementById('art-hero-container').classList.remove('hidden');
+            if (!articleId) {
+                showError("請提供文章標識符 (ID)，無法載入文章。");
+                return;
             }
 
-            const currentUrl = window.location.href;
-            const fbUrl = (currentUrl.includes('file://') || currentUrl.includes('localhost') || currentUrl.includes('127.0.0.1')) ? 'https://www.foday.idv.tw/' : currentUrl;
-            const fbContainer = document.getElementById('fb-comments-container');
-            fbContainer.innerHTML = `<div class="fb-comments" data-href="${fbUrl}" data-width="100%" data-numposts="5"></div>`;
-            if (typeof FB !== 'undefined') FB.XFBML.parse(fbContainer); else setTimeout(() => { if (typeof FB !== 'undefined') FB.XFBML.parse(fbContainer); }, 1500);
+            try {
+                // 向 API 請求知識庫所有資料
+                const response = await fetch(`${GAS_API_URL}?action=getKnowledgeData`);
+                if (!response.ok) throw new Error('API 網路連線錯誤');
+                const data = await response.json();
+
+                // 在資料庫中尋找對應標題(或ID)的文章
+                const article = data.find(item => item.title === articleId || item.id === articleId);
+
+                if (!article) {
+                    showError("資料庫中找不到這篇文章，可能已被刪除或隱藏。");
+                    return;
+                }
+
+                // 成功找到文章，開始渲染畫面
+                renderArticle(article);
+
+            } catch (error) {
+                console.error("讀取失敗:", error);
+                showError("系統連線異常，暫時無法取得文章內容。");
+            }
+        }
+
+        function renderArticle(article) {
+            // 隱藏載入中，顯示文章容器
+            document.getElementById('loading-spinner').classList.add('hidden');
+            document.getElementById('article-container').classList.remove('hidden');
+            document.getElementById('discussion-section').classList.remove('hidden');
+
+            // 1. 填入基礎文字資訊
+            document.getElementById('article-title').textContent = article.title;
+            document.getElementById('article-date').innerHTML = `<i class="fa-regular fa-calendar mr-1"></i> ${article.date}`;
+            document.getElementById('article-author').textContent = article.authorOrTime || 'Veritas 護教中心';
+            
+            // 2. 處理分類標籤顏色
+            const categorySpan = document.getElementById('article-category');
+            categorySpan.textContent = article.category;
+            const bgColor = getCategoryColor(article.category);
+            categorySpan.className = `px-3 py-1 rounded-full text-xs font-bold text-white ${bgColor}`;
+            
+            // 底部標籤
+            document.getElementById('article-tags').innerHTML = `<span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-lg text-sm">${article.category}</span>`;
+
+            // 3. 處理封面圖片
+            if (article.thumbnail) {
+                const thumbContainer = document.getElementById('article-thumbnail-container');
+                const thumbImg = document.getElementById('article-thumbnail');
+                thumbImg.src = article.thumbnail;
+                thumbContainer.classList.remove('hidden');
+            }
+
+            // 4. 處理內文 (支援 HTML)
+            // 將 \n 轉換為 <br> 以相容沒有使用編輯器的舊文章，若有 HTML 標籤則直接渲染
+            let contentHTML = article.content;
+            if (contentHTML && !contentHTML.includes('<p>') && !contentHTML.includes('<br>')) {
+                contentHTML = contentHTML.replace(/\n/g, '<br>');
+            }
+            document.getElementById('article-content').innerHTML = contentHTML || '<p class="text-gray-400 italic">本文暫無詳細內容。</p>';
+
+            // 修改網頁 Title 增加 SEO
+            document.title = `${article.title} | Veritas 護教中心`;
+
+            // 5. 設定並渲染 Facebook 留言板
+            setupFacebookComments();
         }
 
         function showError(msg) {
-            document.getElementById('loading-screen').innerHTML = `<i class="fa-solid fa-circle-exclamation text-5xl text-red-500 mb-4"></i><p class="font-bold text-gray-700 text-xl mb-4">${msg}</p><a href="knowledge.html" class="bg-veritas-red text-white px-6 py-2 rounded-full font-bold">返回知識庫</a>`;
+            document.getElementById('loading-spinner').classList.add('hidden');
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.classList.remove('hidden');
+            document.getElementById('error-text').textContent = msg;
         }
 
-        function shareArticle(platform) {
-            const url = encodeURIComponent(window.location.href), title = encodeURIComponent(document.title);
-            if (platform === 'line') window.open(`https://social-plugins.line.me/lineit/share?url=${url}`);
-            else if (platform === 'fb') window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
-            else if (navigator.share) navigator.share({ title: document.title, url: window.location.href });
+        // ==========================================
+        // 分類顏色產生器 (確保與 knowledge.html 一致)
+        // ==========================================
+        function getCategoryColor(categoryName) {
+            const colors = [
+                'bg-red-600', 'bg-blue-600', 'bg-green-600', 'bg-yellow-600', 
+                'bg-purple-600', 'bg-indigo-600', 'bg-pink-600', 'bg-teal-600'
+            ];
+            let hash = 0;
+            for (let i = 0; i < categoryName.length; i++) {
+                hash = categoryName.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const index = Math.abs(hash) % colors.length;
+            return colors[index];
+        }
+
+        // ==========================================
+        // 社群分享功能
+        // ==========================================
+        function shareToFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
+        }
+
+        function shareToLine() {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            window.open(`https://social-plugins.line.me/lineit/share?url=${url}&text=${title}`, '_blank');
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('文章連結已複製！');
+            }).catch(err => {
+                // 備用複製方法
+                const input = document.createElement('input');
+                input.value = window.location.href;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                alert('文章連結已複製！');
+            });
+        }
+
+        // ==========================================
+        // Facebook 留言板處理 (解決動態載入不顯示的問題)
+        // ==========================================
+        function setupFacebookComments() {
+            let currentUrl = window.location.href;
+            
+            // 本地測試防呆：如果是 file:/// 或 localhost，給予一個預設的真實網址以利測試
+            if (currentUrl.startsWith('file://') || currentUrl.includes('localhost') || currentUrl.includes('127.0.0.1')) {
+                currentUrl = 'https://www.catholic.org.tw/'; 
+                console.log("偵測到本地端測試，FB 留言板使用預設網址:", currentUrl);
+            }
+
+            const fbContainer = document.getElementById('fb-comments-container');
+            
+            // 插入留言板的 HTML 標籤
+            fbContainer.innerHTML = `<div class="fb-comments" data-href="${currentUrl}" data-width="100%" data-numposts="5"></div>`;
+            
+            // 【關鍵修復】：動態插入 HTML 後，必須呼叫 Facebook 的 API 重新掃描並渲染這個區域
+            if (typeof FB !== 'undefined') {
+                FB.XFBML.parse(fbContainer);
+            } else {
+                // 如果 FB SDK 還沒載入完，等待 1 秒後重試一次
+                setTimeout(() => {
+                    if (typeof FB !== 'undefined') {
+                        FB.XFBML.parse(fbContainer);
+                    } else {
+                        console.warn("無法載入 Facebook SDK");
+                    }
+                }, 1000);
+            }
         }
     </script>
 </body>
 </html>
+
